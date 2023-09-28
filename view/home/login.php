@@ -7,7 +7,7 @@
 
 <div class="fondo-login">
     <div class="icon">
-        <a href="/login/index.php">
+        <a href="/Programacion-Web/index.php">
             <i class="fa-solid fa-shield-dog dog-icon"></i>
         </a>
     </div>

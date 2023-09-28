@@ -1,5 +1,5 @@
 <?php
-    require_once("c://xampp/htdocs/login/view/head/head.php");
+    require_once("c://xampp/htdocs/Programacion-Web/view/head/head.php");
     
 ?>
 
@@ -24,8 +24,8 @@
                             <a class="nav-link" href="#">Contactanos</a>
                         </li>
                     </ul>
-                    <a href="/login/view/home/login.php" class="boton">Inicia Session</a>
-                    <a href="/login/view/home/signup.php" class="boton">Registrate</a>
+                    <a href="/Programacion-Web/view/home/login.php" class="boton">Inicia Session</a>
+                    <a href="/Programacion-Web/view/home/signup.php" class="boton">Registrate</a>
                 </div>
                 <?php else: ?>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -40,7 +40,7 @@
                             <a class="nav-link" href="#">Session de recursos</a>
                         </li>
                     </ul>
-                    <a href="/login/view/home/logout.php" class="boton">Cerrar Sesion</a>
+                    <a href="/Programacion-Web/view/home/logout.php" class="boton">Cerrar Sesion</a>
                 </div>
                 <?php endif ?>
 
