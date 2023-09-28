@@ -24,7 +24,7 @@ if (isset($_POST['update'])) {
   mysqli_query($conn, $query);
   $_SESSION['message'] = 'Task Updated Successfully';
   $_SESSION['message_type'] = 'warning';
-  header('Location: altaLotes.php');
+  header('Location: gestionLotes.php');
 }
 
 ?>
