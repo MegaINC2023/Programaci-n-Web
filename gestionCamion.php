@@ -29,7 +29,7 @@
             <input type="text" name="pesoMax" class="form-control" placeholder="ingresar peso maximo del camion" autofocus>
           </div>
           
-          <input type="submit" name="save_camiones" class="btn btn-success btn-block" value="Save Task">
+          <input type="submit" name="save_camiones" class="btn btn-success btn-block" value="Guardar">
         </form>
       </div>
     </div>

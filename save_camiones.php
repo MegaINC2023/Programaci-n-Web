@@ -14,7 +14,7 @@ if (isset($_POST['save_camiones'])) {
 
   $_SESSION['message'] = 'Task Saved Successfully';
   $_SESSION['message_type'] = 'success';
-  header('Location: altaCamion.php');
+  header('Location: gestionCamion.php');
 
 }
 

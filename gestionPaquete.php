@@ -18,9 +18,9 @@
 
       <!-- ADD TASK FORM -->
       <div class="card card-body">
-        <form action="save_almacen.php" method="POST">
+        <form action="save_paquete.php" method="POST">
           <div class="form-group">
-            <input type="text" name="empresa" class="form-control" placeholder="ingresar empresa del almacen" autofocus>
+            <input type="text" name="estado" class="form-control" placeholder="ingresar estado del paquete" autofocus>
           </div>
           <div class="form-group">
             <input type="text" name="nomb_calle" class="form-control" placeholder="ingresar el nombre de la calle" autofocus>
@@ -29,10 +29,13 @@
             <input type="text" name="num_calle" class="form-control" placeholder="ingresar el numero de la calle" autofocus>
           </div>
           <div class="form-group">
+            <input type="text" name="departamento" class="form-control" placeholder="ingresar el departamento" autofocus>
+          </div>
+          <div class="form-group">
             <input type="text" name="localidad" class="form-control" placeholder="ingresar la localidad" autofocus>
           </div>
           
-          <input type="submit" name="save_almacen" class="btn btn-success btn-block" value="Guardar">
+          <input type="submit" name="save_paquete" class="btn btn-success btn-block" value="Guardar">
         </form>
       </div>
     </div>
@@ -40,32 +43,36 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>Id Almacen</th>
-            <th>Empresa</th>
+            <th>Id Paquete</th>
+            <th>Estado</th>
             <th>Nombre de la calle</th>
             <th>Numero de la calle</th>
+            <th>Departamento</th>
             <th>Localidad</th>
+            <th>Fecha de registro</th>
             <th>Opciones</th>
           </tr>
         </thead>
         <tbody>
 
           <?php
-          $query = "SELECT * FROM almacen";
+          $query = "SELECT * FROM paquetes";
           $result_tasks = mysqli_query($conn, $query);    
 
           while($row = mysqli_fetch_assoc($result_tasks)) { ?>
           <tr>
-            <td><?php echo $row['id_almacen']; ?></td>
-            <td><?php echo $row['empresa']; ?></td>
+            <td><?php echo $row['id_paquete']; ?></td>
+            <td><?php echo $row['estado']; ?></td>
             <td><?php echo $row['nomb_calle']; ?></td>
             <td><?php echo $row['num_calle']; ?></td>
+            <td><?php echo $row['departamento']; ?></td>
             <td><?php echo $row['localidad']; ?></td>
+            <td><?php echo $row['fecha_registro']; ?></td>
             <td>
-              <a href="edit_almacen.php?id_almacen=<?php echo $row['id_almacen']?>" class="btn btn-secondary">
+              <a href="edit_paquete.php?id_paquete=<?php echo $row['id_paquete']?>" class="btn btn-secondary">
                 <i class="fas fa-marker"></i>
               </a>
-              <a href="delete_almacen.php?id_almacen=<?php echo $row['id_almacen']?>" class="btn btn-danger">
+              <a href="delete_paquete.php?id_paquete=<?php echo $row['id_paquete']?>" class="btn btn-danger">
                 <i class="far fa-trash-alt"></i>
               </a>
             </td>

@@ -2,9 +2,9 @@
 
 include("config\usersDB.php");
 
-if(isset($_GET['id_almacen'])) {
-  $id_almacen = $_GET['id_almacen'];
-  $query = "DELETE FROM almacen WHERE id_almacen = $id_almacen";
+if(isset($_GET['id_paquete'])) {
+  $id_paquete = $_GET['id_paquete'];
+  $query = "DELETE FROM paquetes WHERE id_paquete = $id_paquete";
   $result = mysqli_query($conn, $query);
   if(!$result) {
     die("Query Failed.");
@@ -12,7 +12,7 @@ if(isset($_GET['id_almacen'])) {
 
   $_SESSION['message'] = 'Se modifico correctamente';
   $_SESSION['message_type'] = 'danger';
-  header('Location: gestionAlmacen.php');
+  header('Location: gestionPaquete.php');
 }
 
 ?>

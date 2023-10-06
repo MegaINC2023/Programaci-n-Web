@@ -22,7 +22,7 @@ if (isset($_POST['update'])) {
 
   $query = "UPDATE lotes set estado = '$estado', peso = '$peso' WHERE id_lotes=$id_lotes";
   mysqli_query($conn, $query);
-  $_SESSION['message'] = 'Task Updated Successfully';
+  $_SESSION['message'] = 'Se modifico correctamente';
   $_SESSION['message_type'] = 'warning';
   header('Location: gestionLotes.php');
 }
@@ -41,7 +41,7 @@ if (isset($_POST['update'])) {
           <input name="peso" type="text" class="form-control" value="<?php echo $peso; ?>" placeholder="cambiar peso">
         </div>
         <button class="btn-success" name="update">
-          Update
+          Cambiar
 </button>
       </form>
       </div>

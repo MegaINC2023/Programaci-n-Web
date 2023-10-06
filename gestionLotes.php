@@ -26,7 +26,7 @@
             <input type="text" name="peso" class="form-control" placeholder="ingresar el peso del lote" autofocus>
           </div>
           
-          <input type="submit" name="save_lotes" class="btn btn-success btn-block" value="Save Task">
+          <input type="submit" name="save_lotes" class="btn btn-success btn-block" value="Guardar">
         </form>
       </div>
     </div>

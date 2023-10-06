@@ -10,9 +10,9 @@ if(isset($_GET['id_lotes'])) {
     die("Query Failed.");
   }
 
-  $_SESSION['message'] = 'Task Removed Successfully';
+  $_SESSION['message'] = 'Se modifico correctamente';
   $_SESSION['message_type'] = 'danger';
-  header('Location: altaLotes.php');
+  header('Location: gestionLotes.php');
 }
 
 ?>

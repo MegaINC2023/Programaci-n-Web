@@ -14,7 +14,7 @@ if (isset($_POST['save_lotes'])) {
 
   $_SESSION['message'] = 'Task Saved Successfully';
   $_SESSION['message_type'] = 'success';
-  header('Location: altaLotes.php');
+  header('Location: gestionLotes.php');
 
 }
 

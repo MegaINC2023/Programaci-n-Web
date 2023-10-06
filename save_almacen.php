@@ -16,7 +16,7 @@ if (isset($_POST['save_almacen'])) {
 
   $_SESSION['message'] = 'Task Saved Successfully';
   $_SESSION['message_type'] = 'success';
-  header('Location: altaAlmacen.php');
+  header('Location: gestionAlmacen.php');
 
 }
 

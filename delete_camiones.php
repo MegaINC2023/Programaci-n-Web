@@ -10,9 +10,9 @@ if(isset($_GET['matricula'])) {
     die("Query Failed.");
   }
 
-  $_SESSION['message'] = 'Task Removed Successfully';
+  $_SESSION['message'] = 'Se modifico correctamente';
   $_SESSION['message_type'] = 'danger';
-  header('Location: altaCamion.php');
+  header('Location: gestionCamion.php');
 }
 
 ?>
