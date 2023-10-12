@@ -12,7 +12,7 @@ if (isset($_POST['save_camiones'])) {
     die("Query Failed.");
   }
 
-  $_SESSION['message'] = 'Task Saved Successfully';
+  $_SESSION['message'] = 'Se guardo Correctamente';
   $_SESSION['message_type'] = 'success';
   header('Location: gestionCamion.php');
 

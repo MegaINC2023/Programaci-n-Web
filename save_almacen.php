@@ -14,7 +14,7 @@ if (isset($_POST['save_almacen'])) {
     die("Query Failed.");
   }
 
-  $_SESSION['message'] = 'Task Saved Successfully';
+  $_SESSION['message'] = 'Se guardo correctamente';
   $_SESSION['message_type'] = 'success';
   header('Location: gestionAlmacen.php');
 
