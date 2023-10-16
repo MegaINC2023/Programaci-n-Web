@@ -1,21 +1,21 @@
 <?php
 include("config\usersDB.php");
-$empresa= '';
-$nomb_calle= '';
-$num_calle= '';
+$id_empresa= '';
+$calle= '';
+$numero= '';
 $localidad= '';
 
 
 if  (isset($_GET['id_almacen'])) {
   $id_almacen = $_GET['id_almacen'];
-  $query = "SELECT * FROM almacen WHERE id_almacen=$id_almacen";
+  $query = "SELECT * FROM Almacen WHERE id_almacen=$id_almacen";
   $result = mysqli_query($conn, $query);
   if (mysqli_num_rows($result) == 1) {
     $row = mysqli_fetch_array($result);
     $id_almacen = $row['id_almacen'];
-    $empresa = $row['empresa'];
-    $nomb_calle = $row['nomb_calle'];
-    $num_calle = $row['num_calle'];
+    $id_empresa = $row['id_empresa'];
+    $calle = $row['calle'];
+    $numero = $row['numero'];
     $localidad = $row['localidad'];
 
   }
@@ -23,12 +23,12 @@ if  (isset($_GET['id_almacen'])) {
 
 if (isset($_POST['update'])) {
   $id_almacen = $_GET['id_almacen'];
-  $empresa= $_POST['empresa'];
-  $nomb_calle = $_POST['nomb_calle'];
-  $num_calle = $_POST['num_calle'];
+  $id_empresa= $_POST['id_empresa'];
+  $calle = $_POST['calle'];
+  $numero = $_POST['numero'];
   $localidad = $_POST['localidad'];
 
-  $query = "UPDATE almacen set empresa = '$empresa', nomb_calle = '$nomb_calle', num_calle = '$num_calle', localidad = '$localidad' WHERE id_almacen=$id_almacen";
+  $query = "UPDATE Almacen set id_empresa = '$id_empresa', calle = '$calle', numero = '$numero', localidad = '$localidad' WHERE id_almacen=$id_almacen";
   mysqli_query($conn, $query);
   $_SESSION['message'] = 'Se modifico correctamente';
   $_SESSION['message_type'] = 'warning';
@@ -43,13 +43,13 @@ if (isset($_POST['update'])) {
       <div class="card card-body">
       <form action="edit_almacen.php?id_almacen=<?php echo $_GET['id_almacen']; ?>" method="POST">
         <div class="form-group">
-          <input name="empresa" type="text" class="form-control" value="<?php echo $empresa; ?>" placeholder="cambiar empresa">
+          <input name="id_empresa" type="text" class="form-control" value="<?php echo $id_empresa; ?>" placeholder="cambiar id empresa">
         </div>
         <div class="form-group">
-          <input name="nomb_calle" type="text" class="form-control" value="<?php echo $nomb_calle; ?>" placeholder="cambiar nombre de calle">
+          <input name="calle" type="text" class="form-control" value="<?php echo $calle; ?>" placeholder="cambiar nombre de calle">
         </div>
         <div class="form-group">
-          <input name="num_calle" type="text" class="form-control" value="<?php echo $num_calle; ?>" placeholder="cambiar el numero de la calle">
+          <input name="numero" type="text" class="form-control" value="<?php echo $numero; ?>" placeholder="cambiar el numero de la calle">
         </div>
         <div class="form-group">
           <input name="localidad" type="text" class="form-control" value="<?php echo $localidad; ?>" placeholder="cambiar la localidad">

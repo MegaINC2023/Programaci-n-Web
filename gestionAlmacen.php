@@ -19,14 +19,17 @@
       <!-- ADD TASK FORM -->
       <div class="card card-body">
         <form action="save_almacen.php" method="POST">
-          <div class="form-group">
-            <input type="text" name="empresa" class="form-control" placeholder="ingresar empresa del almacen" autofocus>
+        <div class="form-group">
+            <input type="text" name="id_almacen" class="form-control" placeholder="ingresar ID del almacen" autofocus>
+          </div>
+        <div class="form-group">
+            <input type="text" name="id_empresa" class="form-control" placeholder="ingresar empresa del almacen" autofocus>
           </div>
           <div class="form-group">
-            <input type="text" name="nomb_calle" class="form-control" placeholder="ingresar el nombre de la calle" autofocus>
+            <input type="text" name="calle" class="form-control" placeholder="ingresar el nombre de la calle" autofocus>
           </div>
           <div class="form-group">
-            <input type="text" name="num_calle" class="form-control" placeholder="ingresar el numero de la calle" autofocus>
+            <input type="text" name="numero" class="form-control" placeholder="ingresar el numero de la calle" autofocus>
           </div>
           <div class="form-group">
             <input type="text" name="localidad" class="form-control" placeholder="ingresar la localidad" autofocus>
@@ -57,9 +60,9 @@
           while($row = mysqli_fetch_assoc($result_tasks)) { ?>
           <tr>
             <td><?php echo $row['id_almacen']; ?></td>
-            <td><?php echo $row['empresa']; ?></td>
-            <td><?php echo $row['nomb_calle']; ?></td>
-            <td><?php echo $row['num_calle']; ?></td>
+            <td><?php echo $row['id_empresa']; ?></td>
+            <td><?php echo $row['calle']; ?></td>
+            <td><?php echo $row['numero']; ?></td>
             <td><?php echo $row['localidad']; ?></td>
             <td>
               <a href="edit_almacen.php?id_almacen=<?php echo $row['id_almacen']?>" class="btn btn-secondary">

@@ -23,18 +23,11 @@
             <input type="text" name="estado" class="form-control" placeholder="ingresar estado del paquete" autofocus>
           </div>
           <div class="form-group">
-            <input type="text" name="nomb_calle" class="form-control" placeholder="ingresar el nombre de la calle" autofocus>
+            <input type="text" name="tipo" class="form-control" placeholder="ingresar el tipo del paquete" autofocus>
           </div>
           <div class="form-group">
-            <input type="text" name="num_calle" class="form-control" placeholder="ingresar el numero de la calle" autofocus>
+            <input type="text" name="fragil" class="form-control" placeholder="¿El paquete es fragil?" autofocus>
           </div>
-          <div class="form-group">
-            <input type="text" name="departamento" class="form-control" placeholder="ingresar el departamento" autofocus>
-          </div>
-          <div class="form-group">
-            <input type="text" name="localidad" class="form-control" placeholder="ingresar la localidad" autofocus>
-          </div>
-          
           <input type="submit" name="save_paquete" class="btn btn-success btn-block" value="Guardar">
         </form>
       </div>

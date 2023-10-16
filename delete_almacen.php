@@ -4,7 +4,7 @@ include("config\usersDB.php");
 
 if(isset($_GET['id_almacen'])) {
   $id_almacen = $_GET['id_almacen'];
-  $query = "DELETE FROM almacen WHERE id_almacen = $id_almacen";
+  $query = "DELETE FROM Almacen WHERE id_almacen = $id_almacen";
   $result = mysqli_query($conn, $query);
   if(!$result) {
     die("Query Failed.");

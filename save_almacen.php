@@ -4,11 +4,11 @@ include('config\usersDB.php');
 
 if (isset($_POST['save_almacen'])) {
   $id_almacen = $_POST['id_almacen'];
-  $empresa = $_POST['empresa'];
-  $nomb_calle = $_POST['nomb_calle'];
-  $num_calle = $_POST['num_calle'];
+  $id_empresa = $_POST['id_empresa'];
+  $calle = $_POST['calle'];
+  $numero = $_POST['numero'];
   $localidad = $_POST['localidad'];
-  $query = "INSERT INTO almacen(id_almacen, empresa, nomb_calle, num_calle, localidad) VALUES ('$id_almacen', '$empresa', '$nomb_calle', '$num_calle', '$localidad')";
+  $query = "INSERT INTO Almacen(id_almacen, id_empresa, calle, numero, localidad) VALUES ('$id_almacen', '$id_empresa', '$calle', '$numero', '$localidad')";
   $result = mysqli_query($conn, $query);
   if(!$result) {
     die("Query Failed.");

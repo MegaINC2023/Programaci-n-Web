@@ -1,4 +1,5 @@
-﻿use Megainc;
+﻿create database Megainc;
+use Megainc;
 
 Create table Chofer(
 cedula int (10) not null primary key, 
@@ -35,7 +36,9 @@ FOREIGN Key (matricula) references Vehiculo (matricula);
 Create table Paquete (
 id_paquete int (10) not null primary key,
 estado varchar (50) not null,
-fecha_registro date not null
+fecha_registro date not null,
+tipo varchar (20),
+fragil varchar (2) not null
 );
 
 create table Direccion (
@@ -209,15 +212,30 @@ insert into Camion (matricula, peso_max)  values ('JTP 4458', '23 ton');
 insert into Camioneta (matricula, peso_max)  values ('HTP 2681', '5 ton');
 insert into Camioneta (matricula, peso_max)  values ('HTP 8542', '5 ton');
 
-insert into Paquete (id_paquete, estado, calle, numero, localidad, departamento, fecha_registro) values ('432551', 'En viaje', 'Diego Lamas', '1172', 'Rivera', 'Rivera', '2023-08-31');
-insert into Paquete (id_paquete, estado, calle, numero, localidad, departamento, fecha_registro) values ('543678', 'Entregado', 'Agraciada', '810', 'Rivera', 'Rivera', '2023-06-20');
-insert into Paquete (id_paquete, estado, calle, numero, localidad, departamento, fecha_registro) values ('413255', 'En viaje', 'Av. Sarandi', '1102', 'Rivera', 'Rivera', '2023-09-04');
-insert into Paquete (id_paquete, estado, calle, numero, localidad, departamento, fecha_registro) values ('543264', 'En viaje', '25 de agosto', '808', 'Pando', 'Canelones', '2023-08-20');
-insert into Paquete (id_paquete, estado, calle, numero, localidad, departamento, fecha_registro) values ('154662', 'En espera', 'Lorenzo Latorre', '16', 'Empalme olmos', 'Canelones', '2023-09-04');
-insert into Paquete (id_paquete, estado, calle, numero, localidad, departamento, fecha_registro) values ('652466', 'Entregado', 'Artigas', '2268', 'Salto', 'Salto', '2023-08-20');
-insert into Paquete (id_paquete, estado, calle, numero, localidad, departamento, fecha_registro) values ('614436', 'Entregado', '19 de abril', '651', 'Salto', 'Salto', '2023-09-06');
- 
-insert into Paquete (id_paquete, estado, calle, numero, localidad, departamento, fecha_registro) values ('124556', 'Entregado', 'Jose pedro varela', '688', 'Melo', 'Cerro Largo', '2023-09-11');
+insert into Paquete (id_paquete, estado, fecha_registro, tipo, fragil) values ('432551', 'En viaje', '2023-08-31', 'Electronico', 'si');
+insert into Paquete (id_paquete, estado, fecha_registro, tipo, fragil) values ('543678', 'Entregado', '2023-06-20', 'Indumentaria', 'no');
+insert into Paquete (id_paquete, estado, fecha_registro, tipo, fragil) values ('413255', 'En viaje', '2023-09-04', 'Mueble', 'no');
+insert into Paquete (id_paquete, estado, fecha_registro, tipo, fragil) values ('543264', 'En viaje', '2023-08-20', 'Mueble', 'no');
+insert into Paquete (id_paquete, estado, fecha_registro, tipo, fragil) values ('154662', 'En espera', '2023-09-04', 'Electronico', 'si' );
+insert into Paquete (id_paquete, estado, fecha_registro, tipo, fragil) values ('652466', 'Entregado', '2023-08-20', 'Electronico', 'si');
+insert into Paquete (id_paquete, estado, fecha_registro, tipo, fragil) values ('614436', 'Entregado', '2023-09-06', 'Mueble', 'si');
+insert into Paquete (id_paquete, estado, fecha_registro, tipo, fragil) values ('124556', 'Entregado', '2023-09-11', 'Mueble', 'no');
+
+insert into Direccion (id_paquete, calle, numero, localidad) values ('432551', 'Diego Lamas', '1172', 'Rivera');
+insert into Direccion (id_paquete, calle, numero, localidad) values ('543678', 'Agraciada', '810', 'Rivera');
+insert into Direccion (id_paquete, calle, numero, localidad) values ('413255', 'Av. Sarandi', '1102', 'Rivera');
+insert into Direccion (id_paquete, calle, numero, localidad) values ('543264', '25 de agosto', '808', 'Pando');
+insert into Direccion (id_paquete, calle, numero, localidad) values ('154662', 'Lorenzo Latorre', '16', 'Empalme olmos',);
+insert into Direccion (id_paquete, calle, numero, localidad) values ('652466', 'Artigas', '2268', 'Salto');
+insert into Direccion (id_paquete, calle, numero, localidad) values ('614436', '19 de abril', '651', 'Salto');
+insert into Direccion (id_paquete, calle, numero, localidad) values ('124556', 'Jose pedro varela', '688', 'Melo');
+
+insert into Localidad (localidad, departamento) values ('Rivera', 'Rivera');
+insert into Localidad (localidad, departamento) values ('Pando', 'Canelones');
+insert into Localidad (localidad, departamento) values ('Empalme olmos', 'Canelones');
+insert into Localidad (localidad, departamento) values ('Salto', 'Salto');
+insert into Localidad (localidad, departamento) values ('Melo', 'Cerro Largo');
+
 
 insert into Empresa (id_empresa, empresa) values ('1', 'quick carry');
 insert into Empresa (id_empresa, empresa) values ('2', 'crecom');
@@ -314,12 +332,13 @@ GRANT SELECT (id_Trayecto, origen, destino, distancia) ON Trayecto TO Chofer;
 GRANT SELECT (id_Trayecto, origen, destino, distancia) ON Trayecto TO PerAdmin_Almacen;
 GRANT UPDATE (id_Trayecto, origen, destino, distancia) ON Trayecto TO PerAdmin_Almacen;
 
-GRANT INSERT (id_paquete, estado, fecha_registro) ON Paquete TO BackOffice;
-GRANT SELECT (id_paquete, estado, fecha_registro) ON Paquete TO BackOffice;
-GRANT UPDATE (id_paquete, estado, fecha_registro) ON Paquete TO BackOffice;
-GRANT SELECT (id_paquete, estado, fecha_registro) ON Paquete TO Almacenero;
+GRANT INSERT (id_paquete, estado, fecha_registro, tipo, fragil) ON Paquete TO BackOffice;
+GRANT SELECT (id_paquete, estado, fecha_registro, tipo, fragil) ON Paquete TO BackOffice;
+GRANT UPDATE (id_paquete, estado, fecha_registro, tipo, fragil) ON Paquete TO BackOffice;
+GRANT SELECT (id_paquete, estado, fecha_registro, tipo, fragil) ON Paquete TO Almacenero;
+GRANT SELECT (tipo, fragil) ON Paquete TO Chofer;
 GRANT INSERT (fecha_registro) ON Paquete TO PerAdmin_Almacen;
-GRANT SELECT (id_paquete, estado) ON Paquete TO PerAdmin_Almacen;
+GRANT SELECT (id_paquete, estado, tipo, fragil) ON Paquete TO PerAdmin_Almacen;
 GRANT UPDATE (estado) ON Paquete TO PerAdmin_Almacen; 
 
 GRANT INSERT (id_paquete, calle, numero, localidad) ON Direccion TO BackOffice;
@@ -429,8 +448,8 @@ value ('ZTX 5129', 'Disponible', '', '31 ton');
 rollback;
 
 Start transaction;
-insert into Paquete (id_paquete, estado, calle, numero, localidad, departamento, fecha_registro)
-values ('432551', 'Entregado', 'Diego Lamas', '1172', 'Rivera', 'Rivera', '2023-09-18');
+insert into Paquete (id_paquete, estado, calle, numero, localidad, departamento, fecha_registro, tipo, fragil)
+values ('432551', 'Entregado', 'Diego Lamas', '1172', 'Rivera', 'Rivera', '2023-09-18', 'electronico', 'no');
 rollback;
 
 Start transaction;
@@ -537,3 +556,8 @@ SELECT Almacén.Id_Almacen
 FROM Almacén
 INNER JOIN Trayecto_Tiene_Almacen ON Almacén.Id_Almacen = Trayecto_Tiene_Almacen.Id_Almacen
 INNER JOIN Trayecto ON Trayecto_Tiene_Almacen.Id_Trayecto = Trayecto.Id_Trayecto;
+
+
+
+
+

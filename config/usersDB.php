@@ -5,7 +5,7 @@ $conn = mysqli_connect(
   'localhost',
   'root',
   '',
-  'login'
+  'megainc'
 ) or die(mysqli_erro($mysqli));
 
 ?>
