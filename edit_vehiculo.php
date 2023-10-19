@@ -3,7 +3,7 @@ include("config\usersDB.php");
 $matricula = '';
 $estado = '';
 $licencia = '';
-$pesoMax = '';
+$peso_max = '';
 
 if (isset($_GET['matricula'])) {
   $matricula = $_GET['matricula'];
@@ -14,7 +14,7 @@ if (isset($_GET['matricula'])) {
     $matricula = $row['matricula'];
     $estado = $row['estado'];
     $licencia = $row['licencia'];
-    $pesoMax = $row['pesoMax'];
+    $peso_max = $row['peso_max'];
   }
 }
 
@@ -22,9 +22,9 @@ if (isset($_POST['update'])) {
   $matricula = $_POST['matricula']; 
   $estado = $_POST['estado'];
   $licencia = $_POST['licencia'];
-  $pesoMax = $_POST['pesoMax'];
+  $peso_max = $_POST['peso_max'];
 
-  $query = "UPDATE Vehiculo SET estado = '$estado', licencia = '$licencia', pesoMax = '$pesoMax' WHERE matricula='$matricula'"; 
+  $query = "UPDATE Vehiculo SET estado = '$estado', licencia = '$licencia', peso_max = '$peso_max' WHERE matricula='$matricula'"; 
   mysqli_query($conn, $query);
   $_SESSION['message'] = 'Se modifico correctamente';
   $_SESSION['message_type'] = 'warning';
@@ -49,7 +49,7 @@ if (isset($_POST['update'])) {
             <input name="licencia" type="text" class="form-control" value="<?php echo $licencia; ?>" placeholder="Cambiar licencia">
           </div>
           <div class="form-group">
-            <input name="pesoMax" type="text" class="form-control" value="<?php echo $pesoMax; ?>" placeholder="Cambiar peso maximo">
+            <input name="peso_max" type="text" class="form-control" value="<?php echo $peso_max; ?>" placeholder="Cambiar peso maximo">
           </div>
           <button class="btn-success" name="update">
             Cambiar

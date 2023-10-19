@@ -29,7 +29,7 @@
             <input type="text" name="licencia" class="form-control" placeholder="ingresar licencia del camion" autofocus>
           </div>
           <div class="form-group">
-            <input type="text" name="pesoMax" class="form-control" placeholder="ingresar peso maximo del camion" autofocus>
+            <input type="text" name="peso_max" class="form-control" placeholder="ingresar peso maximo del camion" autofocus>
           </div>
           
           <input type="submit" name="save_vehiculo" class="btn btn-success btn-block" value="Guardar">
@@ -58,7 +58,7 @@
             <td><?php echo $row['matricula']; ?></td>
             <td><?php echo $row['estado']; ?></td>
             <td><?php echo $row['licencia']; ?></td>
-            <td><?php echo $row['pesoMax']; ?></td>
+            <td><?php echo $row['peso_max']; ?></td>
             <td>
               <a href="edit_vehiculo.php?matricula=<?php echo $row['matricula']?>" class="btn btn-secondary">
                 <i class="fas fa-marker"></i>
