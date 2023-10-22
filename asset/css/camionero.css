@@ -1,0 +1,157 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #4700f9;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* Estilos para las imágenes de la esquina superior izquierda y derecha */
+.logo-izquierda {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 100px; /* Ajusta el tamaño según tus necesidades */
+}
+
+.logo-derecha {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 100px; /* Ajusta el tamaño según tus necesidades */
+}
+
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #0400ff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form button {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #555;
+}
+
+#rutaMap {
+    height: 300px;
+    margin: 20px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #000000;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #000000;
+    color: #fff;
+}
+
+/* Estilos para los botones en la tabla */
+
+table .estadoBtn {
+    background-color: #3498db;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+table .estadoBtn:hover {
+    background-color: #2f00ff;
+}
+
+table .infoBtn {
+    background-color: #0d00ff;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+table .infoBtn:hover {
+    background-color: #1e8449;
+}
+
+/* Estilos para el pie de página */
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 12px;
+}
+
+/* Estilos para la interfaz móvil (responsive) */
+
+@media (max-width: 768px) {
+    main {
+        padding: 10px;
+    }
+
+    #rutaMap {
+        height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    form button {
+        padding: 8px 16px;
+    }
+
+    table .estadoBtn, table .infoBtn {
+        padding: 4px 8px;
+    }
+}

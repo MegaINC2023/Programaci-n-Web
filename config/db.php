@@ -1,7 +1,7 @@
 <?php
     class db{
         private $host="localhost";
-        private $dbname="login";
+        private $dbname="megainc";
         private $user="root";
         private $password="";
         public function conexion(){

@@ -484,6 +484,9 @@ ALTER TABLE `login`
   ADD PRIMARY KEY (`id_usuario`),
   ADD UNIQUE KEY `cedula` (`cedula`);
 
+  ALTER TABLE `login`
+  MODIFY `id_usuario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- Indices de la tabla `lote`
 --

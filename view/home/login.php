@@ -4,6 +4,55 @@
         header("Location:panel_control.php");
     }
 ?>
+<?php
+// Configuración de la base de datos
+$host = "localhost";
+$usuario = "root";
+$contrasena = "";
+$base_de_datos = "megainc";
+
+// Conexión a la base de datos
+$conexion = new mysqli($host, $usuario, $contrasena, $base_de_datos);
+
+// Verificar la conexión
+if ($conexion->connect_error) {
+    die("Error de conexión a la base de datos: " . $conexion->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Recuperar las credenciales del formulario
+    $cedula = $_POST['cedula'];
+    $contraseña = $_POST['contraseña'];
+
+    // Consulta SQL para verificar las credenciales
+    $consulta = "SELECT * FROM login WHERE cedula = '$cedula' AND contraseña = '$contraseña'";
+    $resultado = $conexion->query($consulta);
+
+    // Verificar si se encontraron resultados
+    if ($resultado->num_rows > 0) {
+        $fila = $resultado->fetch_assoc();
+        $tipo_usuario = $fila['tipo_de_usuario'];
+
+       if ($tipo_usuario == 'admin') {
+            header('Location: pagina_admin.php');
+        } elseif ($tipo_usuario == 'chofer') {
+            header('Location: pagina_chofer.php');
+        } elseif ($tipo_usuario == 'almacenista') {
+            header('Location: pagina_almacenista.php');
+        } else {
+            // El usuario no es un administrador, puedes redirigirlo a otra página si lo deseas
+            header('Location: otra_pagina.php');
+        }
+    } else {
+        // Las credenciales son incorrectas, redirigir de nuevo al formulario de inicio de sesión con un mensaje de error
+        header('Location: inicio_sesion.php?error=Credenciales incorrectas. Por favor, intente de nuevo.');
+    }
+}
+
+// Cerrar la conexión a la base de datos
+$conexion->close();
+?>
+
 
 <div class="fondo-login">
     <div class="icon">
@@ -14,7 +63,7 @@
     <div class="titulo">
         Inicia sesion en NEL
     </div>
-    <form action="verificar.php" method="POST" class="col-3 login" autocomplete="off">
+    <form  method="POST" class="col-3 login" autocomplete="off">
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Cedula</label>
             <input name="cedula" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">

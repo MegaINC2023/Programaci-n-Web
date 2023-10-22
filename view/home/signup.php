@@ -58,19 +58,19 @@
         <tbody>
 
           <?php
-          $query = "SELECT * FROM usuarios";
+          $query = "SELECT * FROM login";
           $result_tasks = mysqli_query($conn, $query);    
 
           while($row = mysqli_fetch_assoc($result_tasks)) { ?>
           <tr>
-            <td><?php echo $row['id']; ?></td>
+            <td><?php echo $row['id_usuario']; ?></td>
             <td><?php echo $row['cedula']; ?></td>
             <td><?php echo $row['password']; ?></td>
             <td>
-              <a href="edit.php?id=<?php echo $row['id']?>" class="btn btn-secondary">
+              <a href="edit.php?id_usuario=<?php echo $row['id_usuario']?>" class="btn btn-secondary">
                 <i class="fas fa-marker"></i>
               </a>
-              <a href="delete_task.php?id=<?php echo $row['id']?>" class="btn btn-danger">
+              <a href="delete_task.php?id_usuario=<?php echo $row['id_usuario']?>" class="btn btn-danger">
                 <i class="far fa-trash-alt"></i>
               </a>
             </td>
