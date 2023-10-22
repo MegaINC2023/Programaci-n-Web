@@ -1,6 +1,6 @@
 <?php include("config\usersDB.php"); ?>
 
-<?php include('view\home\includes\header.php'); ?>
+<?php include('includes\header.php'); ?>
 
 <main class="container p-4">
   <div class="row">
@@ -80,4 +80,4 @@
   </div>
 </main>
 
-<?php include('view\home\includes\footer.php'); ?>
+<?php include('includes\footer.php'); ?>

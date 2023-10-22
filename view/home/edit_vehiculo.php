@@ -33,7 +33,7 @@ if (isset($_POST['update'])) {
 
 ?>
 
-<?php include('view\home\includes\header.php'); ?>
+<?php include('includes\header.php'); ?>
 <div class="container p-4">
   <div class="row">
     <div class="col-md-4 mx-auto">
@@ -61,4 +61,4 @@ if (isset($_POST['update'])) {
 </div>
 
 
-<?php include('view\home\includes\footer.php'); ?>
+<?php include('includes\footer.php'); ?>

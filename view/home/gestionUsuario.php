@@ -1,6 +1,6 @@
 <?php include("config\usersDB.php"); ?>
 
-<?php include('view\home\includes\header.php'); ?>
+<?php include('includes\header.php'); ?>
 
 <main class="container p-4">
   <div class="row">
@@ -18,20 +18,17 @@
 
       <!-- ADD TASK FORM -->
       <div class="card card-body">
-        <form action="save_chofer.php" method="POST">
+        <form action="save_usuario.php" method="POST">
         <div class="form-group">
-            <input type="text" name="cedula" class="form-control" placeholder="ingresar cedula del chofer" autofocus>
+            <input type="text" name="cedula" class="form-control" placeholder="ingresar cedula del usuario" autofocus>
           </div>
         <div class="form-group">
-            <input type="text" name="licencia" class="form-control" placeholder="ingresar licencia del chofer" autofocus>
+            <input type="text" name="tipo_de_usuario" class="form-control" placeholder="ingresar tipo del usuario" autofocus>
           </div>
           <div class="form-group">
-            <input type="text" name="nombre" class="form-control" placeholder="ingresar el nombre del chofer" autofocus>
+            <input type="text" name="contraseña" class="form-control" placeholder="ingresar contraseña del usuario" autofocus>
           </div>
-          <div class="form-group">
-            <input type="text" name="apellido" class="form-control" placeholder="ingresar el apellido del chofer" autofocus>
-          </div>
-          <input type="submit" name="save_chofer" class="btn btn-success btn-block" value="Guardar">
+          <input type="submit" name="save_usuario" class="btn btn-success btn-block" value="Guardar">
         </form>
       </div>
     </div>
@@ -39,30 +36,30 @@
       <table class="table table-bordered">
         <thead>
           <tr>
+            <th>ID Usuario</th>
             <th>Cedula</th>
-            <th>Licencia</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
+            <th>Tipo de usuario</th>
+            <th>Contraseña</th>
             <th>Opciones</th>
           </tr>
         </thead>
         <tbody>
 
           <?php
-          $query = "SELECT * FROM chofer";
+          $query = "SELECT * FROM login";
           $result_tasks = mysqli_query($conn, $query);    
 
           while($row = mysqli_fetch_assoc($result_tasks)) { ?>
           <tr>
+            <td><?php echo $row['id_usuario']; ?></td>
             <td><?php echo $row['cedula']; ?></td>
-            <td><?php echo $row['licencia']; ?></td>
-            <td><?php echo $row['nombre']; ?></td>
-            <td><?php echo $row['apellido']; ?></td>
+            <td><?php echo $row['tipo_de_usuario']; ?></td>
+            <td><?php echo $row['contraseña']; ?></td>
             <td>
-              <a href="edit_chofer.php?cedula=<?php echo $row['cedula']?>" class="btn btn-secondary">
+              <a href="edit_usuario.php?id_usuario=<?php echo $row['id_usuario']?>" class="btn btn-secondary">
                 <i class="fas fa-marker"></i>
               </a>
-              <a href="delete_chofer.php?cedula=<?php echo $row['cedula']?>" class="btn btn-danger">
+              <a href="delete_usuario.php?id_usuario=<?php echo $row['id_usuario']?>" class="btn btn-danger">
                 <i class="far fa-trash-alt"></i>
               </a>
             </td>
@@ -74,4 +71,4 @@
   </div>
 </main>
 
-<?php include('view\home\includes\footer.php'); ?>
+<?php include('includes\footer.php'); ?>

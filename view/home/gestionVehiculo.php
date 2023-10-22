@@ -1,6 +1,6 @@
 <?php include("config\usersDB.php"); ?>
 
-<?php include('view\home\includes\header.php'); ?>
+<?php include('includes\header.php'); ?>
 
 <main class="container p-4">
   <div class="row">
@@ -18,18 +18,21 @@
 
       <!-- ADD TASK FORM -->
       <div class="card card-body">
-        <form action="save_direccion.php" method="POST">
+        <form action="save_vehiculo.php" method="POST">
           <div class="form-group">
-            <input type="text" name="nomb_calle" class="form-control" placeholder="ingresar el nombre de la calle" autofocus>
+            <input type="text" name="matricula" class="form-control" placeholder="ingresar matricula" autofocus>
           </div>
           <div class="form-group">
-            <input type="text" name="num_calle" class="form-control" placeholder="ingresar el numero de la calle" autofocus>
+            <input type="text" name="estado" class="form-control" placeholder="ingresar estado del camion" autofocus>
           </div>
           <div class="form-group">
-            <input type="text" name="localidad" class="form-control" placeholder="ingresar la localidad" autofocus>
+            <input type="text" name="licencia" class="form-control" placeholder="ingresar licencia del camion" autofocus>
+          </div>
+          <div class="form-group">
+            <input type="text" name="peso_max" class="form-control" placeholder="ingresar peso maximo del camion" autofocus>
           </div>
           
-          <input type="submit" name="save_direccion" class="btn btn-success btn-block" value="Guardar">
+          <input type="submit" name="save_vehiculo" class="btn btn-success btn-block" value="Guardar">
         </form>
       </div>
     </div>
@@ -37,33 +40,30 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>Id Paquete</th>
-            <th>Nombre de la calle</th>
-            <th>Numero de la calle</th>
-            <th>Localidad</th>
+            <th>Matricula</th>
+            <th>Estado</th>
+            <th>licencia</th>
+            <th>Peso Maximo</th>
             <th>Opciones</th>
           </tr>
         </thead>
         <tbody>
 
           <?php
-          $query = "SELECT * FROM Direccion";
+          $query = "SELECT * FROM Vehiculo";
           $result_tasks = mysqli_query($conn, $query);    
 
           while($row = mysqli_fetch_assoc($result_tasks)) { ?>
           <tr>
-            <td><?php echo $row['id_paquete']; ?></td>
+            <td><?php echo $row['matricula']; ?></td>
             <td><?php echo $row['estado']; ?></td>
-            <td><?php echo $row['nomb_calle']; ?></td>
-            <td><?php echo $row['num_calle']; ?></td>
-            <td><?php echo $row['departamento']; ?></td>
-            <td><?php echo $row['localidad']; ?></td>
-            <td><?php echo $row['fecha_registro']; ?></td>
+            <td><?php echo $row['licencia']; ?></td>
+            <td><?php echo $row['peso_max']; ?></td>
             <td>
-              <a href="edit_paquete.php?id_paquete=<?php echo $row['id_paquete']?>" class="btn btn-secondary">
+              <a href="edit_vehiculo.php?matricula=<?php echo $row['matricula']?>" class="btn btn-secondary">
                 <i class="fas fa-marker"></i>
               </a>
-              <a href="delete_paquete.php?id_paquete=<?php echo $row['id_paquete']?>" class="btn btn-danger">
+              <a href="delete_vehiculo.php?matricula=<?php echo $row['matricula']?>" class="btn btn-danger">
                 <i class="far fa-trash-alt"></i>
               </a>
             </td>
@@ -75,4 +75,4 @@
   </div>
 </main>
 
-<?php include('view\home\includes\footer.php'); ?>
+<?php include('includes\footer.php'); ?>

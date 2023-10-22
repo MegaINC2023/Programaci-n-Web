@@ -1,6 +1,6 @@
 <?php include("config\usersDB.php"); ?>
 
-<?php include('view\home\includes\header.php'); ?>
+<?php include('includes\header.php'); ?>
 
 <main class="container p-4">
   <div class="row">
@@ -18,21 +18,20 @@
 
       <!-- ADD TASK FORM -->
       <div class="card card-body">
-        <form action="save_vehiculo.php" method="POST">
-          <div class="form-group">
-            <input type="text" name="matricula" class="form-control" placeholder="ingresar matricula" autofocus>
+        <form action="save_chofer.php" method="POST">
+        <div class="form-group">
+            <input type="text" name="cedula" class="form-control" placeholder="ingresar cedula del chofer" autofocus>
+          </div>
+        <div class="form-group">
+            <input type="text" name="licencia" class="form-control" placeholder="ingresar licencia del chofer" autofocus>
           </div>
           <div class="form-group">
-            <input type="text" name="estado" class="form-control" placeholder="ingresar estado del camion" autofocus>
+            <input type="text" name="nombre" class="form-control" placeholder="ingresar el nombre del chofer" autofocus>
           </div>
           <div class="form-group">
-            <input type="text" name="licencia" class="form-control" placeholder="ingresar licencia del camion" autofocus>
+            <input type="text" name="apellido" class="form-control" placeholder="ingresar el apellido del chofer" autofocus>
           </div>
-          <div class="form-group">
-            <input type="text" name="peso_max" class="form-control" placeholder="ingresar peso maximo del camion" autofocus>
-          </div>
-          
-          <input type="submit" name="save_vehiculo" class="btn btn-success btn-block" value="Guardar">
+          <input type="submit" name="save_chofer" class="btn btn-success btn-block" value="Guardar">
         </form>
       </div>
     </div>
@@ -40,30 +39,30 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>Matricula</th>
-            <th>Estado</th>
-            <th>licencia</th>
-            <th>Peso Maximo</th>
+            <th>Cedula</th>
+            <th>Licencia</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
             <th>Opciones</th>
           </tr>
         </thead>
         <tbody>
 
           <?php
-          $query = "SELECT * FROM Vehiculo";
+          $query = "SELECT * FROM chofer";
           $result_tasks = mysqli_query($conn, $query);    
 
           while($row = mysqli_fetch_assoc($result_tasks)) { ?>
           <tr>
-            <td><?php echo $row['matricula']; ?></td>
-            <td><?php echo $row['estado']; ?></td>
+            <td><?php echo $row['cedula']; ?></td>
             <td><?php echo $row['licencia']; ?></td>
-            <td><?php echo $row['peso_max']; ?></td>
+            <td><?php echo $row['nombre']; ?></td>
+            <td><?php echo $row['apellido']; ?></td>
             <td>
-              <a href="edit_vehiculo.php?matricula=<?php echo $row['matricula']?>" class="btn btn-secondary">
+              <a href="edit_chofer.php?cedula=<?php echo $row['cedula']?>" class="btn btn-secondary">
                 <i class="fas fa-marker"></i>
               </a>
-              <a href="delete_vehiculo.php?matricula=<?php echo $row['matricula']?>" class="btn btn-danger">
+              <a href="delete_chofer.php?cedula=<?php echo $row['cedula']?>" class="btn btn-danger">
                 <i class="far fa-trash-alt"></i>
               </a>
             </td>
@@ -75,4 +74,4 @@
   </div>
 </main>
 
-<?php include('view\home\includes\footer.php'); ?>
+<?php include('includes\footer.php'); ?>
