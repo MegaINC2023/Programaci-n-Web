@@ -1,3 +1,57 @@
+<?php
+   
+    if(!empty($_SESSION['usuario'])){
+        header("Location:panel_control.php");
+    }
+?>
+<?php
+// Configuración de la base de datos
+$host = "localhost";
+$usuario = "root";
+$contrasena = "";
+$base_de_datos = "megainc";
+
+// Conexión a la base de datos
+$conexion = new mysqli($host, $usuario, $contrasena, $base_de_datos);
+
+// Verificar la conexión
+if ($conexion->connect_error) {
+    die("Error de conexión a la base de datos: " . $conexion->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Recuperar las credenciales del formulario
+    $cedula = $_POST['cedula'];
+    $contraseña = $_POST['contraseña'];
+
+    // Consulta SQL para verificar las credenciales
+    $consulta = "SELECT * FROM login WHERE cedula = '$cedula' AND contraseña = '$contraseña'";
+    $resultado = $conexion->query($consulta);
+
+    // Verificar si se encontraron resultados
+    if ($resultado->num_rows > 0) {
+        $fila = $resultado->fetch_assoc();
+        $tipo_usuario = $fila['tipo_de_usuario'];
+
+       if ($tipo_usuario == 'admin') {
+            header('Location: view\home\pagina_admin.php');
+        } elseif ($tipo_usuario == 'chofer') {
+            header('Location: pagina_chofer.php');
+        } elseif ($tipo_usuario == 'almacenista') {
+            header('Location: pagina_almacenista.php');
+        } else {
+            // El usuario no es un administrador, puedes redirigirlo a otra página si lo deseas
+            header('Location: otra_pagina.php');
+        }
+    } else {
+        // Las credenciales son incorrectas, redirigir de nuevo al formulario de inicio de sesión con un mensaje de error
+        header('Location: inicio_sesion.php?error=Credenciales incorrectas. Por favor, intente de nuevo.');
+    }
+}
+
+// Cerrar la conexión a la base de datos
+$conexion->close();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -16,17 +70,17 @@
   <!-- 
     - favicon
   -->
-  <link rel="shortcut icon" href="imgs/logo.png" type="image/svg+xml">
+  <link rel="shortcut icon" href="asset/imgs/logo.png" type="image/svg+xml">
 
   <!-- 
     - custom css link
   -->
-  <link rel="stylesheet" href="css/iniciosesion.css">
+  <link rel="stylesheet" href="asset/css/iniciosesion.css">
 
   <!-- 
     - custom font link
   -->
-  <link rel="stylesheet" href="font/font.css">
+  <link rel="stylesheet" href="asset/font/font.css">
 
 
 
@@ -40,23 +94,23 @@
   <header class="header" data-header>
     <div class="container">
 
-      <a href="index.html" class="logo">
-        <img src="imgs/logo.png" width="160" height="50" alt="nel home">
+      <a href="index.php" class="logo">
+        <img src="asset/imgs/logo.png" width="160" height="50" alt="nel home">
       </a>
 
       <nav class="navbar" data-navbar>
         <ul class="navbar-list">
 
           <li class="navbar-item">
-            <a href="iniciosesion.html" class="navbar-link">Inicio de Sesion</a>
+            <a href="iniciosesion.php" class="navbar-link">Inicio de Sesion</a>
           </li>
 
           <li class="navbar-item">
-            <a href="/src/seguimiento.html" class="navbar-link">Seguimiento</a>
+            <a href="seguimiento.php" class="navbar-link">Seguimiento</a>
           </li>
 
           <li class="navbar-item">
-            <a href="/src/contacto.html" class="navbar-link">Contacto</a>
+            <a href="contacto.php" class="navbar-link">Contacto</a>
           </li>
 
           <li class="navbar-item">
@@ -78,7 +132,7 @@
           <span class="span">XXXXXXXXXXXXXXXS</span>
         </a>
 
-        <a href="iniciosesion.html" class="btn btn-primary">
+        <a href="iniciosesion.php" class="btn btn-primary">
           <span class="span">Iniciar Sesion</span>
 
           <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
@@ -101,13 +155,19 @@
   <main>
     <section class="section hero" aria-label="home"></section>
       
-    <form id="login-form">
+    <form method="POST" id="login-form">
       <label for="username">Identificador</label>
-      <input type="text" id="id" name="id" required><br><br>
+      <input type="text" id="id" name="cedula" required><br><br>
 
       <label for="password">Contraseña:</label>
-      <input type="password" id="password" name="password" required><br><br>
-
+      <button type="button" onclick="mostrarContraseña('password','eyepassword')">
+                    <i id="eyepassword" class="fa-solid fa-eye changePassword"></i>
+                </button>
+      <input type="password" id="password" name="contraseña" required><br><br>
+      <div id="alertError" style="margin: auto;" class="alert alert-danger mb-2" role="alert">
+                <?= !empty($_GET['error']) ? $_GET['error'] : ""?>
+            </div>
+        
       <button type="submit">Iniciar Sesión</button>
   </form>
 </section>
@@ -240,7 +300,7 @@
           <p class="copyright">Hecho por Mega, INC.</a></p>
         </div>
 
-        <img src="/src/imgs/MI-fotor-bg-remover-20230525144451.png" width="100" height="63" loading="lazy">
+        <img src="asset/imgs/nuestrologo.png.png" width="100"  loading="lazy">
 
         <ul class="social-list">
 
@@ -294,7 +354,7 @@
   <!-- 
     - custom js link
   -->
-  <script src="js/script.js"></script>
+  <script src="asset/js/script.js"></script>
 
   <!-- 
     - ionicon link

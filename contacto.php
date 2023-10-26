@@ -1,3 +1,7 @@
+<?php
+    require("view/home/procesarformulario.php");
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -21,12 +25,12 @@
   <!-- 
     - custom css link
   -->
-  <link rel="stylesheet" href="css/seguimiento.css">
+  <link rel="stylesheet" href="asset/css/contacto.css">
 
   <!-- 
     - custom font link
   -->
-  <link rel="stylesheet" href="font/font.css">
+  <link rel="stylesheet" href="/asset/font/font.css">
 
 
 
@@ -40,23 +44,23 @@
   <header class="header" data-header>
     <div class="container">
 
-      <a href="index.html" class="logo">
-        <img src="imgs/logo.png" width="160" height="50" alt="nel home">
+      <a href="index.php" class="logo">
+        <img src="asset/imgs/logo.png" width="160" height="50" alt="nel home">
       </a>
 
       <nav class="navbar" data-navbar>
         <ul class="navbar-list">
 
           <li class="navbar-item">
-            <a href="iniciosesion.html" class="navbar-link">Inicio de Sesion</a>
+            <a href="iniciosesion.php" class="navbar-link">Inicio de Sesion</a>
           </li>
 
           <li class="navbar-item">
-            <a href="/src/seguimiento.html" class="navbar-link">Seguimiento</a>
+            <a href="seguimiento.php" class="navbar-link">Seguimiento</a>
           </li>
 
           <li class="navbar-item">
-            <a href="/src/contacto.html" class="navbar-link">Contacto</a>
+            <a href="contacto.php" class="navbar-link">Contacto</a>
           </li>
 
           <li class="navbar-item">
@@ -78,7 +82,7 @@
           <span class="span">XXXXXXXXXXXXXXXS</span>
         </a>
 
-        <a href="iniciosesion.html" class="btn btn-primary">
+        <a href="iniciosesion.php" class="btn btn-primary">
           <span class="span">Iniciar Sesion</span>
 
           <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
@@ -95,26 +99,39 @@
   </header>
 
 
+|<main>
+  <article>
 
-
-
-
-
-    <main>
-      <section class="section hero" aria-label="home"></section>
-        <div class="tracking-form">
-            <h2>Ingresa tu código de seguimiento de envío</h2>
-            <input type="text" id="tracking-code" placeholder="Código de seguimiento">
-            <button onclick="buscarEnvio()">Buscar Envío</button>
+    <section class="section hero" aria-label="home"></section>
+    <div class="container-form">
+        <div class="info-form">
+            <h2>Contáctanos</h2>
+            <p>¿Quieres comunicarte con nosotros? Puede hacerlo a través del número de teléfono y correo electrónico indicados o puede dejarnos un mensaje aquí.</p>
+            <a href="#"><i class="fa fa-phone"></i> (+598) xxxxxxxxxxxxx</a>
+            <a href="#"><i class="fa fa-envelope"></i> quickcarry@gmail.com</a>
+            <a href="#"><i class="fa fa-map-marked"></i> Montevideo, Uruguay</a>
         </div>
-        <div class="tracking-result">
-            <h3>Estado del Envío:</h3>
-            <p id="tracking-status">Esperando consulta...</p>
-            <h3>Ubicación:</h3>
-            <div id="map"></div>
-        </div>
-      </section>
-        <!-- 
+        <form action="view/home/procesarformulario.php" method="post" autocomplete="off">
+    <input type="text" name="nombre" placeholder="Tu Nombre" class="campo">
+    <input type="email" name="email" placeholder="Tu Email" class="campo">
+    <textarea name="mensaje" placeholder="Tu Mensaje..."></textarea>
+    <input type="submit" name="enviar" value="Enviar Mensaje" class="btn-enviar">
+</form>
+
+       
+    </div>
+</section>
+
+
+
+
+
+
+
+     
+
+
+      <!-- 
         - #CONTACT
       -->
 
@@ -172,14 +189,6 @@
 
     </article>
   </main>
-  <!-- 
-    - custom js link
-  -->
-  <script src="js/scriptsm.js"></script>
-  <script src="js/script.js"></script>
-
-   
-</body>
 
 
 
@@ -228,7 +237,7 @@
 
           <li>
             <p class="footer-text">
-              Sí tienes alguna duda no dudes en llamarnos al telefono que aparece debajo
+              Sí tienes alguna duda no dudes en llamarnos al telefono que aoarece debajo
             </p>
           </li>
 
@@ -247,7 +256,7 @@
           <p class="copyright">Hecho por Mega, INC.</a></p>
         </div>
 
-        <img src="/src/imgs/MI-fotor-bg-remover-20230525144451.png" width="100" height="63" loading="lazy">
+        <img src="asset/imgs/nuestrologo.png.png" width="100"  loading="lazy">
 
         <ul class="social-list">
 
@@ -298,6 +307,10 @@
 
 
 
+  <!-- 
+    - custom js link
+  -->
+  <script src="js/script.js"></script>
 
   <!-- 
     - ionicon link
@@ -305,6 +318,6 @@
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-
+</body>
 
 </html>
