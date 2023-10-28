@@ -5,11 +5,9 @@ include('config\usersDB.php');
 if (isset($_POST['save_paquete'])) {
   $id_paquete = $_POST['id_paquete'];
   $estado = $_POST['estado'];
-  $nomb_calle = $_POST['nomb_calle'];
-  $num_calle = $_POST['num_calle'];
-  $departamento = $_POST['departamento'];
-  $localidad = $_POST['localidad'];
-  $query = "INSERT INTO paquetes(id_paquete, estado, nomb_calle, num_calle, departamento, localidad) VALUES ('$id_paquete', '$estado', '$nomb_calle', '$num_calle', '$departamento', '$localidad')";
+  $tipo = $_POST['tipo'];
+  $fragil = $_POST['fragil'];
+  $query = "INSERT INTO paquete(id_paquete, estado, tipo, fragil) VALUES ('$id_paquete', '$estado', '$tipo', '$fragil')";
   $result = mysqli_query($conn, $query);
   if(!$result) {
     die("Query Failed.");

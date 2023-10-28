@@ -38,10 +38,8 @@
           <tr>
             <th>Id Paquete</th>
             <th>Estado</th>
-            <th>Nombre de la calle</th>
-            <th>Numero de la calle</th>
-            <th>Departamento</th>
-            <th>Localidad</th>
+            <th>tipo</th>
+            <th>fragil</th>
             <th>Fecha de registro</th>
             <th>Opciones</th>
           </tr>
@@ -56,10 +54,8 @@
           <tr>
             <td><?php echo $row['id_paquete']; ?></td>
             <td><?php echo $row['estado']; ?></td>
-            <td><?php echo $row['nomb_calle']; ?></td>
-            <td><?php echo $row['num_calle']; ?></td>
-            <td><?php echo $row['departamento']; ?></td>
-            <td><?php echo $row['localidad']; ?></td>
+            <td><?php echo $row['tipo']; ?></td>
+            <td><?php echo $row['fragil']; ?></td>
             <td><?php echo $row['fecha_registro']; ?></td>
             <td>
               <a href="edit_paquete.php?id_paquete=<?php echo $row['id_paquete']?>" class="btn btn-secondary">

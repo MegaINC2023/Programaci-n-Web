@@ -3,12 +3,12 @@
         private $PDO;
         public function __construct()
         {
-            require_once("c://xampp/htdocs/Programacion-Web/config/db.php");
+            require_once("c://xampp/htdocs/Programacion-Web/view/home/config/db.php");
             $pdo = new db();
             $this->PDO = $pdo->conexion();
         }
         public function agregarNuevoUsuario($cedula,$password){
-            $statement = $this->PDO->prepare("INSERT INTO usuarios values(null,:cedula, :password)");
+            $statement = $this->PDO->prepare("INSERT INTO login values(null,:cedula, :contraseña)");
             $statement->bindParam(":cedula",$cedula);
             $statement->bindParam(":password",$password);
             try {
@@ -19,7 +19,7 @@
             }
         }
         public function obtenerclave($cedula){
-            $statement = $this->PDO->prepare("SELECT password FROM usuarios WHERE cedula = :cedula");
+            $statement = $this->PDO->prepare("SELECT contraseña FROM login WHERE cedula = :cedula");
             $statement->bindParam(":cedula",$cedula);
             return ($statement->execute()) ? $statement->fetch()['password'] : false;
         }

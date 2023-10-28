@@ -52,6 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Cerrar la conexión a la base de datos
 $conexion->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
