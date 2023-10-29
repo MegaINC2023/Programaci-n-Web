@@ -211,9 +211,14 @@ CREATE TABLE `login` (
   `id_usuario` int(10) NOT NULL,
   `tipo_de_usuario` varchar(15) DEFAULT NULL,
   `cedula` int(10) DEFAULT NULL,
-  `contraseña` varchar(20) NOT NULL
+  `contraseña` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `login` (`id_usuario`, `tipo_de_usuario`, `cedula`, `contraseña`) VALUES
+(1, 'admin', '55555', '$2y$10$/UjfZIXqEUL4BWyofhniGOdi/kaQeeGYVDw9zsmCCBEi6TwtXlFZG'),
+(2, 'chofer', '4444', '$2y$10$HQ/0wu3uzvBj5KPIicJiFOjtX29rLZJzO0ijSPNn08QpDa4YOrDWa'),
+(3, 'almacenista', '333', '$2y$10$WAh5ypic2Me2jU830ozDB.AfBjnxZ6r4eVMjNMB4xTgb9fs0h4.0.'),
+(4, 'administracion', '666666', '$2y$10$NH7BfZoPG9LkBYdw3j9JnOIXM2JHMVTFkT57i0wqkGym317eqwvdG');
 -- --------------------------------------------------------
 
 --
