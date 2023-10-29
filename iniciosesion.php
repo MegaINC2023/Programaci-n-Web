@@ -1,10 +1,9 @@
 <?php
-   
-    if(!empty($_SESSION['usuario'])){
-        header("Location:panel_control.php");
-    }
-?>
-<?php
+
+if (!empty($_SESSION['usuario'])) {
+    header("Location: panel_control.php");
+}
+
 // Configuración de la base de datos
 $host = "localhost";
 $usuario = "root";
@@ -24,33 +23,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cedula = $_POST['cedula'];
     $contraseña = $_POST['contraseña'];
 
-    // Consulta SQL para verificar las credenciales
-    $consulta = "SELECT * FROM login WHERE cedula = '$cedula' AND contraseña = '$contraseña'";
+    // Consulta SQL para obtener la contraseña hasheada
+    $consulta = "SELECT contraseña FROM login WHERE cedula = '$cedula'";
     $resultado = $conexion->query($consulta);
 
     // Verificar si se encontraron resultados
     if ($resultado->num_rows > 0) {
         $fila = $resultado->fetch_assoc();
-        $tipo_usuario = $fila['tipo_de_usuario'];
+        $contraseña_hasheada = $fila['contraseña'];
 
-       if ($tipo_usuario == 'admin') {
-            header('Location: view\home\pagina_admin.php');
-        } elseif ($tipo_usuario == 'chofer') {
-            header('Location: pagina_chofer.php');
-        } elseif ($tipo_usuario == 'almacenista') {
-            header('Location: pagina_almacenista.php');
+        // Verificar si la contraseña ingresada coincide con la contraseña hasheada
+        if (password_verify($contraseña, $contraseña_hasheada)) {
+            // Contraseña válida, puedes continuar con la redirección según el tipo de usuario
+            $consulta_tipo_usuario = "SELECT tipo_de_usuario FROM login WHERE cedula = '$cedula'";
+            $resultado_tipo_usuario = $conexion->query($consulta_tipo_usuario);
+
+            if ($resultado_tipo_usuario->num_rows > 0) {
+                $fila_tipo_usuario = $resultado_tipo_usuario->fetch_assoc();
+                $tipo_usuario = $fila_tipo_usuario['tipo_de_usuario'];
+
+                if ($tipo_usuario == 'admin') {
+                    header('Location: view/home/pagina_admin.php');
+                } elseif ($tipo_usuario == 'chofer') {
+                    header('Location: pagina_chofer.php');
+                } elseif ($tipo_usuario == 'almacenista') {
+                    header('Location: pagina_almacenista.php');
+                } else {
+                    // El usuario no es un administrador, puedes redirigirlo a otra página si lo deseas
+                    header('Location: otra_pagina.php');
+                }
+            }
         } else {
-            // El usuario no es un administrador, puedes redirigirlo a otra página si lo deseas
-            header('Location: otra_pagina.php');
+            // Las credenciales son incorrectas, redirigir de nuevo al formulario de inicio de sesión con un mensaje de error
+            header('Location: iniciosesion.php?error=Credenciales incorrectas. Por favor, intente de nuevo.');
         }
     } else {
-        // Las credenciales son incorrectas, redirigir de nuevo al formulario de inicio de sesión con un mensaje de error
-        header('Location: inicio_sesion.php?error=Credenciales incorrectas. Por favor, intente de nuevo.');
+        // Usuario no encontrado en la base de datos
+        header('Location: iniciosesion.php?error=Usuario no encontrado. Por favor, intente de nuevo.');
     }
 }
-
-// Cerrar la conexión a la base de datos
-$conexion->close();
+?>
 ?>
 
 <!DOCTYPE html>
@@ -156,7 +168,7 @@ $conexion->close();
   <main>
     <section class="section hero" aria-label="home"></section>
       
-    <form method="POST" id="login-form">
+    <form  method="POST" id="login-form">
       <label for="username">Identificador</label>
       <input type="text" id="id" name="cedula" required><br><br>
 
