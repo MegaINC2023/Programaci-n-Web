@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost:3306
--- Tiempo de generación: 17-10-2023 a las 20:12:35
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 30-10-2023 a las 18:35:59
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -13,7 +13,6 @@ SET time_zone = "+00:00";
 
 create database megainc;
 use megainc;
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -179,6 +178,27 @@ INSERT INTO `entrega` (`id_paquete`, `matricula`, `fecha_entrega`, `hora_entrega
 (614436, 0, '2023-05-05', '15:30:00'),
 (652466, 0, '2023-09-05', '13:30:00');
 
+--
+-- Disparadores `entrega`
+--
+DELIMITER $$
+CREATE TRIGGER `ValidarFechaEntrega` BEFORE INSERT ON `entrega` FOR EACH ROW BEGIN
+    DECLARE fecha_registro_paquete DATE;
+
+    -- Obtener la fecha de registro del paquete
+    SELECT fecha_registro INTO fecha_registro_paquete
+    FROM Paquete
+    WHERE id_paquete = NEW.id_paquete;
+
+    -- Verificar que la fecha de entrega sea posterior o igual a la fecha de registro
+    IF NEW.fecha_entrega < fecha_registro_paquete THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'La fecha de entrega no puede ser anterior a la fecha de registro del paquete';
+    END IF;
+END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -211,8 +231,9 @@ CREATE TABLE `login` (
   `id_usuario` int(10) NOT NULL,
   `tipo_de_usuario` varchar(15) DEFAULT NULL,
   `cedula` int(10) DEFAULT NULL,
-  `contraseña` varchar(500) NOT NULL
+  `contraseña` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 INSERT INTO `login` (`id_usuario`, `tipo_de_usuario`, `cedula`, `contraseña`) VALUES
 (1, 'admin', '55555', '$2y$10$/UjfZIXqEUL4BWyofhniGOdi/kaQeeGYVDw9zsmCCBEi6TwtXlFZG'),
@@ -228,18 +249,19 @@ INSERT INTO `login` (`id_usuario`, `tipo_de_usuario`, `cedula`, `contraseña`) V
 CREATE TABLE `lote` (
   `id_lote` int(10) NOT NULL,
   `estado` varchar(20) NOT NULL,
-  `peso` varchar(20) NOT NULL
+  `peso` varchar(20) NOT NULL,
+  `almacen_destino` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `lote`
 --
 
-INSERT INTO `lote` (`id_lote`, `estado`, `peso`) VALUES
-(23452, 'En viaje', '100 kg'),
-(44512, 'En viaje', '134 kg'),
-(53151, 'Entregado', '200 kg'),
-(65312, 'En espera', '30 kg');
+INSERT INTO `lote` (`id_lote`, `estado`, `peso`, `almacen_destino`) VALUES
+(23452, 'En viaje', '100 kg', 234),
+(44512, 'En viaje', '134 kg', 234),
+(53151, 'Entregado', '200 kg', 130),
+(65312, 'En espera', '30 kg', 34);
 
 -- --------------------------------------------------------
 
@@ -270,7 +292,7 @@ INSERT INTO `maneja` (`cedula`, `matricula`) VALUES
 CREATE TABLE `paquete` (
   `id_paquete` int(10) NOT NULL,
   `estado` varchar(50) NOT NULL,
-  `fecha_registro` date NOT NULL,
+  `fecha_registro` DATE DEFAULT CURRENT_DATE() NOT NULL,
   `tipo` varchar(20) DEFAULT NULL,
   `fragil` varchar(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -285,7 +307,7 @@ INSERT INTO `paquete` (`id_paquete`, `estado`, `fecha_registro`, `tipo`, `fragil
 (413255, 'En viaje', '2023-09-04', 'Mueble', 'no'),
 (432551, 'En viaje', '2023-08-31', 'Electronico', 'si'),
 (543264, 'En viaje', '2023-08-20', 'Mueble', 'no'),
-(543678, 'Entregado', '2023-06-20', 'Indumentaria', 'no'),
+(543678, 'Entregado', '2023-05-20', 'Indumentaria', 'no'),
 (614436, 'Entregado', '2023-09-06', 'Mueble', 'si'),
 (652466, 'Entregado', '2023-08-20', 'Electronico', 'si');
 
@@ -332,6 +354,60 @@ INSERT INTO `realiza` (`id_lote`, `id_almacen`, `id_trayecto`, `matricula`) VALU
 (53151, 34, 102, 'CTP 5974'),
 (23452, 234, 101, 'JTP 4458'),
 (44512, 130, 102, 'ZTP 5139');
+
+--
+-- Disparadores `realiza`
+--
+DELIMITER $$
+CREATE TRIGGER `CheckLoteWeight` BEFORE INSERT ON `realiza` FOR EACH ROW BEGIN
+    DECLARE lote_weight DECIMAL(10, 2);
+    DECLARE max_weight DECIMAL(10, 2);
+
+    -- Obtiene el peso del lote que se va a agregar
+    SELECT CAST(L.peso AS DECIMAL(10, 2))
+    INTO lote_weight
+    FROM Lote L
+    WHERE L.id_lote = NEW.id_lote;
+
+    -- Obtiene el peso máximo del camión al que se va a agregar el lote
+    SELECT CAST(C.peso_max AS DECIMAL(10, 2))
+    INTO max_weight
+    FROM Camion C
+    WHERE C.matricula = NEW.matricula;
+
+    -- Comprueba si el peso del lote supera el límite del camión y lanza una excepción si es así
+    IF lote_weight > max_weight THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El peso del lote supera el límite del camión';
+    END IF;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `ChequeoPeso` BEFORE INSERT ON `realiza` FOR EACH ROW BEGIN
+    DECLARE total_weight DECIMAL(10, 2);
+    DECLARE max_weight DECIMAL(10, 2);
+
+    -- Calcula la suma del peso de todos los lotes relacionados con el camión actual
+    SELECT SUM(CAST(L.peso AS DECIMAL(10, 2)))
+    INTO total_weight
+    FROM Lote L
+    WHERE L.id_lote IN (SELECT id_lote FROM Realiza WHERE matricula = NEW.matricula);
+
+    -- Obtiene el peso máximo del camión
+    SELECT CAST(C.peso_max AS DECIMAL(10, 2))
+    INTO max_weight
+    FROM Camion C
+    WHERE C.matricula = NEW.matricula;
+
+    -- Comprueba si la suma excede el límite del camión y lanza una excepción si es así
+    IF (total_weight > max_weight) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'La suma del peso de los lotes excede el límite del camión';
+    END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -428,6 +504,102 @@ INSERT INTO `viaja` (`id_lote`, `id_almacen`, `id_trayecto`, `fecha_llegada`, `h
 (53151, 34, 102, '2023-09-01', '08:35:00'),
 (53151, 130, 102, '2023-08-28', '17:00:00');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vistachofercamionlote`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vistachofercamionlote` (
+`CedulaChofer` int(10)
+,`MatriculaCamion` varchar(10)
+,`IDLote` int(10)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vistachofercamiontrayecto`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vistachofercamiontrayecto` (
+`CedulaChofer` int(10)
+,`MatriculaCamion` varchar(10)
+,`IDTrayecto` int(10)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_almacen_con_lotes`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vista_almacen_con_lotes` (
+`Almacen_ID` int(10)
+,`Calle_Almacen` varchar(50)
+,`Numero_Almacen` int(10)
+,`Localidad_Almacen` varchar(50)
+,`Trayecto_ID` int(10)
+,`Origen_Trayecto` varchar(100)
+,`Destino_Trayecto` varchar(100)
+,`Lote_ID` int(10)
+,`Estado_Lote` varchar(20)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_almacen_trayecto_lote`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vista_almacen_trayecto_lote` (
+`Almacen_ID` int(10)
+,`Calle_Almacen` varchar(50)
+,`Numero_Almacen` int(10)
+,`Localidad_Almacen` varchar(50)
+,`Trayecto_ID` int(10)
+,`Origen_Trayecto` varchar(100)
+,`Destino_Trayecto` varchar(100)
+,`Lote_ID` int(10)
+,`Estado_Lote` varchar(20)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vistachofercamionlote`
+--
+DROP TABLE IF EXISTS `vistachofercamionlote`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vistachofercamionlote`  AS SELECT `m`.`cedula` AS `CedulaChofer`, `m`.`matricula` AS `MatriculaCamion`, `r`.`id_lote` AS `IDLote` FROM (`maneja` `m` join `realiza` `r` on(`m`.`matricula` = `r`.`matricula`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vistachofercamiontrayecto`
+--
+DROP TABLE IF EXISTS `vistachofercamiontrayecto`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vistachofercamiontrayecto`  AS SELECT `m`.`cedula` AS `CedulaChofer`, `m`.`matricula` AS `MatriculaCamion`, `r`.`id_trayecto` AS `IDTrayecto` FROM (`maneja` `m` join `realiza` `r` on(`m`.`matricula` = `r`.`matricula`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_almacen_con_lotes`
+--
+DROP TABLE IF EXISTS `vista_almacen_con_lotes`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_almacen_con_lotes`  AS SELECT `a`.`id_almacen` AS `Almacen_ID`, `a`.`calle` AS `Calle_Almacen`, `a`.`numero` AS `Numero_Almacen`, `a`.`localidad` AS `Localidad_Almacen`, `t`.`id_trayecto` AS `Trayecto_ID`, `t`.`origen` AS `Origen_Trayecto`, `t`.`destino` AS `Destino_Trayecto`, `l`.`id_lote` AS `Lote_ID`, `l`.`estado` AS `Estado_Lote` FROM ((((`almacen` `a` left join `tiene` `ti` on(`a`.`id_almacen` = `ti`.`id_almacen`)) left join `trayecto` `t` on(`ti`.`id_trayecto` = `t`.`id_trayecto`)) left join `viaja` `v` on(`a`.`id_almacen` = `v`.`id_almacen`)) left join `lote` `l` on(`v`.`id_lote` = `l`.`id_lote`)) WHERE `l`.`id_lote` is not null ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_almacen_trayecto_lote`
+--
+DROP TABLE IF EXISTS `vista_almacen_trayecto_lote`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_almacen_trayecto_lote`  AS SELECT `a`.`id_almacen` AS `Almacen_ID`, `a`.`calle` AS `Calle_Almacen`, `a`.`numero` AS `Numero_Almacen`, `a`.`localidad` AS `Localidad_Almacen`, `t`.`id_trayecto` AS `Trayecto_ID`, `t`.`origen` AS `Origen_Trayecto`, `t`.`destino` AS `Destino_Trayecto`, `l`.`id_lote` AS `Lote_ID`, `l`.`estado` AS `Estado_Lote` FROM ((((`almacen` `a` left join `tiene` `ti` on(`a`.`id_almacen` = `ti`.`id_almacen`)) left join `trayecto` `t` on(`ti`.`id_trayecto` = `t`.`id_trayecto`)) left join `viaja` `v` on(`a`.`id_almacen` = `v`.`id_almacen`)) left join `lote` `l` on(`v`.`id_lote` = `l`.`id_lote`)) ;
+
 --
 -- Índices para tablas volcadas
 --
@@ -438,6 +610,9 @@ INSERT INTO `viaja` (`id_lote`, `id_almacen`, `id_trayecto`, `fecha_llegada`, `h
 ALTER TABLE `almacen`
   ADD PRIMARY KEY (`id_almacen`),
   ADD KEY `fk_empresa` (`id_empresa`);
+
+  ALTER TABLE `almacen`
+  MODIFY `id_almacen` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Indices de la tabla `camion`
@@ -470,6 +645,9 @@ ALTER TABLE `direccion`
 ALTER TABLE `empresa`
   ADD PRIMARY KEY (`id_empresa`);
 
+  ALTER TABLE `empresa`
+  MODIFY `id_empresa` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- Indices de la tabla `entrega`
 --
@@ -491,12 +669,14 @@ ALTER TABLE `login`
 
   ALTER TABLE `login`
   MODIFY `id_usuario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
 -- Indices de la tabla `lote`
 --
 ALTER TABLE `lote`
   ADD PRIMARY KEY (`id_lote`);
+
+  ALTER TABLE `lote`
+  MODIFY `id_lote` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Indices de la tabla `maneja`
@@ -509,6 +689,9 @@ ALTER TABLE `maneja`
 --
 ALTER TABLE `paquete`
   ADD PRIMARY KEY (`id_paquete`);
+
+  ALTER TABLE `paquete`
+  MODIFY `id_paquete` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Indices de la tabla `pertenece`

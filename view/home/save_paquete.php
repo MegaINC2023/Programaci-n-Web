@@ -1,22 +1,30 @@
 <?php
-
-include('config\usersDB.php');
+include("config/usersDB.php");
 
 if (isset($_POST['save_paquete'])) {
-  $id_paquete = $_POST['id_paquete'];
-  $estado = $_POST['estado'];
-  $tipo = $_POST['tipo'];
-  $fragil = $_POST['fragil'];
-  $query = "INSERT INTO paquete(id_paquete, estado, tipo, fragil) VALUES ('$id_paquete', '$estado', '$tipo', '$fragil')";
-  $result = mysqli_query($conn, $query);
-  if(!$result) {
-    die("Query Failed.");
-  }
+    // Recopilamos los datos del formulario
+    $estado = $_POST['estado'];
+    $tipo = $_POST['tipo'];
+    $fragil = $_POST['fragil'];
+    $calle = $_POST['calle'];
+    $numero = $_POST['numero'];
+    $localidad = $_POST['localidad'];
 
-  $_SESSION['message'] = 'Se guardo correctamente';
-  $_SESSION['message_type'] = 'success';
-  header('Location: gestionPaquete.php');
+    // Creamos un registro en la tabla "paquete"
+    $query = "INSERT INTO paquete (estado, tipo, fragil, fecha_registro) VALUES ('$estado', '$tipo', '$fragil', NOW())";
+    mysqli_query($conn, $query);
 
+    // Obtenemos el ID del paquete recién insertado
+    $id_paquete = mysqli_insert_id($conn);
+
+    // Creamos un registro en la tabla "direccion" relacionado con el mismo ID del paquete
+    $query = "INSERT INTO direccion (id_paquete, calle, numero, localidad) VALUES ('$id_paquete', '$calle', '$numero', '$localidad')";
+    mysqli_query($conn, $query);
+
+    // Redireccionamos o mostramos un mensaje de éxito
+    $_SESSION['message'] = 'Paquete guardado exitosamente';
+    $_SESSION['message_type'] = 'success';
+
+    header('Location: gestionPaquete.php'); // Cambia "index.php" a la página a la que desees redirigir después de guardar.
 }
-
 ?>

@@ -1,37 +1,62 @@
 <?php
-include("config\usersDB.php");
-$estado= '';
-$tipo= '';
-$fragil= '';
+include("config/usersDB.php");
 
-
-if  (isset($_GET['id_paquete'])) {
+if (isset($_GET['id_paquete'])) {
   $id_paquete = $_GET['id_paquete'];
-  $query = "SELECT * FROM paquete WHERE id_paquete=$id_paquete";
-  $result = mysqli_query($conn, $query);
-  if (mysqli_num_rows($result) == 1) {
-    $row = mysqli_fetch_array($result);
-    $id_paquete = $row['id_paquete'];
-    $estado = $row['estado'];
-    $tipo = $row['tipo'];
-    $fragil = $row['fragil'];
 
+  // Realizamos una consulta para obtener los datos actuales del paquete y la dirección
+  $query = "SELECT paquete.*, direccion.calle, direccion.numero, direccion.localidad FROM paquete JOIN direccion ON paquete.id_paquete = direccion.id_paquete WHERE paquete.id_paquete = $id_paquete";
+  $result = mysqli_query($conn, $query);
+  
+  if ($row = mysqli_fetch_assoc($result)) {
+      // Asignamos los valores a las variables
+      $estado = $row['estado'];
+      $tipo = $row['tipo'];
+      $fragil = $row['fragil'];
+      $calle = $row['calle'];
+      $numero = $row['numero'];
+      $localidad = $row['localidad'];
   }
 }
-
 if (isset($_POST['update'])) {
-  $id_paquete = $_GET['id_paquete'];
-  $estado= $_POST['estado'];
-  $tipo = $_POST['tipo'];
-  $fragil = $_POST['fragil'];
+    $id_paquete = $_GET['id_paquete'];
 
-  $query = "UPDATE paquete set estado = '$estado', tipo = '$tipo', fragil = '$fragil' WHERE id_paquete=$id_paquete";
-  mysqli_query($conn, $query);
-  $_SESSION['message'] = 'Se modifico correctamente';
-  $_SESSION['message_type'] = 'warning';
-  header('Location: gestionPaquete.php');
+    // Recopilamos los datos del formulario
+    $estado = $_POST['estado'];
+    $tipo = $_POST['tipo'];
+    $fragil = $_POST['fragil'];
+    $calle = $_POST['calle'];
+    $numero = $_POST['numero'];
+    $localidad = $_POST['localidad'];
+
+    // Realizamos una consulta para verificar qué campos se han modificado
+    $query = "SELECT estado, tipo, fragil FROM paquete WHERE id_paquete = $id_paquete";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+
+    // Verificamos y actualizamos los campos en la tabla "paquete" si es necesario
+    if ($row['estado'] != $estado || $row['tipo'] != $tipo || $row['fragil'] != $fragil) {
+        $update_query = "UPDATE paquete SET estado = '$estado', tipo = '$tipo', fragil = '$fragil' WHERE id_paquete = $id_paquete";
+        mysqli_query($conn, $update_query);
+    }
+
+    // Realizamos una consulta para verificar qué campos se han modificado en la tabla "direccion"
+    $query = "SELECT calle, numero, localidad FROM direccion WHERE id_paquete = $id_paquete";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+
+    // Verificamos y actualizamos los campos en la tabla "direccion" si es necesario
+    if ($row['calle'] != $calle || $row['numero'] != $numero || $row['localidad'] != $localidad) {
+        $update_query = "UPDATE direccion SET calle = '$calle', numero = '$numero', localidad = '$localidad' WHERE id_paquete = $id_paquete";
+        mysqli_query($conn, $update_query);
+    }
+
+    // Redireccionamos o mostramos un mensaje de éxito
+    $_SESSION['message'] = 'Cambios guardados exitosamente';
+    $_SESSION['message_type'] = 'success';
+
+    header('Location: gestionPaquete.php'); // Cambia "index.php" a la página a la que desees redirigir después de guardar.
 }
-
 ?>
 <?php include('includes\header.php'); ?>
 <div class="container p-4">
@@ -43,10 +68,19 @@ if (isset($_POST['update'])) {
           <input name="estado" type="text" class="form-control" value="<?php echo $estado; ?>" placeholder="cambiar estado">
         </div>
         <div class="form-group">
-          <input name="tipo" type="text" class="form-control" value="<?php echo $nomb_calle; ?>" placeholder="tipo">
+          <input name="tipo" type="text" class="form-control" value="<?php echo $tipo; ?>" placeholder="tipo">
         </div>
         <div class="form-group">
-          <input name="fragil" type="text" class="form-control" value="<?php echo $num_calle; ?>" placeholder="fragil">
+          <input name="fragil" type="text" class="form-control" value="<?php echo $fragil; ?>" placeholder="fragil">
+        </div>
+        <div class="form-group">
+          <input name="calle" type="text" class="form-control" value="<?php echo $calle; ?>" placeholder="cambiar calle">
+        </div>
+        <div class="form-group">
+          <input name="numero" type="text" class="form-control" value="<?php echo $numero; ?>" placeholder="numero de calle">
+        </div>
+        <div class="form-group">
+          <input name="localidad" type="text" class="form-control" value="<?php echo $localidad; ?>" placeholder="localidad">
         </div>
         <button class="btn-success" name="update">
           Cambiar
