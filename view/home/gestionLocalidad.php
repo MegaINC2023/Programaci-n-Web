@@ -18,18 +18,15 @@
 
       <!-- ADD TASK FORM -->
       <div class="card card-body">
-        <form action="save_direccion.php" method="POST">
+        <form action="save_localidad.php" method="POST">
           <div class="form-group">
-            <input type="text" name="nomb_calle" class="form-control" placeholder="ingresar el nombre de la calle" autofocus>
+            <input type="text" name="localidad" class="form-control" placeholder="ingresar una localidad" autofocus>
           </div>
           <div class="form-group">
-            <input type="text" name="num_calle" class="form-control" placeholder="ingresar el numero de la calle" autofocus>
-          </div>
-          <div class="form-group">
-            <input type="text" name="localidad" class="form-control" placeholder="ingresar la localidad" autofocus>
+            <input type="text" name="departamento" class="form-control" placeholder="ingresar un departamento" autofocus>
           </div>
           
-          <input type="submit" name="save_direccion" class="btn btn-success btn-block" value="Guardar">
+          <input type="submit" name="save_localidad" class="btn btn-success btn-block" value="Guardar">
         </form>
       </div>
     </div>
@@ -37,33 +34,26 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>Id Paquete</th>
-            <th>Nombre de la calle</th>
-            <th>Numero de la calle</th>
             <th>Localidad</th>
+            <th>Departamento</th>
             <th>Opciones</th>
           </tr>
         </thead>
         <tbody>
 
           <?php
-          $query = "SELECT * FROM Direccion";
+          $query = "SELECT * FROM localidad";
           $result_tasks = mysqli_query($conn, $query);    
 
           while($row = mysqli_fetch_assoc($result_tasks)) { ?>
           <tr>
-            <td><?php echo $row['id_paquete']; ?></td>
-            <td><?php echo $row['estado']; ?></td>
-            <td><?php echo $row['nomb_calle']; ?></td>
-            <td><?php echo $row['num_calle']; ?></td>
-            <td><?php echo $row['departamento']; ?></td>
             <td><?php echo $row['localidad']; ?></td>
-            <td><?php echo $row['fecha_registro']; ?></td>
+            <td><?php echo $row['departamento']; ?></td>
             <td>
-              <a href="edit_paquete.php?id_paquete=<?php echo $row['id_paquete']?>" class="btn btn-secondary">
+              <a href="edit_localidad.php?localidad=<?php echo $row['localidad']?>" class="btn btn-secondary">
                 <i class="fas fa-marker"></i>
               </a>
-              <a href="delete_paquete.php?id_paquete=<?php echo $row['id_paquete']?>" class="btn btn-danger">
+              <a href="delete_localidad.php?localidad=<?php echo $row['localidad']?>" class="btn btn-danger">
                 <i class="far fa-trash-alt"></i>
               </a>
             </td>

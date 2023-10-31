@@ -3,10 +3,11 @@
 include('config\usersDB.php');
 
 if (isset($_POST['save_lotes'])) {
-  $id_lotes = $_POST['id_lotes'];
+  $id_lote = $_POST['id_lote'];
   $estado = $_POST['estado'];
   $peso = $_POST['peso'];
-  $query = "INSERT INTO lotes(id_lotes, estado, peso) VALUES ('$id_lotes', '$estado', '$peso')";
+  $almacen_destino = $_POST['almacen_destino'];
+  $query = "INSERT INTO lote(id_lote, estado, peso, almacen_destino) VALUES ('$id_lote', '$estado', '$peso', '$almacen_destino')";
   $result = mysqli_query($conn, $query);
   if(!$result) {
     die("Query Failed.");

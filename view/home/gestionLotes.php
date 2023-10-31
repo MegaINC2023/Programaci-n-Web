@@ -25,6 +25,9 @@
           <div class="form-group">
             <input type="text" name="peso" class="form-control" placeholder="ingresar el peso del lote" autofocus>
           </div>
+          <div class="form-group">
+            <input type="text" name="almacen_destino" class="form-control" placeholder="id del almacen destino" autofocus>
+          </div>
           
           <input type="submit" name="save_lotes" class="btn btn-success btn-block" value="Guardar">
         </form>
@@ -37,25 +40,27 @@
             <th>Id lote</th>
             <th>Estado</th>
             <th>Peso</th>
+            <th>Almacen Destino</th>
             <th>Opciones</th>
           </tr>
         </thead>
         <tbody>
 
           <?php
-          $query = "SELECT * FROM lotes";
+          $query = "SELECT * FROM lote";
           $result_tasks = mysqli_query($conn, $query);    
 
           while($row = mysqli_fetch_assoc($result_tasks)) { ?>
           <tr>
-            <td><?php echo $row['id_lotes']; ?></td>
+            <td><?php echo $row['id_lote']; ?></td>
             <td><?php echo $row['estado']; ?></td>
             <td><?php echo $row['peso']; ?></td>
+            <td><?php echo $row['almacen_destino']; ?></td>
             <td>
-              <a href="edit_lotes.php?id_lotes=<?php echo $row['id_lotes']?>" class="btn btn-secondary">
+              <a href="edit_lotes.php?id_lote=<?php echo $row['id_lote']?>" class="btn btn-secondary">
                 <i class="fas fa-marker"></i>
               </a>
-              <a href="delete_lotes.php?id_lotes=<?php echo $row['id_lotes']?>" class="btn btn-danger">
+              <a href="delete_lotes.php?id_lote=<?php echo $row['id_lote']?>" class="btn btn-danger">
                 <i class="far fa-trash-alt"></i>
               </a>
             </td>
