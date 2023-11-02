@@ -59,4 +59,71 @@ if (isset($_POST['update'])) {
     </div>
   </div>
 </div>
+<div class="col-md-4 mx-auto">
+        <form action="save_asignarC.php" method="POST">
+          <div class="form-group">
+            <input type="text" name="matricula" class="form-control" placeholder="Matricula" autofocus>
+          </div>
+          <input type="hidden" name="cedula" value="<?php echo $cedula; ?>">
+          <input type="submit" name="save_asignarC" class="btn btn-success btn-block" value="Asignar a camion">
+        </form>
+      </div>
+      <div class="col-md-4 mx-auto">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Cedula</th>
+            <th>Matricula</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <?php
+          $queryp = "SELECT matricula FROM maneja WHERE cedula = $cedula";
+          $result_tasks = mysqli_query($conn, $queryp);    
+
+          while ($row = mysqli_fetch_assoc($result_tasks)) {
+            ?>
+            <tr>
+                <td><?php echo $cedula; ?></td> 
+                <td><?php echo $row['matricula']; ?></td>
+                <td>
+                    <a href="delete_asignarC.php?matricula=<?php echo $row['matricula']; ?>" class="btn btn-danger">
+                        <i class="far fa-trash-alt"></i>
+                    </a>
+                </td>
+            </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    </div>
+
+      <?php
+$queryDireccion = "SELECT matricula
+FROM camion
+WHERE matricula NOT IN (SELECT matricula FROM maneja);";
+$resultDireccion = mysqli_query($conn, $queryDireccion);
+?>
+<div>
+  <h2>Camiones sin asignar</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Matriculas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php
+      while ($row = mysqli_fetch_assoc($resultDireccion)) {
+        ?>
+        <tr>
+          <td><?php echo $row['matricula']; ?></td>
+        </tr>
+        <?php
+      }
+      ?>
+    </tbody>
+  </table>
+</div>
 <?php include('includes\footer.php'); ?>

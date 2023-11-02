@@ -70,7 +70,7 @@ if (isset($_POST['update'])) {
           <tr>
             <th>Id lote</th>
             <th>Id paquete</th>
-            <th>Opciones</th>
+            <th>Eliminar</th>
           </tr>
         </thead>
         <tbody>
@@ -99,7 +99,8 @@ if (isset($_POST['update'])) {
 // Mostrar tabla de dirección
 $queryDireccion = "SELECT D.id_paquete, D.localidad, L.departamento
 FROM Direccion AS D
-INNER JOIN Localidad AS L ON D.localidad = L.localidad;";
+INNER JOIN Localidad AS L ON D.localidad = L.localidad
+WHERE D.id_paquete NOT IN (SELECT id_paquete FROM pertenece);";
 $resultDireccion = mysqli_query($conn, $queryDireccion);
 ?>
 <div>
