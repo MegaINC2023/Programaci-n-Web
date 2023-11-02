@@ -20,22 +20,22 @@
       <div class="card card-body">
         <form action="save_paquete.php" method="POST">
           <div class="form-group">
-            <input type="text" name="estado" class="form-control" placeholder="ingresar estado del paquete" autofocus>
+            <input type="text" name="estado" class="form-control" placeholder="ingresar estado del paquete" autofocus required>
           </div>
           <div class="form-group">
-            <input type="text" name="tipo" class="form-control" placeholder="ingresar el tipo del paquete" autofocus>
+            <input type="text" name="tipo" class="form-control" placeholder="ingresar el tipo del paquete" autofocus required>
           </div>
           <div class="form-group">
-            <input type="text" name="fragil" class="form-control" placeholder="¿El paquete es fragil?" autofocus>
+            <input type="text" name="fragil" class="form-control" placeholder="¿El paquete es fragil?" autofocus required>
           </div>
           <div class="form-group">
-            <input type="text" name="calle" class="form-control" placeholder="ingresar el nombre de la calle" autofocus>
+            <input type="text" name="calle" class="form-control" placeholder="ingresar el nombre de la calle" autofocus required>
           </div>
           <div class="form-group">
-            <input type="text" name="numero" class="form-control" placeholder="ingresar el numero de la calle" autofocus>
+            <input type="text" name="numero" class="form-control" placeholder="ingresar el numero de la calle" autofocus required>
           </div>
           <div class="form-group">
-            <input type="text" name="localidad" class="form-control" placeholder="ingresar la localidad del paquete" autofocus>
+            <input type="text" name="localidad" class="form-control" placeholder="ingresar la localidad del paquete" autofocus required>
           </div>
           <input type="submit" name="save_paquete" class="btn btn-success btn-block" value="Guardar">
         </form>

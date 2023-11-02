@@ -20,10 +20,10 @@
       <div class="card card-body">
         <form action="save_empresa.php" method="POST">
           <div class="form-group">
-            <input type="text" name="id_empresa" class="form-control" placeholder="ingresar id de la empresa" autofocus>
+            <input type="text" name="id_empresa" class="form-control" placeholder="ingresar id de la empresa" autofocus required>
           </div>
           <div class="form-group">
-            <input type="text" name="empresa" class="form-control" placeholder="ingresar nombre de la empresa" autofocus>
+            <input type="text" name="empresa" class="form-control" placeholder="ingresar nombre de la empresa" autofocus required>
           </div>
           
           <input type="submit" name="save_empresa" class="btn btn-success btn-block" value="Guardar">

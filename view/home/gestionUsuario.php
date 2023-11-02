@@ -20,13 +20,13 @@
       <div class="card card-body">
         <form action="save_usuario.php" method="POST">
         <div class="form-group">
-            <input type="text" name="cedula" class="form-control" placeholder="ingresar cedula del usuario" autofocus>
+            <input type="text" name="cedula" class="form-control" placeholder="ingresar cedula del usuario" autofocus required>
           </div>
         <div class="form-group">
-            <input type="text" name="tipo_de_usuario" class="form-control" placeholder="ingresar tipo del usuario" autofocus>
+            <input type="text" name="tipo_de_usuario" class="form-control" placeholder="ingresar tipo del usuario" autofocus required>
           </div>
           <div class="form-group">
-            <input type="text" name="contraseña" class="form-control" placeholder="ingresar contraseña del usuario" autofocus>
+            <input type="text" name="contraseña" class="form-control" placeholder="ingresar contraseña del usuario" autofocus required> 
           </div>
           <input type="submit" name="save_usuario" class="btn btn-success btn-block" value="Guardar">
         </form>

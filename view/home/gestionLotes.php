@@ -20,13 +20,13 @@
       <div class="card card-body">
         <form action="save_lotes.php" method="POST">
           <div class="form-group">
-            <input type="text" name="estado" class="form-control" placeholder="ingresar estado del lote" autofocus>
+            <input type="text" name="estado" class="form-control" placeholder="ingresar estado del lote" autofocus required>
           </div>
           <div class="form-group">
-            <input type="text" name="peso" class="form-control" placeholder="ingresar el peso del lote" autofocus>
+            <input type="text" name="peso" class="form-control" placeholder="ingresar el peso del lote" autofocus required>
           </div>
           <div class="form-group">
-            <input type="text" name="almacen_destino" class="form-control" placeholder="id del almacen destino" autofocus>
+            <input type="text" name="almacen_destino" class="form-control" placeholder="id del almacen destino" autofocus required>
           </div>
           
           <input type="submit" name="save_lotes" class="btn btn-success btn-block" value="Guardar">

@@ -20,16 +20,16 @@
       <div class="card card-body">
         <form action="save_chofer.php" method="POST">
         <div class="form-group">
-            <input type="text" name="cedula" class="form-control" placeholder="ingresar cedula del chofer" autofocus>
+            <input type="text" name="cedula" class="form-control" placeholder="ingresar cedula del chofer" autofocus required>
           </div>
         <div class="form-group">
-            <input type="text" name="licencia" class="form-control" placeholder="ingresar licencia del chofer" autofocus>
+            <input type="text" name="licencia" class="form-control" placeholder="ingresar licencia del chofer" autofocus required>
           </div>
           <div class="form-group">
-            <input type="text" name="nombre" class="form-control" placeholder="ingresar el nombre del chofer" autofocus>
+            <input type="text" name="nombre" class="form-control" placeholder="ingresar el nombre del chofer" autofocus required>
           </div>
           <div class="form-group">
-            <input type="text" name="apellido" class="form-control" placeholder="ingresar el apellido del chofer" autofocus>
+            <input type="text" name="apellido" class="form-control" placeholder="ingresar el apellido del chofer" autofocus required>
           </div>
           <input type="submit" name="save_chofer" class="btn btn-success btn-block" value="Guardar">
         </form>

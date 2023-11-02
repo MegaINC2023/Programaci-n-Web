@@ -20,16 +20,16 @@
       <div class="card card-body">
         <form action="save_vehiculo.php" method="POST">
           <div class="form-group">
-            <input type="text" name="matricula" class="form-control" placeholder="ingresar matricula" autofocus>
+            <input type="text" name="matricula" class="form-control" placeholder="ingresar matricula" autofocus required>
           </div>
           <div class="form-group">
-            <input type="text" name="estado" class="form-control" placeholder="ingresar estado del camion" autofocus>
+            <input type="text" name="estado" class="form-control" placeholder="ingresar estado del camion" autofocus required>
           </div>
           <div class="form-group">
-            <input type="text" name="licencia" class="form-control" placeholder="ingresar licencia del camion" autofocus>
+            <input type="text" name="licencia" class="form-control" placeholder="ingresar licencia del camion" autofocus required>
           </div>
           <div class="form-group">
-            <input type="text" name="peso_max" class="form-control" placeholder="ingresar peso maximo del camion" autofocus>
+            <input type="text" name="peso_max" class="form-control" placeholder="ingresar peso maximo del camion" autofocus required>
           </div>
           
           <input type="submit" name="save_vehiculo" class="btn btn-success btn-block" value="Guardar">

@@ -20,19 +20,16 @@
       <div class="card card-body">
         <form action="save_almacen.php" method="POST">
         <div class="form-group">
-            <input type="text" name="id_almacen" class="form-control" placeholder="ingresar ID del almacen" autofocus>
-          </div>
-        <div class="form-group">
-            <input type="text" name="id_empresa" class="form-control" placeholder="ingresar empresa del almacen" autofocus>
+            <input type="text" name="id_empresa" class="form-control" placeholder="ingresar empresa del almacen" autofocus required>
           </div>
           <div class="form-group">
-            <input type="text" name="calle" class="form-control" placeholder="ingresar el nombre de la calle" autofocus>
+            <input type="text" name="calle" class="form-control" placeholder="ingresar el nombre de la calle" autofocus required>
           </div>
           <div class="form-group">
-            <input type="text" name="numero" class="form-control" placeholder="ingresar el numero de la calle" autofocus>
+            <input type="text" name="numero" class="form-control" placeholder="ingresar el numero de la calle" autofocus required>
           </div>
           <div class="form-group">
-            <input type="text" name="localidad" class="form-control" placeholder="ingresar la localidad" autofocus>
+            <input type="text" name="localidad" class="form-control" placeholder="ingresar la localidad" autofocus required>
           </div>
           
           <input type="submit" name="save_almacen" class="btn btn-success btn-block" value="Guardar">

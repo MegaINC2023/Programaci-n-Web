@@ -12,24 +12,15 @@
         <h1>Página del Admin</h1>
     </header>
     <main>
-    <form>
-    <a href="gestionAlmacen.php">
-        <button>Almacenes</button>
-    </a>
-    <a href="gestionChofer.php">
-        <button>Choferes</button>
-    </a>
-    <a href="gestionLotes.php">
-        <button>Lotes</button>
-    </a>
-    </a>
-    <a href="gestionPaquete.php">
-        <button>Lotes</button>
-    </a>
-
-
-
-    </main>
+    <button onclick="window.location.href='gestionAlmacen.php'">Almacenes</button>
+    <button onclick="window.location.href='gestionChofer.php'">Choferes</button>
+    <button onclick="window.location.href='gestionLotes.php'">Lotes</button>
+    <button onclick="window.location.href='gestionPaquete.php'">Paquetes</button>
+    <button onclick="window.location.href='gestionVehiculo.php'">Vehiculos</button>
+    <button onclick="window.location.href='gestionLocalidad.php'">Localidades</button>
+    <button onclick="window.location.href='gestionEmpresa.php'">Empresas</button>
+    <button onclick="window.location.href='gestionUsuario.php'">Usuarios</button>
+</main>
     <footer>
     <div class="container">
 

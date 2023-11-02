@@ -719,6 +719,9 @@ ALTER TABLE `tiene`
 ALTER TABLE `trayecto`
   ADD PRIMARY KEY (`id_trayecto`);
 
+  ALTER TABLE `trayecto`
+  MODIFY `id_trayecto` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- Indices de la tabla `vehiculo`
 --

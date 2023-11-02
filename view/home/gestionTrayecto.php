@@ -18,15 +18,17 @@
 
       <!-- ADD TASK FORM -->
       <div class="card card-body">
-        <form action="save_localidad.php" method="POST">
-          <div class="form-group">
-            <input type="text" name="localidad" class="form-control" placeholder="ingresar una localidad" autofocus required>
+        <form action="save_trayecto.php" method="POST">
+        <div class="form-group">
+            <input type="text" name="origen" class="form-control" placeholder="ingresar punto de origen" autofocus required>
+          </div>
+        <div class="form-group">
+            <input type="text" name="destino" class="form-control" placeholder="ingresar el destino" autofocus required>
           </div>
           <div class="form-group">
-            <input type="text" name="departamento" class="form-control" placeholder="ingresar un departamento" autofocus required>
+            <input type="text" name="distancia" class="form-control" placeholder="ingresar la distancia" autofocus required>
           </div>
-          
-          <input type="submit" name="save_localidad" class="btn btn-success btn-block" value="Guardar">
+          <input type="submit" name="save_trayecto" class="btn btn-success btn-block" value="Guardar">
         </form>
       </div>
     </div>
@@ -34,26 +36,30 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>Localidad</th>
-            <th>Departamento</th>
+            <th>ID Trayecto</th>
+            <th>Origen</th>
+            <th>Destino</th>
+            <th>Distancia</th>
             <th>Opciones</th>
           </tr>
         </thead>
         <tbody>
 
           <?php
-          $query = "SELECT * FROM localidad";
+          $query = "SELECT * FROM trayecto";
           $result_tasks = mysqli_query($conn, $query);    
 
           while($row = mysqli_fetch_assoc($result_tasks)) { ?>
           <tr>
-            <td><?php echo $row['localidad']; ?></td>
-            <td><?php echo $row['departamento']; ?></td>
+            <td><?php echo $row['id_trayecto']; ?></td>
+            <td><?php echo $row['origen']; ?></td>
+            <td><?php echo $row['destino']; ?></td>
+            <td><?php echo $row['distancia']; ?></td>
             <td>
-              <a href="edit_localidad.php?localidad=<?php echo $row['localidad']?>" class="btn btn-secondary">
+              <a href="edit_trayecto.php?id_trayecto=<?php echo $row['id_trayecto']?>" class="btn btn-secondary">
                 <i class="fas fa-marker"></i>
               </a>
-              <a href="delete_localidad.php?localidad=<?php echo $row['localidad']?>" class="btn btn-danger">
+              <a href="delete_trayecto.php?id_trayecto=<?php echo $row['id_trayecto']?>" class="btn btn-danger">
                 <i class="far fa-trash-alt"></i>
               </a>
             </td>

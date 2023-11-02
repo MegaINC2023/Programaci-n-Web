@@ -45,9 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if ($tipo_usuario == 'admin') {
                     header('Location: view/home/pagina_admin.php');
                 } elseif ($tipo_usuario == 'chofer') {
-                    header('Location: pagina_chofer.php');
+                    header('Location: view/home/camionero.php');
                 } elseif ($tipo_usuario == 'almacenista') {
-                    header('Location: pagina_almacenista.php');
+                    header('Location: view/home/pagina_almacenista.php');
                 } else {
                     // El usuario no es un administrador, puedes redirigirlo a otra página si lo deseas
                     header('Location: otra_pagina.php');
