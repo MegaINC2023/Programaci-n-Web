@@ -18,7 +18,7 @@ if  (isset($_GET['id_lote'])) {
 }
 
 if (isset($_POST['update'])) {
-  $id_lote = $_GET['id_lote'];
+  $id_lote = $_POST['id_lote'];
   $estado= $_POST['estado'];
   $peso = $_POST['peso'];
   $almacen_destino = $_POST['almacen_destino'];
@@ -36,7 +36,8 @@ if (isset($_POST['update'])) {
   <div class="row">
     <div class="col-md-4 mx-auto">
       <div class="card card-body">
-      <form action="edit_lotes.php?id_lote=<?php echo $_GET['id_lote']; ?>" method="POST">
+      <form action="edit_lotes.php" method="POST">
+      <input type="hidden" name="id_lote" value="<?php echo $id_lote; ?>">
         <div class="form-group">
           <input name="estado" type="text" class="form-control" value="<?php echo $estado; ?>" placeholder="cambiar estado">
         </div>
@@ -53,5 +54,77 @@ if (isset($_POST['update'])) {
       </div>
     </div>
   </div>
+</div>
+<div class="col-md-4 mx-auto">
+        <form action="save_asignar.php" method="POST">
+          <div class="form-group">
+            <input type="text" name="id_paquete" class="form-control" placeholder="Id paquete" autofocus>
+          </div>
+          <input type="hidden" name="id_lote" value="<?php echo $id_lote; ?>">
+          <input type="submit" name="save_asignar" class="btn btn-success btn-block" value="Asignar a lote">
+        </form>
+      </div>
+      <div class="col-md-4 mx-auto">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Id lote</th>
+            <th>Id paquete</th>
+            <th>Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <?php
+          $queryp = "SELECT id_paquete FROM pertenece WHERE id_lote = $id_lote";
+          $result_tasks = mysqli_query($conn, $queryp);    
+
+          while ($row = mysqli_fetch_assoc($result_tasks)) {
+            ?>
+            <tr>
+                <td><?php echo $id_lote; ?></td> <!-- Muestra el id_lote -->
+                <td><?php echo $row['id_paquete']; ?></td> <!-- Muestra el id_paquete -->
+                <td>
+                    <a href="delete_asignar.php?id_paquete=<?php echo $row['id_paquete']; ?>" class="btn btn-danger">
+                        <i class="far fa-trash-alt"></i>
+                    </a>
+                </td>
+            </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    </div>
+
+<?php
+// Mostrar tabla de dirección
+$queryDireccion = "SELECT D.id_paquete, D.localidad, L.departamento
+FROM Direccion AS D
+INNER JOIN Localidad AS L ON D.localidad = L.localidad;";
+$resultDireccion = mysqli_query($conn, $queryDireccion);
+?>
+<div>
+  <h2>Paquetes</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID Paquete</th>
+        <th>Localidad</th>
+        <th>Departamento</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php
+      while ($row = mysqli_fetch_assoc($resultDireccion)) {
+        ?>
+        <tr>
+          <td><?php echo $row['id_paquete']; ?></td>
+          <td><?php echo $row['localidad']; ?></td>
+          <td><?php echo $row['departamento']; ?></td>
+        </tr>
+        <?php
+      }
+      ?>
+    </tbody>
+  </table>
 </div>
 <?php include('includes\footer.php'); ?>
