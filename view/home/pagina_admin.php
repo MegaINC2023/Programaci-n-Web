@@ -19,7 +19,7 @@
     <button onclick="window.location.href='gestionVehiculo.php'">Vehiculos</button>
     <button onclick="window.location.href='gestionLocalidad.php'">Localidades</button>
     <button onclick="window.location.href='gestionEmpresa.php'">Empresas</button>
-    <button onclick="window.location.href='gestionTrayecto.php'">Empresas</button>
+    <button onclick="window.location.href='gestionTrayecto.php'">Trayectos</button>
     <button onclick="window.location.href='gestionUsuario.php'">Usuarios</button>
 </main>
     <footer>

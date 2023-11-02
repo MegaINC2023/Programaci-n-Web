@@ -57,4 +57,80 @@ if (isset($_POST['update'])) {
     </div>
   </div>
 </div>
+<div class="col-md-4 mx-auto">
+    <form action="save_asignarT.php" method="POST">
+        <div class="form-group">
+            <input type="text" name="id_almacen" class="form-control" placeholder="Id Almacen" autofocus>
+        </div>
+        <div class="form-group">
+            <input type="text" name="posicion" class="form-control" placeholder="Posición del almacén en trayecto" autofocus>
+        </div>
+        <input type="hidden" name="id_trayecto" value="<?php echo $id_trayecto; ?>">
+        <input type="submit" name="save_asignarT" class="btn btn-success btn-block" value="Asignar almacén a trayecto">
+    </form>
+</div>
+<div class="col-md-4 mx-auto">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id Trayecto</th>
+                <th>Id Almacen</th>
+                <th>Posición</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $queryp = "SELECT * FROM tiene WHERE id_trayecto = $id_trayecto;";
+            $result_tasks = mysqli_query($conn, $queryp);
+
+            while ($row = mysqli_fetch_assoc($result_tasks)) {
+                ?>
+                <tr>
+                    <td><?php echo $id_trayecto; ?></td>
+                    <td><?php echo $row['id_almacen']; ?></td>
+                    <td><?php echo $row['posicion']; ?></td>
+                    <td>
+                        <a href="delete_asignarT.php?id_trayecto=<?php echo $row['id_trayecto']; ?>&posicion=<?php echo $row['posicion']; ?>" class="btn btn-danger">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+</div>
+
+<?php
+// Mostrar tabla de dirección
+$queryDireccion = "SELECT A.id_almacen, A.localidad, L.departamento
+FROM almacen AS A
+INNER JOIN localidad AS L ON A.localidad = L.localidad;";
+$resultDireccion = mysqli_query($conn, $queryDireccion);
+?>
+<div>
+  <h2>Almacenes</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID Almacen</th>
+        <th>Localidad</th>
+        <th>Departamento</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php
+      while ($row = mysqli_fetch_assoc($resultDireccion)) {
+        ?>
+        <tr>
+          <td><?php echo $row['id_almacen']; ?></td>
+          <td><?php echo $row['localidad']; ?></td>
+          <td><?php echo $row['departamento']; ?></td>
+        </tr>
+        <?php
+      }
+      ?>
+    </tbody>
+  </table>
+</div>
 <?php include('includes\footer.php'); ?>
