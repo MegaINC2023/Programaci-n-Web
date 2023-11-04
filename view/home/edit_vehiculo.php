@@ -7,7 +7,7 @@ $peso_max = '';
 
 if (isset($_GET['matricula'])) {
   $matricula = $_GET['matricula'];
-  $query = "SELECT * FROM Vehiculo WHERE matricula='$matricula'"; 
+  $query = "SELECT * FROM Vehiculo WHERE matricula='$matricula'";
   $result = mysqli_query($conn, $query);
   if (mysqli_num_rows($result) == 1) {
     $row = mysqli_fetch_array($result);
@@ -19,14 +19,27 @@ if (isset($_GET['matricula'])) {
 }
 
 if (isset($_POST['update'])) {
-  $matricula = $_POST['matricula']; 
+  $matricula = $_POST['matricula'];
   $estado = $_POST['estado'];
   $licencia = $_POST['licencia'];
   $peso_max = $_POST['peso_max'];
 
-  $query = "UPDATE Vehiculo SET estado = '$estado', licencia = '$licencia', peso_max = '$peso_max' WHERE matricula='$matricula'"; 
+  // Verificar si la matrícula contiene "HTP"
+  if (strpos($matricula, 'HTP') !== false) {
+    // Si contiene "HTP", actualiza la tabla Camioneta
+    $query = "UPDATE Camioneta SET peso_max = '$peso_max' WHERE matricula='$matricula'";
+    mysqli_query($conn, $query);
+  } else {
+    // Si no contiene "HTP", actualiza la tabla Camión
+    $query = "UPDATE Camion SET peso_max = '$peso_max' WHERE matricula='$matricula'";
+    mysqli_query($conn, $query);
+  }
+
+  // Actualiza la tabla Vehiculo independientemente de la matrícula
+  $query = "UPDATE Vehiculo SET estado = '$estado', licencia = '$licencia', peso_max = '$peso_max' WHERE matricula='$matricula'";
   mysqli_query($conn, $query);
-  $_SESSION['message'] = 'Se modifico correctamente';
+
+  $_SESSION['message'] = 'Se modificó correctamente';
   $_SESSION['message_type'] = 'warning';
   header('Location: gestionVehiculo.php');
 }
@@ -59,6 +72,113 @@ if (isset($_POST['update'])) {
     </div>
   </div>
 </div>
+<div class="col-md-4 mx-auto">
+    <form action="save_asignarV.php" method="POST">
+    <input type="hidden" name="matricula" value="<?php echo $matricula; ?>">
+        <div class="form-group">
+            <input type="text" name="id_almacen" class="form-control" placeholder="Id Almacen" autofocus require>
+        </div>
+        <div class="form-group">
+            <input type="text" name="id_trayecto" class="form-control" placeholder="id trayecto" autofocus require>
+        </div>
+        <div class="form-group">
+            <input type="text" name="id_lote" class="form-control" placeholder="Id lote" autofocus require>
+        </div>
+        <input type="submit" name="save_asignarV" class="btn btn-success btn-block" value="Asignar ruta y lotes">
+    </form>
+</div>
 
+<!-- Lista de almacenes asignados a trayectos -->
+<div class="col-md-4 mx-auto">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID Trayecto</th>
+                <th>ID Almacen Destino</th>
+                <th>ID Lote</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            // Asegúrate de definir $matricula adecuadamente antes de usarlo
+            $queryp = "SELECT * FROM realiza WHERE matricula = '$matricula'";
+            $result_tasks = mysqli_query($conn, $queryp);
 
+            while ($row = mysqli_fetch_assoc($result_tasks)) {
+                ?>
+                <tr>
+                    <td><?php echo $row['id_trayecto']; ?></td>
+                    <td><?php echo $row['id_almacen']; ?></td>
+                    <td><?php echo $row['id_lote']; ?></td>
+                    <td>
+                        <a href="delete_asignarV.php?id_trayecto=<?php echo $row['id_trayecto']; ?>&id_almacen=<?php echo $row['id_almacen']; ?>&id_lote=<?php echo $row['id_lote']; ?>" class="btn btn-danger">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+</div>
+<?php
+$queryTrayecto = "SELECT id_trayecto, origen, destino FROM trayecto";
+$resultTrayecto = mysqli_query($conn, $queryTrayecto);
+
+$queryLotesSinAsignar = "SELECT l.id_lote, l.almacen_destino
+                         FROM lote AS l
+                         LEFT JOIN realiza AS r ON l.id_lote = r.id_lote
+                         WHERE r.id_lote IS NULL";
+$resultLotesSinAsignar = mysqli_query($conn, $queryLotesSinAsignar);
+?>
+
+<div>
+  <h2>Trayecto</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID Trayecto</th>
+        <th>Origen</th>
+        <th>Destino</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php
+      while ($row = mysqli_fetch_assoc($resultTrayecto)) {
+        ?>
+        <tr>
+          <td><?php echo $row['id_trayecto']; ?></td>
+          <td><?php echo $row['origen']; ?></td>
+          <td><?php echo $row['destino']; ?></td>
+        </tr>
+        <?php
+      }
+      ?>
+    </tbody>
+  </table>
+</div>
+
+<div>
+  <h2>Lotes sin Asignar</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID Lote</th>
+        <th>Almacen Destino del Lote</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php
+      while ($row = mysqli_fetch_assoc($resultLotesSinAsignar)) {
+        ?>
+        <tr>
+          <td><?php echo $row['id_lote']; ?></td>
+          <td><?php echo $row['almacen_destino']; ?></td>
+        </tr>
+        <?php
+      }
+      ?>
+    </tbody>
+  </table>
+</div>
 <?php include('includes\footer.php'); ?>
