@@ -12,7 +12,7 @@
         <h1>Página del Camionero</h1>
     </header>
     <main>
-        <form>
+    <form method="post" action="buscar.php">
             <label for="matricula">Matrícula del camión:</label>
             <input type="text" id="matricula" name="matricula" placeholder="Escribe la matrícula">
             <button type="submit">Buscar</button>

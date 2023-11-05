@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header('Location: view/home/pagina_almacenista.php');
                 } else {
                     // El usuario no es un administrador, puedes redirigirlo a otra página si lo deseas
-                    header('Location: otra_pagina.php');
+                    header('Location: view/home/pagina_administracion.php');
                 }
             }
         } else {
