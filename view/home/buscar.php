@@ -17,11 +17,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $matricula = $_POST["matricula"];
 
     // Realizar la consulta SQL con la matrícula
-    $sql = "SELECT r.id_trayecto, t.id_almacen, t.posicion, a.calle, a.numero, a.localidad
-            FROM realiza r
-            JOIN tiene t ON r.id_trayecto = t.id_trayecto
-            JOIN almacen a ON t.id_almacen = a.id_almacen
-            WHERE r.matricula = ?";
+    $sql = "SELECT r.id_trayecto, r.id_lote, t.id_almacen, t.posicion, a.calle, a.numero, a.localidad
+        FROM realiza r
+        JOIN tiene t ON r.id_trayecto = t.id_trayecto
+        JOIN almacen a ON t.id_almacen = a.id_almacen
+        WHERE r.matricula = ?";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $matricula);  // "s" indica que se trata de una cadena
@@ -32,18 +32,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Mostrar los resultados en una tabla
     if ($result->num_rows > 0) {
         echo "<table>";
-        echo "<tr><th>ID Trayecto</th><th>ID Almacen</th><th>Posición</th><th>Calle</th><th>Número</th><th>Localidad</th></tr>";
-        while ($row = $result->fetch_assoc()) {
-            echo "<tr>";
-            echo "<td>" . $row["id_trayecto"] . "</td>";
-            echo "<td>" . $row["id_almacen"] . "</td>";
-            echo "<td>" . $row["posicion"] . "</td>";
-            echo "<td>" . $row["calle"] . "</td>";
-            echo "<td>" . $row["numero"] . "</td>";
-            echo "<td>" . $row["localidad"] . "</td>";
-            echo "</tr>";
-        }
-        echo "</table>";
+echo "<tr><th>ID Trayecto</th><th>ID Lote</th><th>ID Almacen</th><th>Posición</th><th>Calle</th><th>Número</th><th>Localidad</th></tr>";
+while ($row = $result->fetch_assoc()) {
+    echo "<tr>";
+    echo "<td>" . $row["id_trayecto"] . "</td>";
+    echo "<td>" . $row["id_lote"] . "</td>"; 
+    echo "<td>" . $row["id_almacen"] . "</td>";
+    echo "<td>" . $row["posicion"] . "</td>";
+    echo "<td>" . $row["calle"] . "</td>";
+    echo "<td>" . $row["numero"] . "</td>";
+    echo "<td>" . $row["localidad"] . "</td>";
+    echo "</tr>";
+}
+echo "</table>";
     } else {
         echo "No se encontraron resultados para la matrícula ingresada.";
     }
