@@ -18,20 +18,29 @@
 
       <!-- ADD TASK FORM -->
       <div class="card card-body">
-        <form action="save_lotes.php" method="POST">
-          <div class="form-group">
-            <input type="text" name="estado" class="form-control" placeholder="ingresar estado del lote" autofocus required>
-          </div>
-          <div class="form-group">
-            <input type="text" name="peso" class="form-control" placeholder="ingresar el peso del lote" autofocus required>
-          </div>
-          <div class="form-group">
-            <input type="text" name="almacen_destino" class="form-control" placeholder="id del almacen destino" autofocus required>
-          </div>
-          
-          <input type="submit" name="save_lotes" class="btn btn-success btn-block" value="Guardar">
-        </form>
-      </div>
+  <form action="save_lotes.php" method="POST">
+    <div class="form-group">
+      <label for="estado">Estado del lote:</label>
+      <select name="estado" required>
+        <option value="En espera">En espera</option>
+        <option value="Recogido">Recogido</option>
+        <option value="Armado">Armado</option>
+        <option value="En viaje">En viaje</option>
+        <option value="En transbordo">En transbordo</option>
+        <option value="Entregado">Entregado</option>
+        <option value="Fallo entrega">Fallo entrega</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <input type="text" name="peso" class="form-control" placeholder="Ingresar el peso del lote" autofocus required>
+    </div>
+    <div class="form-group">
+      <input type="text" name="almacen_destino" class="form-control" placeholder="ID del almacén destino" autofocus required>
+    </div>
+
+    <input type="submit" name="save_lotes" class="btn btn-success btn-block" value="Guardar">
+  </form>
+</div>
     </div>
     <div class="col-md-8">
       <table class="table table-bordered">
@@ -39,7 +48,7 @@
           <tr>
             <th>Id lote</th>
             <th>Estado</th>
-            <th>Peso</th>
+            <th>Peso(KG)</th>
             <th>Almacen Destino</th>
             <th>Opciones</th>
           </tr>

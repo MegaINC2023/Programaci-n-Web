@@ -19,9 +19,16 @@
       <!-- ADD TASK FORM -->
       <div class="card card-body">
         <form action="save_paquete.php" method="POST">
-          <div class="form-group">
-            <input type="text" name="estado" class="form-control" placeholder="ingresar estado del paquete" autofocus required>
-          </div>
+        <label for="estado">Estado del Paquete:</label>
+      <select name="estado" required>
+        <option value="En espera">En espera</option>
+        <option value="Recogido">Recogido</option>
+        <option value="En almacen destino">En almacen destino</option>
+        <option value="En viaje">En viaje</option>
+        <option value="En almacen central">En almacen central</option>
+        <option value="Entregado">Entregado</option>
+        <option value="Fallo entrega">Fallo entrega</option>
+      </select>
           <div class="form-group">
             <input type="text" name="tipo" class="form-control" placeholder="ingresar el tipo del paquete" autofocus required>
           </div>

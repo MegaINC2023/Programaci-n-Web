@@ -43,7 +43,7 @@
             <th>Matricula</th>
             <th>Estado</th>
             <th>licencia</th>
-            <th>Peso Maximo</th>
+            <th>Peso Maximo(KG)</th>
             <th>Opciones</th>
           </tr>
         </thead>

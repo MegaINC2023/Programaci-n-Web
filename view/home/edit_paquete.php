@@ -64,9 +64,16 @@ if (isset($_POST['update'])) {
     <div class="col-md-4 mx-auto">
       <div class="card card-body">
       <form action="edit_paquete.php?id_paquete=<?php echo $_GET['id_paquete']; ?>" method="POST">
-        <div class="form-group">
-          <input name="estado" type="text" class="form-control" value="<?php echo $estado; ?>" placeholder="cambiar estado">
-        </div>
+      <label for="estado">Estado del Paquete:</label>
+      <select name="estado" required>
+        <option value="En espera">En espera</option>
+        <option value="Recogido">Recogido</option>
+        <option value="En almacen destino">En almacen destino</option>
+        <option value="En viaje">En viaje</option>
+        <option value="En almacen central">En almacen central</option>
+        <option value="Entregado">Entregado</option>
+        <option value="Fallo entrega">Fallo entrega</option>
+      </select>
         <div class="form-group">
           <input name="tipo" type="text" class="form-control" value="<?php echo $tipo; ?>" placeholder="tipo">
         </div>

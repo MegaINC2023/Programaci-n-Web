@@ -39,7 +39,7 @@
             <th>ID Trayecto</th>
             <th>Origen</th>
             <th>Destino</th>
-            <th>Distancia</th>
+            <th>Distancia(KM)</th>
             <th>Opciones</th>
           </tr>
         </thead>

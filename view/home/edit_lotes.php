@@ -38,9 +38,16 @@ if (isset($_POST['update'])) {
       <div class="card card-body">
       <form action="edit_lotes.php" method="POST">
       <input type="hidden" name="id_lote" value="<?php echo $id_lote; ?>">
-        <div class="form-group">
-          <input name="estado" type="text" class="form-control" value="<?php echo $estado; ?>" placeholder="cambiar estado">
-        </div>
+      <label for="estado">Estado del lote:</label>
+      <select name="estado" required>
+        <option value="En espera">En espera</option>
+        <option value="Recogido">Recogido</option>
+        <option value="Armado">Armado</option>
+        <option value="En viaje">En viaje</option>
+        <option value="En transbordo">En transbordo</option>
+        <option value="Entregado">Entregado</option>
+        <option value="Fallo entrega">Fallo entrega</option>
+      </select>
         <div class="form-group">
           <input name="peso" type="text" class="form-control" value="<?php echo $peso; ?>" placeholder="cambiar peso">
         </div>
