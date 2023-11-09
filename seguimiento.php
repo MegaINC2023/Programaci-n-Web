@@ -1,74 +1,34 @@
 <?php
-// Configuración de la base de datos
-$host = "localhost";
-$usuario = "root";
-$contrasena = "";
-$base_de_datos = "megainc";
+// Conéctate a tu base de datos (modifica esto con tu configuración)
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "megainc";
 
-// Conexión a la base de datos
-$conexion = new mysqli($host, $usuario, $contrasena, $base_de_datos);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verificar la conexión
-if ($conexion->connect_error) {
-    die("Error de conexión a la base de datos: " . $conexion->connect_error);
+$estado = "Esperando consulta..."; 
+// Verifica la conexión
+if ($conn->connect_error) {
+    die("Error de conexión a la base de datos: " . $conn->connect_error);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recuperar el id_paquete introducido por el usuario
-    $id_paquete = $_POST['id_paquete'];
+    $id_paquete = $_POST["id_paquete"];
+    
+    // Realiza una consulta SQL para obtener el estado del paquete
+    $sql = "SELECT estado FROM paquete WHERE id_paquete = $id_paquete";
+    $result = $conn->query($sql);
 
-    // Consulta SQL para obtener el estado del paquete
-    $consulta = "SELECT estado FROM paquete WHERE id_paquete = $id_paquete";
-    $resultado = $conexion->query($consulta);
-
-    // Verificar si se encontraron resultados
-    if ($resultado->num_rows > 0) {
-        $fila = $resultado->fetch_assoc();
-        $estado_paquete = $fila['estado'];
-        
-        // Enviar el estado del paquete como respuesta JSON
-        header('Content-Type: application/json');
-        echo json_encode(['estado' => $estado_paquete]);
-        exit; // Terminar el script aquí
-    } else {
-        // El paquete no se encontró en la base de datos
-        header('Content-Type: application/json');
-        echo json_encode(['estado' => 'No se encontró ningún paquete']);
-        exit; // Terminar el script aquí
-    }
+    if ($result->num_rows > 0) {
+      $row = $result->fetch_assoc();
+      $estado = $row["estado"];
+  }
 }
+    // Cierra la conexión a la base de datos
+    $conn->close();
+
 ?>
-<script>function buscarEnvio() {
-    // Obtener el valor del código de seguimiento
-    var id_paquete = document.getElementById("tracking-code").value;
-
-    // Realizar una solicitud AJAX
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "tu_archivo_php.php", true); // Reemplaza "tu_archivo_php.php" con la ruta al archivo PHP que maneja la búsqueda del estado
-
-    // Configurar la función que se ejecutará cuando se complete la solicitud
-    xhr.onload = function () {
-        if (xhr.status == 200) {
-            try {
-                // Parsear la respuesta JSON
-                var respuesta = JSON.parse(xhr.responseText);
-
-                // Actualizar el estado del envío en la página
-                document.getElementById("tracking-status").textContent = "Estado del Envío: " + respuesta.estado;
-            } catch (error) {
-                console.error("Error al parsear la respuesta JSON: " + error);
-            }
-        } else {
-            console.error("Error en la solicitud AJAX: " + xhr.status);
-        }
-    };
-
-    // Configurar el encabezado de la solicitud
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-    // Enviar la solicitud con el id_paquete
-    xhr.send("id_paquete=" + id_paquete);
-}</script>
 
 
 <!DOCTYPE html>
@@ -176,17 +136,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <main>
       <section class="section hero" aria-label="home"></section>
       <form method="POST" action="">
-    <div class="tracking-form">
-        <h2>Ingresa tu código de seguimiento de envío</h2>
-        <input type="text" name="id_paquete" id="tracking-code" placeholder="Código de seguimiento">
-        <button type="button" onclick="buscarEnvio()">Buscar Envío</button>
-    </div>
-    <div class="tracking-result">
-        <h3>Estado del Envío:</h3>
-        <p id="tracking-status">Esperando consulta...</p>
-        <h3>Ubicación:</h3>
-        <div id="map"></div>
-    </div>
+            <div class="tracking-form">
+                <h2>Ingresa tu código de seguimiento de envío</h2>
+                <input type="text" name="id_paquete" id="tracking-code" placeholder="Código de seguimiento">
+                <button type="submit">Buscar Envío</button>
+            </div>
+        </form>
+        <div class="tracking-result">
+            <h3>Estado del Envío:</h3>
+            <p id="tracking-status"><?php echo $estado; ?></p>
+            <h3>Ubicación:</h3>
+            <div id="map"></div>
+        </div>
 </form>
       </section>
         <!-- 
