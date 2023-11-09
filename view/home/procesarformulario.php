@@ -1,22 +1,18 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = $_POST['nombre'];
-    $email = $_POST['email'];
-    $mensaje = $_POST['mensaje'];
-
-    $destinatario = "megaincsrl2023@gmail.com"; 
-    $asunto = "Mensaje de contacto de $nombre";
-    $cuerpo = "Nombre: $nombre\n";
-    $cuerpo .= "Email: $email\n";
-    $cuerpo .= "Mensaje:\n$mensaje";
-
-    // Envía el correo
-    $enviado = mail($destinatario, $asunto, $cuerpo);
-
-    if ($enviado) {
-        echo "Mensaje enviado correctamente. ¡Gracias por contactarnos!";
-    } else {
-        echo "Hubo un problema al enviar el mensaje. Por favor, inténtalo de nuevo.";
-    }
+if(isset($_POST['enviar'])){
+    if (!empty($_POST['nombre']) && !empty($_POST['asunto']) && !empty($_POST['mensaje']) && !empty($_POST['email'])){
+        $name = $_POST ['nombre'] ; 
+        $emaile = $_POST ['email'] ; 
+        $asunto = $_POST ['asunto'] ;  
+        $msg = $_POST ['mensaje'] ;   
+        $email = "megaincSRL2023@gmail.com";
+        $headers = "From: $emaile\r\n"; // Dirección de correo del remitente
+        $headers .= "Reply-To: $email\r\n"; // Dirección de respuesta
+        $headers .= "Return-Path: $email\r\n"; // Dirección de retorno
+        $mail = mail($email, $asunto, $msg, $headers) ;
+        if ($mail) {
+            echo "¡Mail enviado exitosamente!" ;
+        }
+       }
 }
 ?>

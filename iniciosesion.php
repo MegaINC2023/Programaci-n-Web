@@ -113,9 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <nav class="navbar" data-navbar>
         <ul class="navbar-list">
 
-          <li class="navbar-item">
-            <a href="iniciosesion.php" class="navbar-link">Inicio de Sesion</a>
-          </li>
+
 
           <li class="navbar-item">
             <a href="seguimiento.php" class="navbar-link">Seguimiento</a>
@@ -141,7 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <a href="tel:+12312345678901" class="contact-number">
           <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
 
-          <span class="span">XXXXXXXXXXXXXXXS</span>
+          <span class="span">+598 92 173 072</span>
         </a>
 
         <a href="iniciosesion.php" class="btn btn-primary">
@@ -205,7 +203,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div>
                   <h3 class="h6">Número de Télefono</h3>
 
-                  <a href="tel:+01123457890" class="card-subtitle">+598 xxxxxxxxx</a>
+                  <a href="tel:+01123457890" class="card-subtitle">+598 92 173 072</a>
                 </div>
               </div>
             </li>
@@ -219,7 +217,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div>
                   <h3 class="h6">E-Mail </h3>
 
-                  <a href="mailto:voltiinfo@gmail.com" class="card-subtitle">xxxxxx@gmail.com</a>
+                  <a href="mailto:voltiinfo@gmail.com" class="card-subtitle">megaincsrl2023@gmail.com</a>
                 </div>
               </div>
             </li>
@@ -233,7 +231,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div>
                   <h3 class="h6">Nuestra dirección</h3>
 
-                  <address class="card-subtitle">xxxxxxxxxxxx</address>
+                  <address class="card-subtitle"> Rambla 25 de Agosto de 1825 N° 160.</address>
                 </div>
               </div>
             </li>
@@ -287,7 +285,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
           <li>
             <address class="footer-text">
-              xxxx xxxxxxxxxxx, xxxxxxxxxxxxxxxxxx.
+            Rambla 25 de Agosto de 1825 N° 160.
             </address>
           </li>
 
@@ -298,7 +296,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </li>
 
           <li>
-            <a href="tel:00201061245741" class="contact-link">XXXXXXXXXXXXX</a>
+            <a href="tel:00201061245741" class="contact-link">+598 92 173 072</a>
           </li>
 
         </ul>

@@ -84,9 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="iniciosesion.php" class="navbar-link">Inicio de Sesion</a>
           </li>
 
-          <li class="navbar-item">
-            <a href="seguimiento.php" class="navbar-link">Seguimiento</a>
-          </li>
+
 
           <li class="navbar-item">
             <a href="contacto.php" class="navbar-link">Contacto</a>
@@ -108,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <a href="tel:+12312345678901" class="contact-number">
           <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
 
-          <span class="span">XXXXXXXXXXXXXXXS</span>
+          <span class="span">+598 92 173 072</span>
         </a>
 
         <a href="iniciosesion.html" class="btn btn-primary">
@@ -269,7 +267,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </li>
 
           <li>
-            <a href="tel:00201061245741" class="contact-link">XXXXXXXXXXXXX</a>
+            <a href="tel:00201061245741" class="contact-link">+598 92 173 072</a>
           </li>
 
         </ul>

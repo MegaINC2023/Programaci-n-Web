@@ -79,7 +79,7 @@
         <a href="tel:+12312345678901" class="contact-number">
           <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
 
-          <span class="span">XXXXXXXXXXXXXXXS</span>
+          <span class="span">+598 92 173 072</span>
         </a>
 
         <a href="iniciosesion.php" class="btn btn-primary">
@@ -107,17 +107,20 @@
         <div class="info-form">
             <h2>Contáctanos</h2>
             <p>¿Quieres comunicarte con nosotros? Puede hacerlo a través del número de teléfono y correo electrónico indicados o puede dejarnos un mensaje aquí.</p>
-            <a href="#"><i class="fa fa-phone"></i> (+598) xxxxxxxxxxxxx</a>
-            <a href="#"><i class="fa fa-envelope"></i> quickcarry@gmail.com</a>
+            <a href="#"><i class="fa fa-phone"></i> +598 92 173 072</a>
+            <a href="#"><i class="fa fa-envelope"></i> megaincsrl2023gmail.com</a>
             <a href="#"><i class="fa fa-map-marked"></i> Montevideo, Uruguay</a>
         </div>
-        <form action="view/home/procesarformulario.php" method="post" autocomplete="off">
-    <input type="text" name="nombre" placeholder="Tu Nombre" class="campo">
-    <input type="email" name="email" placeholder="Tu Email" class="campo">
+        <form method="post" >
+    <input type="text" name="nombre" placeholder="Tu Nombre" class="campo" required= "">
+    <input type="email" name="email" placeholder="Tu Email" class="campo"  required= "">
+    <input type="text" name="asunto" placeholder="Asunto" class="campo"  required= "">
     <textarea name="mensaje" placeholder="Tu Mensaje..."></textarea>
     <input type="submit" name="enviar" value="Enviar Mensaje" class="btn-enviar">
 </form>
-
+<?php
+include("view/home/procesarformulario.php")
+?>
        
     </div>
 </section>
@@ -149,7 +152,7 @@
                 <div>
                   <h3 class="h6">Número de Télefono</h3>
 
-                  <a href="tel:+01123457890" class="card-subtitle">+598 xxxxxxxxx</a>
+                  <a href="tel:+01123457890" class="card-subtitle">+598 92 173 072</a>
                 </div>
               </div>
             </li>
@@ -163,7 +166,7 @@
                 <div>
                   <h3 class="h6">E-Mail </h3>
 
-                  <a href="mailto:voltiinfo@gmail.com" class="card-subtitle">xxxxxx@gmail.com</a>
+                  <a href="mailto:voltiinfo@gmail.com" class="card-subtitle">megaincsrl2023@gmail.com</a>
                 </div>
               </div>
             </li>
@@ -242,7 +245,7 @@
           </li>
 
           <li>
-            <a href="tel:00201061245741" class="contact-link">XXXXXXXXXXXXX</a>
+            <a href="tel:00201061245741" class="contact-link">+598 92 173 072</a>
           </li>
 
         </ul>
