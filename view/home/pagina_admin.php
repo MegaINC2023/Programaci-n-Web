@@ -1,14 +1,28 @@
-<<!DOCTYPE html>
+<?php
+session_start();
+
+// Verificar si el usuario ha iniciado sesión y es de tipo "admin"
+if (empty($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'admin') {
+    // Redirigir a otra página (puedes cambiar la ruta según tus necesidades)
+    header("Location: acceso_denegado.php");
+    exit(); // Asegúrate de detener la ejecución del script después de la redirección
+}
+?>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="stylesheet" href="camionero.css">
+    <link rel="stylesheet" href="../../asset/css/camionero.css">
+    <link rel="stylesheet" href="../../asset/css/index.css">
 </head>
 <body>
     <header>
         <!-- Logo en la esquina superior izquierda -->
-        <img src="aseet/imgs/logo.png" alt="Logo Izquierda" class="logo-izquierda">
+        <img src="../../asset/imgs/logo.png" alt="Logo Izquierda" class="logo-izquierda">
         <!-- Logo en la esquina superior derecha -->
-        <img src="aseet/imgs/585e4beacb11b227491c3399" alt="Logo Derecha" class="logo-derecha">
+        <form method="post" action="logout.php">
+            <button type="submit" name="cerrar_sesion">Cerrar Sesión</button>
+        </form>
+        <img src="../../asset/imgs/585e4beacb11b227491c3399" alt="Logo Derecha" class="logo-derecha">
         <h1>Página del Admin</h1>
     </header>
     <main>

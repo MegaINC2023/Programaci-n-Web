@@ -1,26 +1,53 @@
+<?php
+session_start();
+
+// Verificar si el usuario ha iniciado sesión y es de tipo "camionero"
+if (empty($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'chofer') {
+    // Redirigir a otra página (puedes cambiar la ruta según tus necesidades)
+    header("Location: acceso_denegado.php");
+    exit(); // Asegúrate de detener la ejecución del script después de la redirección
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="stylesheet" href="camionero.css">
+    <link rel="stylesheet" href="../../asset/css/camionero.css">
+    <link rel="stylesheet" href="../../asset/css/index.css">
 </head>
 <body>
-    <header>
-        <!-- Logo en la esquina superior izquierda -->
-        <img src="aseet/imgs/logo.png" alt="Logo Izquierda" class="logo-izquierda">
-        <!-- Logo en la esquina superior derecha -->
-        <img src="aseet/imgs/585e4beacb11b227491c3399" alt="Logo Derecha" class="logo-derecha">
-        <h1>Página del Camionero</h1>
-    </header>
-    <main>
-    <form method="post" action="camionero.php">
-            <label for="matricula">Matrícula del camión:</label>
-            <input type="text" id="matricula" name="matricula" placeholder="Escribe la matrícula">
-            <button type="submit">Buscar</button>
-        </form>
+<?php
+include("config\usersDB.php");
 
+// Inicia sesión solo si no está iniciada
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
+// Verifica si el usuario ha iniciado sesión
+if (!empty($_SESSION['usuario'])) {
+    // Usuario ha iniciado sesión, muestra la barra de navegación con el botón de cerrar sesión
+    echo '<header>';
+    echo '<img src="../../asset/imgs/logo.png" alt="Logo Izquierda" class="logo-izquierda">';
+    echo '<img src="../../asset/imgs/585e4beacb11b227491c3399.png" alt="Logo Derecha" class="logo-derecha">';
+    echo '<h1>Página del Camionero</h1>';
+    
+    echo '<li class="navbar-item">';
+    echo '<a href="logout.php" class="navbar-link">Cerrar Sesión</a>';
+    echo '</li>';
+    
+    echo '</header>';
+    echo '<main>';
+    echo '<form method="post" action="camionero.php">';
+    echo '<label for="matricula">Matrícula del camión:</label>';
+    echo '<input type="text" id="matricula" name="matricula" placeholder="Escribe la matrícula">';
+    echo '<button type="submit">Buscar</button>';
+    echo '</form>';
+    echo '</main>';
+}
+?>
         <?php
 include("config\usersDB.php");
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $matricula = trim($_POST["matricula"]);

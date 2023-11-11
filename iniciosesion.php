@@ -1,7 +1,9 @@
 <?php
+session_start();
 
 if (!empty($_SESSION['usuario'])) {
     header("Location: panel_control.php");
+    exit();
 }
 
 // Configuración de la base de datos
@@ -23,46 +25,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cedula = $_POST['cedula'];
     $contraseña = $_POST['contraseña'];
 
-    // Consulta SQL para obtener la contraseña hasheada
-    $consulta = "SELECT contraseña FROM login WHERE cedula = '$cedula'";
-    $resultado = $conexion->query($consulta);
+    // Consulta SQL con consulta preparada para prevenir inyección SQL
+    $consulta = $conexion->prepare("SELECT contraseña, tipo_de_usuario FROM login WHERE cedula = ?");
+    $consulta->bind_param("s", $cedula);
+    $consulta->execute();
+    $consulta->store_result();
 
     // Verificar si se encontraron resultados
-    if ($resultado->num_rows > 0) {
-        $fila = $resultado->fetch_assoc();
-        $contraseña_hasheada = $fila['contraseña'];
+    if ($consulta->num_rows > 0) {
+        $consulta->bind_result($contraseña_hasheada, $tipo_usuario);
+        $consulta->fetch();
 
         // Verificar si la contraseña ingresada coincide con la contraseña hasheada
         if (password_verify($contraseña, $contraseña_hasheada)) {
-            // Contraseña válida, puedes continuar con la redirección según el tipo de usuario
-            $consulta_tipo_usuario = "SELECT tipo_de_usuario FROM login WHERE cedula = '$cedula'";
-            $resultado_tipo_usuario = $conexion->query($consulta_tipo_usuario);
+            // Contraseña válida, puedes continuar con el manejo de sesiones
+            $_SESSION['usuario'] = $cedula;
+            $_SESSION['tipo_usuario'] = $tipo_usuario;
 
-            if ($resultado_tipo_usuario->num_rows > 0) {
-                $fila_tipo_usuario = $resultado_tipo_usuario->fetch_assoc();
-                $tipo_usuario = $fila_tipo_usuario['tipo_de_usuario'];
-
-                if ($tipo_usuario == 'admin') {
+            // Redirigir según el tipo de usuario
+            switch ($tipo_usuario) {
+                case 'admin':
                     header('Location: view/home/pagina_admin.php');
-                } elseif ($tipo_usuario == 'chofer') {
+                    exit();
+                case 'chofer':
                     header('Location: view/home/camionero.php');
-                } elseif ($tipo_usuario == 'almacenista') {
+                    exit();
+                case 'almacenista':
                     header('Location: view/home/pagina_almacenista.php');
-                } else {
-                    // El usuario no es un administrador, puedes redirigirlo a otra página si lo deseas
+                    exit();
+                default:
+                    // Redirigir a una página por defecto
                     header('Location: view/home/pagina_administracion.php');
-                }
+                    exit();
             }
         } else {
-            // Las credenciales son incorrectas, redirigir de nuevo al formulario de inicio de sesión con un mensaje de error
+            // Las credenciales son incorrectas
             header('Location: iniciosesion.php?error=Credenciales incorrectas. Por favor, intente de nuevo.');
+            exit();
         }
     } else {
         // Usuario no encontrado en la base de datos
         header('Location: iniciosesion.php?error=Usuario no encontrado. Por favor, intente de nuevo.');
+        exit();
     }
+
+    // Cierra la consulta
+    $consulta->close();
 }
+
+// Cierra la conexión a la base de datos al final del script
+$conexion->close();
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -110,52 +125,83 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <img src="asset/imgs/logo.png" width="160" height="50" alt="nel home">
       </a>
 
-      <nav class="navbar" data-navbar>
-        <ul class="navbar-list">
+      <?php
+// Inicia sesión solo si no está iniciada
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
+// Verifica si el usuario ha iniciado sesión
+if (!empty($_SESSION['usuario'])) {
+    // Usuario ha iniciado sesión, muestra la barra de navegación con el botón de cerrar sesión
+    echo '<header class="header" data-header>';
+    echo '<div class="container">';
 
+    // ... Otros elementos del encabezado ...
 
-          <li class="navbar-item">
-            <a href="seguimiento.php" class="navbar-link">Seguimiento</a>
-          </li>
+    echo '<nav class="navbar" data-navbar>';
+    echo '<ul class="navbar-list">';
 
-          <li class="navbar-item">
-            <a href="contacto.php" class="navbar-link">Contacto</a>
-          </li>
+    // ... Otros elementos de la barra de navegación ...
 
-          <li class="navbar-item">
-            <a href="#" class="navbar-link">Preguntas Frecuentes</a>
-          </li>
+    echo '<li class="navbar-item">';
+    echo '<a href="view\home\logout.php" class="navbar-link">Cerrar Sesión</a>';
+    echo '</li>';
 
-          <li class="navbar-item">
-            <a href="#section about" class="navbar-link">Sobre Nosotros</a>
-          </li>
+    // Cierra los elementos del encabezado
+    echo '</ul>';
+    echo '</nav>';
+    echo '</div>';
+    echo '</header>';
+} else {
+    // Usuario no ha iniciado sesión, muestra una barra de navegación diferente o algo más
+    echo '<div class="container">';
 
-        </ul>
-      </nav>
+    echo '<nav class="navbar" data-navbar>';
+    echo '<ul class="navbar-list">';
 
-      <div class="header-action">
+    // ... Otros elementos de la barra de navegación ...
 
-        <a href="tel:+12312345678901" class="contact-number">
-          <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
+    echo '<li class="navbar-item">';
+    echo '<a href="seguimiento.php" class="navbar-link">Seguimiento</a>';
+    echo '</li>';
 
-          <span class="span">+598 92 173 072</span>
-        </a>
+    echo '<li class="navbar-item">';
+    echo '<a href="contacto.php" class="navbar-link">Contacto</a>';
+    echo '</li>';
 
-        <a href="iniciosesion.php" class="btn btn-primary">
-          <span class="span">Iniciar Sesion</span>
+    echo '<li class="navbar-item">';
+    echo '<a href="#" class="navbar-link">Preguntas Frecuentes</a>';
+    echo '</li>';
 
-          <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
-        </a>
+    echo '<li class="navbar-item">';
+    echo '<a href="#section about" class="navbar-link">Sobre Nosotros</a>';
+    echo '</li>';
 
-      </div>
+    echo '</ul>';
+    echo '</nav>';
 
-      <button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>
-        <ion-icon name="menu-outline" aria-hidden="true" class="open"></ion-icon>
-        <ion-icon name="close-outline" aria-hidden="true" class="close"></ion-icon>
-      </button>
+    echo '<div class="header-action">';
+    echo '<a href="tel:+12312345678901" class="contact-number">';
+    echo '<ion-icon name="call-outline" aria-hidden="true"></ion-icon>';
+    echo '<span class="span">+598 92 173 072</span>';
+    echo '</a>';
 
-    </div>
+    echo '<a href="iniciosesion.php" class="btn btn-primary">';
+    echo '<span class="span">Iniciar Sesion</span>';
+    echo '<ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>';
+    echo '</a>';
+
+    echo '</div>';
+
+    echo '<button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>';
+    echo '<ion-icon name="menu-outline" aria-hidden="true" class="open"></ion-icon>';
+    echo '<ion-icon name="close-outline" aria-hidden="true" class="close"></ion-icon>';
+    echo '</button>';
+
+    echo '</div>';
+}
+?>
   </header>
 
 
@@ -244,7 +290,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </article>
   </main>
 
-
+  
 
 
 

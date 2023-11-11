@@ -1,7 +1,17 @@
 <?php include("config\usersDB.php"); ?>
 
 <?php include('includes\header.php'); ?>
+<?php
+session_start();
 
+
+if (empty($_SESSION['usuario']) || ($_SESSION['tipo_usuario'] !== 'admin' && $_SESSION['tipo_usuario'] !== 'almacenista')) {
+   
+    header("Location: acceso_denegado.php");
+    exit(); 
+} 
+
+?>
 <main class="container p-4">
   <div class="row">
     <div class="col-md-4">

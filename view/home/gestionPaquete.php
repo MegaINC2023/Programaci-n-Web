@@ -2,6 +2,16 @@
 
 <?php include('includes\header.php'); ?>
 
+<?php
+session_start();
+
+// Verificar si el usuario ha iniciado sesión y es de tipo "admin" o "almacenista"
+if (empty($_SESSION['usuario']) || ($_SESSION['tipo_usuario'] !== 'admin' && $_SESSION['tipo_usuario'] !== 'almacenista')) {
+    // Redirigir a otra página (puedes cambiar la ruta según tus necesidades)
+    header("Location: acceso_denegado.php");
+    exit(); // Asegúrate de detener la ejecución del script después de la redirección
+}
+?>
 <main class="container p-4">
   <div class="row">
     <div class="col-md-4">

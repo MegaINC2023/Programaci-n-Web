@@ -1,15 +1,28 @@
-<<!DOCTYPE html>
+<?php
+session_start();
+
+
+if (empty($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'almacenista') {
+    header("Location: acceso_denegado.php");
+    exit(); 
+}
+?>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="stylesheet" href="camionero.css">
+<link rel="stylesheet" href="../../asset/css/camionero.css">
+    <link rel="stylesheet" href="../../asset/css/index.css">
 </head>
 <body>
     <header>
         <!-- Logo en la esquina superior izquierda -->
+        <form method="post" action="logout.php">
+            <button type="submit" name="cerrar_sesion">Cerrar Sesión</button>
+        </form>
         <img src="aseet/imgs/logo.png" alt="Logo Izquierda" class="logo-izquierda">
         <!-- Logo en la esquina superior derecha -->
         <img src="aseet/imgs/585e4beacb11b227491c3399" alt="Logo Derecha" class="logo-derecha">
-        <h1>Página del Admin</h1>
+        <h1>Página del Almacenero</h1>
     </header>
     <main>
     <button onclick="window.location.href='gestionAlmacen.php'">Almacenes</button>

@@ -77,21 +77,35 @@
           <span class="span">+598 92 173 072</span>
         </a>
 
-        <a href="iniciosesion.php" class="btn btn-primary">
-          <span class="span">Iniciar Sesion</span>
-
           <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
         </a>
 
       </div>
+      <?php
+session_start();
+      if (!empty($_SESSION['usuario'])) {
+    // Si el usuario ha iniciado sesión, mostrar el botón de cerrar sesión
+    echo '<a href="view\home\logout.php" class="btn btn-primary">';
+    echo '<span class="span">Cerrar Sesión</span>';
+    echo '</a>';
+} else {
+    // Si el usuario no ha iniciado sesión, mostrar el botón de iniciar sesión
+    echo '<a href="iniciosesion.php" class="btn btn-primary">';
+    echo '<span class="span">Iniciar Sesion</span>';
+    echo '<ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>';
+    echo '</a>';
+}
 
-      <button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>
-        <ion-icon name="menu-outline" aria-hidden="true" class="open"></ion-icon>
-        <ion-icon name="close-outline" aria-hidden="true" class="close"></ion-icon>
-      </button>
+echo '</div>';
 
-    </div>
-  </header>
+echo '<button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>';
+echo '<ion-icon name="menu-outline" aria-hidden="true" class="open"></ion-icon>';
+echo '<ion-icon name="close-outline" aria-hidden="true" class="close"></ion-icon>';
+echo '</button>';
+
+echo '</div>';
+echo '</header>';
+?>
 
 
 
