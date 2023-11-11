@@ -60,9 +60,9 @@
             <td><?php echo $row['licencia']; ?></td>
             <td><?php echo $row['peso_max']; ?></td>
             <td>
-              <a href="edit_vehiculo.php?matricula=<?php echo $row['matricula']?>" class="btn btn-secondary">
-                <i class="fas fa-marker"></i>
-              </a>
+            <a href="<?php echo (strpos($row['matricula'], 'TM') !== false) ? 'asignar_paquete_camioneta.php?matricula=' . $row['matricula'] : 'edit_vehiculo.php?matricula=' . $row['matricula']; ?>" class="btn btn-secondary">
+  <i class="fas fa-marker"></i>
+</a>
               <a href="delete_vehiculo.php?matricula=<?php echo $row['matricula']?>" class="btn btn-danger">
                 <i class="far fa-trash-alt"></i>
               </a>

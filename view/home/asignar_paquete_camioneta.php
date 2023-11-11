@@ -74,18 +74,12 @@ if (isset($_POST['update'])) {
 </div>
 
 <div class="col-md-4 mx-auto">
-    <form action="save_asignarV.php" method="POST">
+    <form action="save_asignarP.php" method="POST">
     <input type="hidden" name="matricula" value="<?php echo $matricula; ?>">
         <div class="form-group">
-            <input type="text" name="id_almacen" class="form-control" placeholder="Id Almacen" autofocus require>
+            <input type="text" name="id_paquete" class="form-control" placeholder="ID Paquete" autofocus require>
         </div>
-        <div class="form-group">
-            <input type="text" name="id_trayecto" class="form-control" placeholder="id trayecto" autofocus require>
-        </div>
-        <div class="form-group">
-            <input type="text" name="id_lote" class="form-control" placeholder="Id lote" autofocus require>
-        </div>
-        <input type="submit" name="save_asignarV" class="btn btn-success btn-block" value="Asignar ruta y lotes">
+        <input type="submit" name="save_asignarP" class="btn btn-success btn-block" value="Asignar paquete a camioneta">
     </form>
 </div>
 
@@ -94,26 +88,22 @@ if (isset($_POST['update'])) {
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>ID Trayecto</th>
-                <th>ID Almacen Destino</th>
-                <th>ID Lote</th>
+                <th>ID Paquete</th>
                 <th>Eliminar</th>
             </tr>
         </thead>
         <tbody>
             <?php
             
-            $queryp = "SELECT * FROM realiza WHERE matricula = '$matricula'";
+            $queryp = "SELECT * FROM entrega WHERE matricula = '$matricula'";
             $result_tasks = mysqli_query($conn, $queryp);
 
             while ($row = mysqli_fetch_assoc($result_tasks)) {
                 ?>
                 <tr>
-                    <td><?php echo $row['id_trayecto']; ?></td>
-                    <td><?php echo $row['id_almacen']; ?></td>
-                    <td><?php echo $row['id_lote']; ?></td>
+                    <td><?php echo $row['id_paquete']; ?></td>
                     <td>
-                        <a href="delete_asignarV.php?id_trayecto=<?php echo $row['id_trayecto']; ?>&id_almacen=<?php echo $row['id_almacen']; ?>&id_lote=<?php echo $row['id_lote']; ?>" class="btn btn-danger">
+                    <a href="delete_asignarP.php?matricula=<?php echo $row['matricula']; ?>&id_paquete=<?php echo $row['id_paquete']; ?>" class="btn btn-danger">
                             <i class="far fa-trash-alt"></i>
                         </a>
                     </td>
@@ -123,34 +113,37 @@ if (isset($_POST['update'])) {
     </table>
 </div>
 <?php
-$queryTrayecto = "SELECT id_trayecto, origen, destino FROM trayecto";
-$resultTrayecto = mysqli_query($conn, $queryTrayecto);
+include('config\usersDB.php');
 
-$queryLotesSinAsignar = "SELECT l.id_lote, l.almacen_destino
-                         FROM lote AS l
-                         LEFT JOIN realiza AS r ON l.id_lote = r.id_lote
-                         WHERE r.id_lote IS NULL";
-$resultLotesSinAsignar = mysqli_query($conn, $queryLotesSinAsignar);
+$query = "SELECT p.id_paquete
+          FROM paquete p
+          WHERE NOT EXISTS (
+              SELECT 1
+              FROM entrega e
+              WHERE e.id_paquete = p.id_paquete
+          )";
+
+$result = mysqli_query($conn, $query);
+
+if (!$result) {
+    die("Query Failed: " . mysqli_error($conn));
+}
 ?>
 
 <div>
-  <h2>Trayecto</h2>
-  <table>
+  <h2>Paquetes no asignados a camioneta</h2>
+  <table class="table table-bordered">
     <thead>
       <tr>
-        <th>ID Trayecto</th>
-        <th>Origen</th>
-        <th>Destino</th>
+        <th>ID Paquete</th>
       </tr>
     </thead>
     <tbody>
       <?php
-      while ($row = mysqli_fetch_assoc($resultTrayecto)) {
+      while ($row = mysqli_fetch_assoc($result)) {
         ?>
         <tr>
-          <td><?php echo $row['id_trayecto']; ?></td>
-          <td><?php echo $row['origen']; ?></td>
-          <td><?php echo $row['destino']; ?></td>
+          <td><?php echo $row['id_paquete']; ?></td>
         </tr>
         <?php
       }
@@ -159,27 +152,6 @@ $resultLotesSinAsignar = mysqli_query($conn, $queryLotesSinAsignar);
   </table>
 </div>
 
-<div>
-  <h2>Lotes sin Asignar</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>ID Lote</th>
-        <th>Almacen Destino del Lote</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php
-      while ($row = mysqli_fetch_assoc($resultLotesSinAsignar)) {
-        ?>
-        <tr>
-          <td><?php echo $row['id_lote']; ?></td>
-          <td><?php echo $row['almacen_destino']; ?></td>
-        </tr>
-        <?php
-      }
-      ?>
-    </tbody>
-  </table>
-</div>
-<?php include('includes\footer.php'); ?>
+<?php
+mysqli_close($conn);
+?>

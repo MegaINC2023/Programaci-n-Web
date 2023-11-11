@@ -1,23 +1,25 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-10-2023 a las 18:35:59
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
+-- Tiempo de generación: 08-11-2023 a las 14:28:51
+-- Versión del servidor: 10.4.27-MariaDB
+-- Versión de PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-create database megainc;
-use megainc;
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+
+create database megainc;
+use megainc;
 --
 -- Base de datos: `megainc`
 --
@@ -34,7 +36,7 @@ CREATE TABLE `almacen` (
   `calle` varchar(50) NOT NULL,
   `numero` int(10) NOT NULL,
   `localidad` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ;
 
 --
 -- Volcado de datos para la tabla `almacen`
@@ -63,9 +65,22 @@ CREATE TABLE `camion` (
 --
 
 INSERT INTO `camion` (`matricula`, `peso_max`) VALUES
-('CTP 5974', '31 ton'),
-('JTP 4458', '23 ton'),
-('ZTP 5139', '31 ton');
+('CTP 5974', '31000'),
+('JTP 4458', '23000'),
+('ZTP 5139', '31000');
+
+--
+-- Disparadores `camion`
+--
+DELIMITER $$
+CREATE TRIGGER `camion_peso_max_check` BEFORE INSERT ON `camion` FOR EACH ROW BEGIN
+    IF NEW.peso_max IS NOT NULL AND NEW.peso_max NOT REGEXP '^[0-9]+$' THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El campo peso_max debe contener solo valores numéricos';
+    END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -83,8 +98,21 @@ CREATE TABLE `camioneta` (
 --
 
 INSERT INTO `camioneta` (`matricula`, `peso_max`) VALUES
-('HTP 2681', '5 ton'),
-('HTP 8542', '5 ton');
+('HTP 2681', '5000'),
+('HTP 8542', '5000');
+
+--
+-- Disparadores `camioneta`
+--
+DELIMITER $$
+CREATE TRIGGER `camioneta_peso_max_check` BEFORE INSERT ON `camioneta` FOR EACH ROW BEGIN
+    IF NEW.peso_max IS NOT NULL AND NEW.peso_max NOT REGEXP '^[0-9]+$' THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El campo peso_max debe contener solo valores numéricos';
+    END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -97,16 +125,43 @@ CREATE TABLE `chofer` (
   `licencia` varchar(10) NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `apellido` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ;
 
 --
 -- Volcado de datos para la tabla `chofer`
 --
 
 INSERT INTO `chofer` (`cedula`, `licencia`, `nombre`, `apellido`) VALUES
-(17438941, 'C , D', 'Sofia', 'Ramirez'),
+(17438941, 'C', 'Sofia', 'Ramirez'),
 (29848642, 'D', 'Mario', 'Ramirez'),
 (54897452, 'D', 'Jose', 'Gonzales');
+
+--
+-- Disparadores `chofer`
+--
+DELIMITER $$
+CREATE TRIGGER `chofer_licencia_check` BEFORE INSERT ON `chofer` FOR EACH ROW BEGIN
+    IF NEW.licencia NOT IN ('Camion', 'Camioneta', 'D', 'C') THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Valor de licencia no válido';
+    END IF;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `chofer_nombre_apellido_check` BEFORE INSERT ON `chofer` FOR EACH ROW BEGIN
+    IF NEW.nombre REGEXP '^[A-Za-z]+$' = 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El nombre debe contener solo letras';
+    END IF;
+
+    IF NEW.apellido REGEXP '^[A-Za-z]+$' = 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El apellido debe contener solo letras';
+    END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -135,6 +190,19 @@ INSERT INTO `direccion` (`id_paquete`, `calle`, `numero`, `localidad`) VALUES
 (614436, '19 de abril', 651, 'Salto'),
 (652466, 'Artigas', 2268, 'Salto');
 
+--
+-- Disparadores `direccion`
+--
+DELIMITER $$
+CREATE TRIGGER `Direccion_check_numero_min_length` BEFORE INSERT ON `direccion` FOR EACH ROW BEGIN
+    IF LENGTH(NEW.numero) < 3 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El campo numero debe tener al menos 3 dígitos';
+    END IF;
+END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -154,6 +222,19 @@ INSERT INTO `empresa` (`id_empresa`, `empresa`) VALUES
 (1, 'quick carry'),
 (2, 'crecom');
 
+--
+-- Disparadores `empresa`
+--
+DELIMITER $$
+CREATE TRIGGER `Empresa_check_id_empresa_positive` BEFORE INSERT ON `empresa` FOR EACH ROW BEGIN
+    IF NEW.id_empresa <= 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El valor en id_empresa debe ser positivo';
+    END IF;
+END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -162,7 +243,7 @@ INSERT INTO `empresa` (`id_empresa`, `empresa`) VALUES
 
 CREATE TABLE `entrega` (
   `id_paquete` int(10) NOT NULL,
-  `matricula` int(10) NOT NULL,
+  `matricula` varchar(10) NOT NULL,
   `fecha_entrega` date DEFAULT NULL,
   `hora_entrega` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -172,11 +253,11 @@ CREATE TABLE `entrega` (
 --
 
 INSERT INTO `entrega` (`id_paquete`, `matricula`, `fecha_entrega`, `hora_entrega`) VALUES
-(413255, 0, '0000-00-00', '00:00:00'),
-(432551, 0, '0000-00-00', '00:00:00'),
-(543264, 0, '2023-09-05', '15:30:00'),
-(614436, 0, '2023-05-05', '15:30:00'),
-(652466, 0, '2023-09-05', '13:30:00');
+(413255, 'HTP 8542', NULL, NULL),
+(432551, 'HTP 8542', NULL, NULL),
+(543264, 'HTP 2681', '2023-09-05', '15:30:00'),
+(614436, 'HTP 2681', '2023-05-05', '15:30:00'),
+(652466, 'HTP 2681', '2023-09-05', '13:30:00');
 
 --
 -- Disparadores `entrega`
@@ -198,6 +279,14 @@ CREATE TRIGGER `ValidarFechaEntrega` BEFORE INSERT ON `entrega` FOR EACH ROW BEG
 END
 $$
 DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `before_insert_entrega` BEFORE INSERT ON `entrega` FOR EACH ROW BEGIN
+  IF NEW.fecha_entrega < (SELECT fecha_registro FROM Paquete WHERE id_paquete = NEW.id_paquete) THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La fecha de entrega no puede ser anterior a la fecha de registro del paquete';
+  END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -208,7 +297,7 @@ DELIMITER ;
 CREATE TABLE `localidad` (
   `localidad` varchar(20) NOT NULL,
   `departamento` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ;
 
 --
 -- Volcado de datos para la tabla `localidad`
@@ -230,16 +319,20 @@ INSERT INTO `localidad` (`localidad`, `departamento`) VALUES
 CREATE TABLE `login` (
   `id_usuario` int(10) NOT NULL,
   `tipo_de_usuario` varchar(15) DEFAULT NULL,
-  `cedula` int(10) DEFAULT NULL,
+  `cedula` int(8) DEFAULT NULL,
   `contraseña` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ;
 
+--
+-- Volcado de datos para la tabla `login`
+--
 
 INSERT INTO `login` (`id_usuario`, `tipo_de_usuario`, `cedula`, `contraseña`) VALUES
-(1, 'admin', '55555', '$2y$10$/UjfZIXqEUL4BWyofhniGOdi/kaQeeGYVDw9zsmCCBEi6TwtXlFZG'),
-(2, 'chofer', '4444', '$2y$10$HQ/0wu3uzvBj5KPIicJiFOjtX29rLZJzO0ijSPNn08QpDa4YOrDWa'),
-(3, 'almacenista', '333', '$2y$10$WAh5ypic2Me2jU830ozDB.AfBjnxZ6r4eVMjNMB4xTgb9fs0h4.0.'),
-(4, 'administracion', '666666', '$2y$10$NH7BfZoPG9LkBYdw3j9JnOIXM2JHMVTFkT57i0wqkGym317eqwvdG');
+(1, 'admin', 55555, '$2y$10$/UjfZIXqEUL4BWyofhniGOdi/kaQeeGYVDw9zsmCCBEi6TwtXlFZG'),
+(2, 'chofer', 4444, '$2y$10$HQ/0wu3uzvBj5KPIicJiFOjtX29rLZJzO0ijSPNn08QpDa4YOrDWa'),
+(3, 'almacenista', 333, '$2y$10$WAh5ypic2Me2jU830ozDB.AfBjnxZ6r4eVMjNMB4xTgb9fs0h4.0.'),
+(4, 'administracion', 666666, '$2y$10$NH7BfZoPG9LkBYdw3j9JnOIXM2JHMVTFkT57i0wqkGym317eqwvdG');
+
 -- --------------------------------------------------------
 
 --
@@ -251,17 +344,17 @@ CREATE TABLE `lote` (
   `estado` varchar(20) NOT NULL,
   `peso` varchar(20) NOT NULL,
   `almacen_destino` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ;
 
 --
 -- Volcado de datos para la tabla `lote`
 --
 
 INSERT INTO `lote` (`id_lote`, `estado`, `peso`, `almacen_destino`) VALUES
-(23452, 'En viaje', '100 kg', 234),
-(44512, 'En viaje', '134 kg', 234),
-(53151, 'Entregado', '200 kg', 130),
-(65312, 'En espera', '30 kg', 34);
+(23452, 'En viaje', '100', 234),
+(44512, 'En viaje', '134', 234),
+(53151, 'Entregado', '200', 130),
+(65312, 'En espera', '30', 34);
 
 -- --------------------------------------------------------
 
@@ -292,10 +385,10 @@ INSERT INTO `maneja` (`cedula`, `matricula`) VALUES
 CREATE TABLE `paquete` (
   `id_paquete` int(10) NOT NULL,
   `estado` varchar(50) NOT NULL,
-  `fecha_registro` DATE DEFAULT CURRENT_DATE() NOT NULL,
+  `fecha_registro` date NOT NULL,
   `tipo` varchar(20) DEFAULT NULL,
   `fragil` varchar(2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ;
 
 --
 -- Volcado de datos para la tabla `paquete`
@@ -320,7 +413,7 @@ INSERT INTO `paquete` (`id_paquete`, `estado`, `fecha_registro`, `tipo`, `fragil
 CREATE TABLE `pertenece` (
   `id_paquete` int(10) NOT NULL,
   `id_lote` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ;
 
 --
 -- Volcado de datos para la tabla `pertenece`
@@ -344,7 +437,7 @@ CREATE TABLE `realiza` (
   `id_almacen` int(10) NOT NULL,
   `id_trayecto` int(10) NOT NULL,
   `matricula` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ;
 
 --
 -- Volcado de datos para la tabla `realiza`
@@ -444,15 +537,15 @@ CREATE TABLE `trayecto` (
   `origen` varchar(100) NOT NULL,
   `destino` varchar(100) NOT NULL,
   `distancia` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ;
 
 --
 -- Volcado de datos para la tabla `trayecto`
 --
 
 INSERT INTO `trayecto` (`id_trayecto`, `origen`, `destino`, `distancia`) VALUES
-(101, '444', '234', '506km'),
-(102, '444', '34', '491km');
+(101, '444', '234', '506'),
+(102, '444', '34', '491');
 
 -- --------------------------------------------------------
 
@@ -465,19 +558,19 @@ CREATE TABLE `vehiculo` (
   `licencia` varchar(10) DEFAULT NULL,
   `estado` varchar(50) NOT NULL,
   `peso_max` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ;
 
 --
 -- Volcado de datos para la tabla `vehiculo`
 --
 
 INSERT INTO `vehiculo` (`matricula`, `licencia`, `estado`, `peso_max`) VALUES
-('CTP 5974', 'D', 'Transportando', '31 ton'),
-('HTP 2621', 'C', 'No disponible', '5 ton'),
-('HTP 2681', 'D', 'No disponible', '25 ton'),
-('HTP 8542', 'C', 'En Viaje', '5 ton'),
-('JTP 4458', 'D', 'Transportando', '23 ton'),
-('ZTP 5139', 'D', 'Disponible', '31 ton');
+('CTP 5974', 'D', 'Transportando', '31000'),
+('HTP 2621', 'C', 'No disponible', '5000'),
+('HTP 2681', 'D', 'No disponible', '25000'),
+('HTP 8542', 'C', 'En Viaje', '5000'),
+('JTP 4458', 'D', 'Transportando', '23000'),
+('ZTP 5139', 'D', 'Disponible', '31000');
 
 -- --------------------------------------------------------
 
@@ -498,11 +591,39 @@ CREATE TABLE `viaja` (
 --
 
 INSERT INTO `viaja` (`id_lote`, `id_almacen`, `id_trayecto`, `fecha_llegada`, `hora_llegada`) VALUES
-(23452, 234, 0, '0000-00-00', '00:00:00'),
-(44512, 130, 101, '0000-00-00', '00:00:00'),
-(44512, 234, 0, '0000-00-00', '00:00:00'),
 (53151, 34, 102, '2023-09-01', '08:35:00'),
 (53151, 130, 102, '2023-08-28', '17:00:00');
+
+--
+-- Disparadores `viaja`
+--
+DELIMITER $$
+CREATE TRIGGER `Viaja_check_positive_values` BEFORE INSERT ON `viaja` FOR EACH ROW BEGIN
+    IF NEW.id_lote <= 0 OR NEW.id_almacen <= 0 OR NEW.id_trayecto <= 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Los valores en id_lote, id_almacen e id_trayecto deben ser positivos';
+    END IF;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `check_fecha_hora_llegada` BEFORE INSERT ON `viaja` FOR EACH ROW BEGIN
+  DECLARE fecha_salida_trayecto DATE;
+  DECLARE hora_salida_trayecto TIME;
+
+  -- Obtén la fecha y hora de salida del trayecto correspondiente
+  SELECT fecha_salida, hora_salida
+  INTO fecha_salida_trayecto, hora_salida_trayecto
+  FROM Trayecto
+  WHERE id_trayecto = NEW.id_trayecto;
+
+  IF NEW.fecha_llegada < fecha_salida_trayecto OR (NEW.fecha_llegada = fecha_salida_trayecto AND NEW.hora_llegada < hora_salida_trayecto) THEN
+    SIGNAL SQLSTATE '45000'
+    SET MESSAGE_TEXT = 'La fecha y hora de llegada deben ser posteriores a la fecha y hora de salida en el trayecto';
+  END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -571,7 +692,7 @@ CREATE TABLE `vista_almacen_trayecto_lote` (
 --
 DROP TABLE IF EXISTS `vistachofercamionlote`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vistachofercamionlote`  AS SELECT `m`.`cedula` AS `CedulaChofer`, `m`.`matricula` AS `MatriculaCamion`, `r`.`id_lote` AS `IDLote` FROM (`maneja` `m` join `realiza` `r` on(`m`.`matricula` = `r`.`matricula`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vistachofercamionlote`  AS SELECT `m`.`cedula` AS `CedulaChofer`, `m`.`matricula` AS `MatriculaCamion`, `r`.`id_lote` AS `IDLote` FROM (`maneja` `m` join `realiza` `r` on(`m`.`matricula` = `r`.`matricula`))  ;
 
 -- --------------------------------------------------------
 
@@ -580,7 +701,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `vistachofercamiontrayecto`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vistachofercamiontrayecto`  AS SELECT `m`.`cedula` AS `CedulaChofer`, `m`.`matricula` AS `MatriculaCamion`, `r`.`id_trayecto` AS `IDTrayecto` FROM (`maneja` `m` join `realiza` `r` on(`m`.`matricula` = `r`.`matricula`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vistachofercamiontrayecto`  AS SELECT `m`.`cedula` AS `CedulaChofer`, `m`.`matricula` AS `MatriculaCamion`, `r`.`id_trayecto` AS `IDTrayecto` FROM (`maneja` `m` join `realiza` `r` on(`m`.`matricula` = `r`.`matricula`))  ;
 
 -- --------------------------------------------------------
 
@@ -589,7 +710,30 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `vista_almacen_con_lotes`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_almacen_con_lotes`  AS SELECT `a`.`id_almacen` AS `Almacen_ID`, `a`.`calle` AS `Calle_Almacen`, `a`.`numero` AS `Numero_Almacen`, `a`.`localidad` AS `Localidad_Almacen`, `t`.`id_trayecto` AS `Trayecto_ID`, `t`.`origen` AS `Origen_Trayecto`, `t`.`destino` AS `Destino_Trayecto`, `l`.`id_lote` AS `Lote_ID`, `l`.`estado` AS `Estado_Lote` FROM ((((`almacen` `a` left join `tiene` `ti` on(`a`.`id_almacen` = `ti`.`id_almacen`)) left join `trayecto` `t` on(`ti`.`id_trayecto` = `t`.`id_trayecto`)) left join `viaja` `v` on(`a`.`id_almacen` = `v`.`id_almacen`)) left join `lote` `l` on(`v`.`id_lote` = `l`.`id_lote`)) WHERE `l`.`id_lote` is not null ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_almacen_con_lotes` AS 
+SELECT 
+    `a`.`id_almacen` AS `Almacen_ID`, 
+    `a`.`calle` AS `Calle_Almacen`, 
+    `a`.`numero` AS `Numero_Almacen`, 
+    `a`.`localidad` AS `Localidad_Almacen`, 
+    `t`.`id_trayecto` AS `Trayecto_ID`, 
+    `t`.`origen` AS `Origen_Trayecto`, 
+    `t`.`destino` AS `Destino_Trayecto`, 
+    `l`.`id_lote` AS `Lote_ID`, 
+    `l`.`estado` AS `Estado_Lote` 
+FROM 
+    (
+        (
+            (`almacen` `a` 
+            LEFT JOIN `tiene` `ti` ON (`a`.`id_almacen` = `ti`.`id_almacen`)
+        ) 
+        LEFT JOIN `trayecto` `t` ON (`ti`.`id_trayecto` = `t`.`id_trayecto`)
+        ) 
+        LEFT JOIN `viaja` `v` ON (`a`.`id_almacen` = `v`.`id_almacen`)
+    ) 
+    LEFT JOIN `lote` `l` ON (`v`.`id_lote` = `l`.`id_lote`)
+WHERE 
+    `l`.`id_lote` IS NOT NULL;
 
 -- --------------------------------------------------------
 
@@ -598,7 +742,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `vista_almacen_trayecto_lote`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_almacen_trayecto_lote`  AS SELECT `a`.`id_almacen` AS `Almacen_ID`, `a`.`calle` AS `Calle_Almacen`, `a`.`numero` AS `Numero_Almacen`, `a`.`localidad` AS `Localidad_Almacen`, `t`.`id_trayecto` AS `Trayecto_ID`, `t`.`origen` AS `Origen_Trayecto`, `t`.`destino` AS `Destino_Trayecto`, `l`.`id_lote` AS `Lote_ID`, `l`.`estado` AS `Estado_Lote` FROM ((((`almacen` `a` left join `tiene` `ti` on(`a`.`id_almacen` = `ti`.`id_almacen`)) left join `trayecto` `t` on(`ti`.`id_trayecto` = `t`.`id_trayecto`)) left join `viaja` `v` on(`a`.`id_almacen` = `v`.`id_almacen`)) left join `lote` `l` on(`v`.`id_lote` = `l`.`id_lote`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_almacen_trayecto_lote`  AS SELECT `a`.`id_almacen` AS `Almacen_ID`, `a`.`calle` AS `Calle_Almacen`, `a`.`numero` AS `Numero_Almacen`, `a`.`localidad` AS `Localidad_Almacen`, `t`.`id_trayecto` AS `Trayecto_ID`, `t`.`origen` AS `Origen_Trayecto`, `t`.`destino` AS `Destino_Trayecto`, `l`.`id_lote` AS `Lote_ID`, `l`.`estado` AS `Estado_Lote` FROM ((((`almacen` `a` left join `tiene` `ti` on(`a`.`id_almacen` = `ti`.`id_almacen`)) left join `trayecto` `t` on(`ti`.`id_trayecto` = `t`.`id_trayecto`)) left join `viaja` `v` on(`a`.`id_almacen` = `v`.`id_almacen`)) left join `lote` `l` on(`v`.`id_lote` = `l`.`id_lote`))  ;
 
 --
 -- Índices para tablas volcadas
@@ -610,9 +754,6 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 ALTER TABLE `almacen`
   ADD PRIMARY KEY (`id_almacen`),
   ADD KEY `fk_empresa` (`id_empresa`);
-
-  ALTER TABLE `almacen`
-  MODIFY `id_almacen` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Indices de la tabla `camion`
@@ -645,9 +786,6 @@ ALTER TABLE `direccion`
 ALTER TABLE `empresa`
   ADD PRIMARY KEY (`id_empresa`);
 
-  ALTER TABLE `empresa`
-  MODIFY `id_empresa` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
 -- Indices de la tabla `entrega`
 --
@@ -667,16 +805,11 @@ ALTER TABLE `login`
   ADD PRIMARY KEY (`id_usuario`),
   ADD UNIQUE KEY `cedula` (`cedula`);
 
-  ALTER TABLE `login`
-  MODIFY `id_usuario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- Indices de la tabla `lote`
 --
 ALTER TABLE `lote`
   ADD PRIMARY KEY (`id_lote`);
-
-  ALTER TABLE `lote`
-  MODIFY `id_lote` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Indices de la tabla `maneja`
@@ -689,9 +822,6 @@ ALTER TABLE `maneja`
 --
 ALTER TABLE `paquete`
   ADD PRIMARY KEY (`id_paquete`);
-
-  ALTER TABLE `paquete`
-  MODIFY `id_paquete` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Indices de la tabla `pertenece`
@@ -719,9 +849,6 @@ ALTER TABLE `tiene`
 ALTER TABLE `trayecto`
   ADD PRIMARY KEY (`id_trayecto`);
 
-  ALTER TABLE `trayecto`
-  MODIFY `id_trayecto` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
 -- Indices de la tabla `vehiculo`
 --
@@ -734,6 +861,46 @@ ALTER TABLE `vehiculo`
 ALTER TABLE `viaja`
   ADD PRIMARY KEY (`id_lote`,`id_almacen`,`id_trayecto`),
   ADD KEY `fk_Valmacen` (`id_almacen`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `almacen`
+--
+ALTER TABLE `almacen`
+  MODIFY `id_almacen` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `empresa`
+--
+ALTER TABLE `empresa`
+  MODIFY `id_empresa` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `login`
+--
+ALTER TABLE `login`
+  MODIFY `id_usuario` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `lote`
+--
+ALTER TABLE `lote`
+  MODIFY `id_lote` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `paquete`
+--
+ALTER TABLE `paquete`
+  MODIFY `id_paquete` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `trayecto`
+--
+ALTER TABLE `trayecto`
+  MODIFY `id_trayecto` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
