@@ -20,22 +20,12 @@
 
 
         <?php
+include("config\usersDB.php");
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $matricula = trim($_POST["matricula"]);
+    $matricula = trim($_POST["matricula"]);
 
     if (strpos($matricula, "TM") === false) {
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "megainc";
-
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        // Verificar la conexión
-        if ($conn->connect_error) {
-            die("Error de conexión: " . $conn->connect_error);
-        }
-
         // Realizar la consulta SQL con la matrícula
         $sql = "SELECT r.id_trayecto, r.id_lote, t.id_almacen, t.posicion, a.calle, a.numero, a.localidad
             FROM realiza r
@@ -44,47 +34,108 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             WHERE r.matricula = ?";
 
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $matricula);  // "s" indica que se trata de una cadena
+        $stmt->bind_param("s", $matricula);
 
         $stmt->execute();
         $result = $stmt->get_result();
 
-        // Mostrar los resultados en una tabla
         if ($result->num_rows > 0) {
             echo "<h2>Resultados de la búsqueda:</h2>";
+            echo "<form method='post' action='procesar_viaje.php'>";
             echo "<table>";
             echo "<tr><th>ID Trayecto</th><th>ID Lote</th><th>ID Almacen</th><th>Posición</th><th>Calle</th><th>Número</th><th>Localidad</th></tr>";
+
             while ($row = $result->fetch_assoc()) {
+                // Populate the hidden inputs with values from the result set
                 echo "<tr>";
                 echo "<td>" . $row["id_trayecto"] . "</td>";
-                echo "<td>" . $row["id_lote"] . "</td"; 
+                echo "<td>" . $row["id_lote"] . "</td>";
                 echo "<td>" . $row["id_almacen"] . "</td>";
                 echo "<td>" . $row["posicion"] . "</td>";
                 echo "<td>" . $row["calle"] . "</td>";
                 echo "<td>" . $row["numero"] . "</td>";
                 echo "<td>" . $row["localidad"] . "</td>";
                 echo "</tr>";
+
+                // Store values for use in the form
+                $id_lote = $row["id_lote"];
+                $id_trayecto = $row["id_trayecto"];
+                $id_almacen = $row["id_almacen"];
             }
+
             echo "</table>";
+
+            // Form for processing selected data
+            echo "<input type='hidden' name='id_lote' value='$id_lote'>";
+            echo "<input type='hidden' name='id_trayecto' value='$id_trayecto'>";
+            echo "<input type='hidden' name='id_almacen' value='$id_almacen'>";
+            echo "<input type='text'  name='input_id_lote' placeholder='Escribe el ID del lote'>";
+            echo "<input type='text'  name='input_id_trayecto' placeholder='Escribe el ID del trayecto'>";
+            echo "<input type='text'  name='input_id_almacen' placeholder='Escribe el ID del almacen'>";
+            echo "<button type='submit' name='viajar'>Listo</button>";
+            echo "</form>";
         } else {
             echo "<p>No se encontraron resultados para la matrícula ingresada.</p>";
         }
-// Cerrar la conexión a la base de datos
-$stmt->close();
-$conn->close();
-       
-    } else {
-      echo "<h2>Formulario para Entrega de Paquete</h2>";
-      echo "<form method='post' action='procesar_entrega.php'>";
-      echo "<label for='id_paquete'>ID Paquete:</label>";
-      echo "<input type='text' id='id_paquete' name='id_paquete' placeholder='Escribe el ID del paquete'>";
-      echo "<input type='hidden' name='matricula' value='$matricula'>"; 
-      echo "<button type='submit'>Entregar Paquete</button>";
-      echo "</form>";
 
-       
-  }
+        $stmt->close();
+    } else {
+        echo "<h2>Formulario para Entrega de Paquete</h2>";
+        echo "<form method='post' action='procesar_entrega.php'>";
+        echo "<label for='id_paquete'>ID Paquete:</label>";
+        echo "<input type='text' id='id_paquete' name='id_paquete' placeholder='Escribe el ID del paquete'>";
+        echo "<input type='hidden' name='matricula' value='$matricula'>"; 
+        echo "<button type='submit'>Entregar Paquete</button>";
+        echo "</form>";
+
+        $queryDireccion = "SELECT 
+            e.id_paquete,
+            e.matricula,
+            d.calle,
+            d.numero
+            FROM 
+            entrega e
+            JOIN 
+            paquete p ON e.id_paquete = p.id_paquete
+            JOIN 
+            direccion d ON p.id_paquete = d.id_paquete
+            WHERE 
+            e.hora_entrega IS NULL
+            AND e.matricula = ?";
+
+        $stmtDireccion = $conn->prepare($queryDireccion);
+        $stmtDireccion->bind_param("s", $matricula);
+        $stmtDireccion->execute();
+
+        $resultDireccion = $stmtDireccion->get_result();
+
+        echo "<div>";
+        echo "<h2>Paquetes para entregar</h2>";
+        echo "<table>";
+        echo "<thead>";
+        echo "<tr><th>ID Paquete</th><th>Numero</th><th>Calle</th></tr>";
+        echo "</thead>";
+        echo "<tbody>";
+
+        while ($row = mysqli_fetch_assoc($resultDireccion)) {
+            echo "<tr>";
+            echo "<td>" . $row['id_paquete'] . "</td>";
+            echo "<td>" . $row['numero'] . "</td>";
+            echo "<td>" . $row['calle'] . "</td>";
+            echo "</tr>";
+        }
+
+        echo "</tbody>";
+        echo "</table>";
+        echo "</div>";
+
+        // Cerrar el statement, pero no la conexión
+        $stmtDireccion->close();
+    }
 }
+
+// Cerrar la conexión fuera de las condiciones
+$conn->close();
 ?>
         <!-- Resto del contenido -->
     </main>
