@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (empty($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'admin') {
     // Redirigir a otra página (puedes cambiar la ruta según tus necesidades)
     header("Location: acceso_denegado.php");

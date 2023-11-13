@@ -16,14 +16,22 @@ if(isset($_GET['matricula'])) {
       die("Query Failed: " . mysqli_error($conn)); 
     }
   } else {
+
     
+    
+    $query5 = "DELETE FROM realiza WHERE matricula = '$matricula'";
     $query3 = "DELETE FROM Camion WHERE matricula = '$matricula'";
     $query4 = "DELETE FROM Vehiculo WHERE matricula = '$matricula'";
     
+    
+    
+    $result5 = mysqli_query($conn, $query5);
     $result3 = mysqli_query($conn, $query3);
     $result4 = mysqli_query($conn, $query4);
+   
+    
 
-    if(!$result3 || !$result4) {
+    if(!$result3 || !$result4 || !$result5) {
       die("Query Failed: " . mysqli_error($conn)); 
     }
   }
