@@ -63,9 +63,12 @@ if (isset($_POST['update'])) {
           <div class="form-group">
             <input name="matricula" type="text" class="form-control" value="<?php echo $matricula; ?>" placeholder="Cambiar matricula">
           </div>
-          <div class="form-group">
-            <input name="estado" type="text" class="form-control" value="<?php echo $estado; ?>" placeholder="Cambiar estado">
-          </div>
+          <label for="estado">cambiar estado del camion</label>
+      <select name="estado" required>
+        <option value="En viaje">En viaje</option>
+        <option value="Fuera de servicio">Fuera de servicio</option>
+        <option value="En espera">En espera</option>
+      </select>
           <div class="form-group">
             <input name="licencia" type="text" class="form-control" value="<?php echo $licencia; ?>" placeholder="Cambiar licencia">
           </div>

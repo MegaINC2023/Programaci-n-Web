@@ -48,19 +48,12 @@
     </form>
 
     <?php
+     include("config\usersDB.php");
+     
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $idLote = $_POST["id_lote"];
 
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "megainc";
-
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        if ($conn->connect_error) {
-            die("Conexión fallida: " . $conn->connect_error);
-        }
+       
 
         $sql = "SELECT peso, almacen_destino FROM lote WHERE id_lote = $idLote";
         $result = $conn->query($sql);

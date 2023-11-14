@@ -54,9 +54,13 @@ if (isset($_POST['update'])) {
         <div class="form-group">
           <input name="cedula" type="text" class="form-control" value="<?php echo $cedula; ?>" placeholder="cambiar cedula del usuario">
         </div>
-        <div class="form-group">
-          <input name="tipo_de_usuario" type="text" class="form-control" value="<?php echo $tipo_de_usuario; ?>" placeholder="cambiar tipo de usuario">
-        </div>
+        <label for="tipo_de_usuario">cambiar tipo de usuario</label>
+      <select name="tipo_de_usuario" required>
+        <option value="admin">admin</option>
+        <option value="chofer">chofer</option>
+        <option value="almacenista">almacenista</option>
+        <option value="administracion">administracion</option>
+      </select>
         <div class="form-group">
           <input name="contraseña" type="text" class="form-control" value="<?php echo $contraseña; ?>" placeholder="cambiar contraseña del usuario">
         </div>

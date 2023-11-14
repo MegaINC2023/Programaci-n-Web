@@ -30,9 +30,12 @@ if (empty($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'admin') {
           <div class="form-group">
             <input type="text" name="matricula" class="form-control" placeholder="ingresar matricula" autofocus required>
           </div>
-          <div class="form-group">
-            <input type="text" name="estado" class="form-control" placeholder="ingresar estado del camion" autofocus required>
-          </div>
+          <label for="estado">Ingresar estado del camion</label>
+      <select name="estado" required>
+        <option value="En viaje">En viaje</option>
+        <option value="Fuera de servicio">Fuera de servicio</option>
+        <option value="En espera">En espera</option>
+      </select>
           <div class="form-group">
             <input type="text" name="licencia" class="form-control" placeholder="ingresar licencia del camion" autofocus required>
           </div>

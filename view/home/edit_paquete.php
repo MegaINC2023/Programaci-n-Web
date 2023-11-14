@@ -86,9 +86,11 @@ if (isset($_POST['update'])) {
         <div class="form-group">
           <input name="tipo" type="text" class="form-control" value="<?php echo $tipo; ?>" placeholder="tipo">
         </div>
-        <div class="form-group">
-          <input name="fragil" type="text" class="form-control" value="<?php echo $fragil; ?>" placeholder="fragil">
-        </div>
+        <label for="fragil">¿El paquete es fragil?</label>
+      <select name="fragil" required>
+        <option value="Si">Si</option>
+        <option value="No">No</option>
+      </select>
         <div class="form-group">
           <input name="calle" type="text" class="form-control" value="<?php echo $calle; ?>" placeholder="cambiar calle">
         </div>

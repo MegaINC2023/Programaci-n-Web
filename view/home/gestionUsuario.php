@@ -31,9 +31,13 @@ if (empty($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'admin') {
         <div class="form-group">
             <input type="text" name="cedula" class="form-control" placeholder="ingresar cedula del usuario" autofocus required>
           </div>
-        <div class="form-group">
-            <input type="text" name="tipo_de_usuario" class="form-control" placeholder="ingresar tipo del usuario" autofocus required>
-          </div>
+          <label for="tipo_de_usuario">Ingresar tipo de usuario</label>
+      <select name="tipo_de_usuario" required>
+        <option value="admin">admin</option>
+        <option value="chofer">chofer</option>
+        <option value="almacenista">almacenista</option>
+        <option value="administracion">administracion</option>
+      </select>
           <div class="form-group">
             <input type="text" name="contraseña" class="form-control" placeholder="ingresar contraseña del usuario" autofocus required> 
           </div>

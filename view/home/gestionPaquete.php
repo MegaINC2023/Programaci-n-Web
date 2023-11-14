@@ -22,6 +22,7 @@ if (empty($_SESSION['usuario']) || ($_SESSION['tipo_usuario'] !== 'admin' && $_S
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
+        
     </div>
     <?php unset($_SESSION['message']);}?>
 
@@ -41,9 +42,13 @@ if (empty($_SESSION['usuario']) || ($_SESSION['tipo_usuario'] !== 'admin' && $_S
           <div class="form-group">
             <input type="text" name="tipo" class="form-control" placeholder="ingresar el tipo del paquete" autofocus required>
           </div>
-          <div class="form-group">
-            <input type="text" name="fragil" class="form-control" placeholder="¿El paquete es fragil?" autofocus required>
-          </div>
+      
+          <label for="fragil">¿El paquete es fragil?</label>
+      <select name="fragil" required>
+        <option value="Si">Si</option>
+        <option value="No">No</option>
+      </select>
+          
           <div class="form-group">
             <input type="text" name="calle" class="form-control" placeholder="ingresar el nombre de la calle" autofocus required>
           </div>
