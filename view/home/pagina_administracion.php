@@ -1,23 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../asset/css/camionero.css">
-    <link rel="stylesheet" href="../../asset/css/index.css">
+ 
+    
+    <link rel="stylesheet" href="../../asset/css/seguimiento.css">
+
 </head>
-<header>
-        <!-- Logo en la esquina superior izquierda -->
-        <form method="post" action="logout.php">
-            <button type="submit" name="cerrar_sesion">Cerrar Sesión</button>
-        </form>
-        <img src="aseet/imgs/logo.png" alt="Logo Izquierda" class="logo-izquierda">
-        <!-- Logo en la esquina superior derecha -->
-        <img src="aseet/imgs/585e4beacb11b227491c3399" alt="Logo Derecha" class="logo-derecha">
-        <h1>Página del Almacenero</h1>
-    </header>
 <body>
+    <header>
+    <header class="header" data-header>
+    <div class="container">
+
+      <a href="index.php" class="logo">
+        <img src="../../asset/imgs/logo.png" width="160" height="50" alt="nel home">
+      </a>
+
+      <nav class="navbar" data-navbar>
+      <ul class="navbar-list">
+      <li class="navbar-item">
+            <a >Página de Personal Administrativo</a>
+          </li>
+          </ul>
+      </nav>
+      <a href="logout.php" class="btn btn-primary">
+    <span class="span">Cerrar Sesión</span></a>
+
+      </div>
+
+      <button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>
+        <ion-icon name="menu-outline" aria-hidden="true" class="open"></ion-icon>
+        <ion-icon name="close-outline" aria-hidden="true" class="close"></ion-icon>
+      </button>
+
+    </div>
+
+
+
+
+    </header>
+
 <main>
+<section class="section hero" aria-label="home"></section>
     <form method="POST">
         <label for="id_lote">ID del lote:</label>
         <input type="text" id="id_lote" name="id_lote" placeholder="Escribe el ID del lote">

@@ -1,9 +1,8 @@
 <?php
 session_start();
-if (empty($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'admin') {
-    // Redirigir a otra página (puedes cambiar la ruta según tus necesidades)
+if (empty($_SESSION['usuario']) ||( $_SESSION['tipo_usuario'] !== 'admin' && $_SESSION['tipo_usuario'] !== 'almacenista')) {
     header("Location: acceso_denegado.php");
-    exit(); // Asegúrate de detener la ejecución del script después de la redirección
+    exit(); 
 }
 ?>
 <?php

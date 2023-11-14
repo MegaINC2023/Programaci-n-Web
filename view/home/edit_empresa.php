@@ -1,9 +1,8 @@
 <?php
 session_start();
 if (empty($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'admin') {
-    // Redirigir a otra página (puedes cambiar la ruta según tus necesidades)
     header("Location: acceso_denegado.php");
-    exit(); // Asegúrate de detener la ejecución del script después de la redirección
+    exit(); 
 }
 ?>
 <?php
@@ -26,14 +25,18 @@ if (isset($_POST['update'])) {
   $id_empresa = $_POST['id_empresa']; 
   $empresa = $_POST['empresa'];
 
+  $query = "UPDATE empresa SET empresa = ? WHERE id_empresa = ?";
+  
+  $stmt = mysqli_prepare($conn, $query);
+  mysqli_stmt_bind_param($stmt, 'si', $empresa, $id_empresa);
+  
+  if (mysqli_stmt_execute($stmt)) {
+      $_SESSION['message'] = 'Se modificó correctamente';
+      $_SESSION['message_type'] = 'warning';
+      header('Location: gestionEmpresa.php' );
+  }
 
-  $query = "UPDATE empresa SET empresa = '$empresa' WHERE id_empresa='$id_empresa'"; 
- 
-
-  mysqli_query($conn, $query);
-  $_SESSION['message'] = 'Se modifico correctamente';
-  $_SESSION['message_type'] = 'warning';
-  header('Location: gestionEmpresa.php');
+  mysqli_stmt_close($stmt);
 }
 
 ?>

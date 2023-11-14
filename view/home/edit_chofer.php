@@ -1,11 +1,10 @@
 <?php
 session_start();
 
-// Verificar si el usuario ha iniciado sesión y es de tipo "admin" o "almacenista"
+
 if (empty($_SESSION['usuario']) || ($_SESSION['tipo_usuario'] !== 'admin' && $_SESSION['tipo_usuario'] !== 'almacenista')) {
-    // Redirigir a otra página (puedes cambiar la ruta según tus necesidades)
     header("Location: acceso_denegado.php");
-    exit(); // Asegúrate de detener la ejecución del script después de la redirección
+    exit();
 }
 ?>
 <?php
@@ -117,7 +116,7 @@ $resultDireccion = mysqli_query($conn, $queryDireccion);
 ?>
 <div>
   <h2>Camiones sin asignar</h2>
-  <table>
+  <table  class="table table-bordered tabla-paquetes">
     <thead>
       <tr>
         <th>Matriculas</th>

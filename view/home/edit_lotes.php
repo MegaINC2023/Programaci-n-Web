@@ -1,11 +1,10 @@
 <?php
 session_start();
 
-// Verificar si el usuario ha iniciado sesión y es de tipo "admin" o "almacenista"
+
 if (empty($_SESSION['usuario']) || ($_SESSION['tipo_usuario'] !== 'admin' && $_SESSION['tipo_usuario'] !== 'almacenista')) {
-    // Redirigir a otra página (puedes cambiar la ruta según tus necesidades)
     header("Location: acceso_denegado.php");
-    exit(); // Asegúrate de detener la ejecución del script después de la redirección
+    exit(); 
 }
 ?>
 <?php
@@ -99,8 +98,8 @@ if (isset($_POST['update'])) {
           while ($row = mysqli_fetch_assoc($result_tasks)) {
             ?>
             <tr>
-                <td><?php echo $id_lote; ?></td> <!-- Muestra el id_lote -->
-                <td><?php echo $row['id_paquete']; ?></td> <!-- Muestra el id_paquete -->
+                <td><?php echo $id_lote; ?></td> 
+                <td><?php echo $row['id_paquete']; ?></td> 
                 <td>
                     <a href="delete_asignar.php?id_paquete=<?php echo $row['id_paquete']; ?>" class="btn btn-danger">
                         <i class="far fa-trash-alt"></i>
@@ -113,16 +112,15 @@ if (isset($_POST['update'])) {
     </div>
 
 <?php
-// Mostrar tabla de dirección
 $queryDireccion = "SELECT D.id_paquete, D.localidad, L.departamento
 FROM Direccion AS D
 INNER JOIN Localidad AS L ON D.localidad = L.localidad
 WHERE D.id_paquete NOT IN (SELECT id_paquete FROM pertenece);";
 $resultDireccion = mysqli_query($conn, $queryDireccion);
 ?>
-<div>
+<div class="col-md-4 mx-auto">
   <h2>Paquetes</h2>
-  <table>
+  <table class="table table-bordered tabla-paquetes">
     <thead>
       <tr>
         <th>ID Paquete</th>

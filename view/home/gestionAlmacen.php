@@ -15,18 +15,18 @@ if (empty($_SESSION['usuario']) || ($_SESSION['tipo_usuario'] !== 'admin' && $_S
 <main class="container p-4">
   <div class="row">
     <div class="col-md-4">
-      <!-- MESSAGES -->
+     
 
       <?php if (isset($_SESSION['message'])) { ?>
-      <div class="alert alert-<?= $_SESSION['message_type']?> alert-dismissible fade show" role="alert">
+    <div class="alert alert-<?= $_SESSION['message_type']?> alert-dismissible fade show" role="alert">
         <?= $_SESSION['message']?>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
         </button>
-      </div>
-      <?php session_unset(); } ?>
+    </div>
+    <?php unset($_SESSION['message']);}?>
 
-      <!-- ADD TASK FORM -->
+      
       <div class="card card-body">
         <form action="save_almacen.php" method="POST">
         <div class="form-group">

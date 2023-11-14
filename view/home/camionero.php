@@ -1,41 +1,69 @@
 <?php
 session_start();
 
-// Verificar si el usuario ha iniciado sesión y es de tipo "camionero"
+
 if (empty($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'chofer') {
-    // Redirigir a otra página (puedes cambiar la ruta según tus necesidades)
     header("Location: acceso_denegado.php");
-    exit(); // Asegúrate de detener la ejecución del script después de la redirección
+    exit(); 
 }
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="stylesheet" href="../../asset/css/camionero.css">
-    <link rel="stylesheet" href="../../asset/css/index.css">
+    <link rel="stylesheet" href="../../asset/css/seguimiento.css">
+
 </head>
 <body>
 <?php
 include("config\usersDB.php");
 
-// Inicia sesión solo si no está iniciada
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Verifica si el usuario ha iniciado sesión
+
 if (!empty($_SESSION['usuario'])) {
-    // Usuario ha iniciado sesión, muestra la barra de navegación con el botón de cerrar sesión
-    echo '<header>';
-    echo '<img src="../../asset/imgs/logo.png" alt="Logo Izquierda" class="logo-izquierda">';
-    echo '<img src="../../asset/imgs/585e4beacb11b227491c3399.png" alt="Logo Derecha" class="logo-derecha">';
-    echo '<h1>Página del Camionero</h1>';
     
-    echo '<li class="navbar-item">';
-    echo '<a href="logout.php" class="navbar-link">Cerrar Sesión</a>';
-    echo '</li>';
+    echo '<header>';
+    echo ' <header class="header" data-header>';
+    echo  '<div class="container">';
+    echo  '<a href="index.php" class="logo">';
+    echo  '<img src="../../asset/imgs/logo.png" width="160" height="50" alt="nel home">';
+    echo  ' </a>';
+    echo  '<nav class="navbar" data-navbar>';
+    echo  '<ul class="navbar-list">';
+    echo  '<li class="navbar-item">';
+    echo  '<a >Página del Administrativo</a>';
+    echo  '</li>';
+    echo  '</ul>';
+    echo  '</nav>';
+    echo  '<a href="logout.php" class="btn btn-primary">';
+    echo  '<span class="span">Cerrar Sesión</span></a>';
+    echo  ' </div>';
+    echo  '<button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>';
+    echo  '<ion-icon name="menu-outline" aria-hidden="true" class="open"></ion-icon>';
+    echo  '<ion-icon name="close-outline" aria-hidden="true" class="close"></ion-icon>';
+    echo  '</button>';
+    echo  '</div>';
+    echo  '';
+    echo  '';
+    echo  '';
+    echo  '';
+    echo  '';
+    echo  '';
+    echo  '';
+    echo  '';
+    echo  '';
+    echo  '';
+    echo  '';
+    echo  '';
+    echo  '';
+    echo  '';
+  
     
     echo '</header>';
+    echo  '<section class="section hero" aria-label="home"></section>';
     echo '<main>';
     echo '<form method="post" action="camionero.php">';
     echo '<label for="matricula">Matrícula del camión:</label>';
@@ -53,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $matricula = trim($_POST["matricula"]);
 
     if (strpos($matricula, "TM") === false) {
-        // Realizar la consulta SQL con la matrícula
+        
         $sql = "SELECT r.id_trayecto, r.id_lote, t.id_almacen, t.posicion, a.calle, a.numero, a.localidad
             FROM realiza r
             JOIN tiene t ON r.id_trayecto = t.id_trayecto
@@ -73,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "<tr><th>ID Trayecto</th><th>ID Lote</th><th>ID Almacen</th><th>Posición</th><th>Calle</th><th>Número</th><th>Localidad</th></tr>";
 
             while ($row = $result->fetch_assoc()) {
-                // Populate the hidden inputs with values from the result set
+                
                 echo "<tr>";
                 echo "<td>" . $row["id_trayecto"] . "</td>";
                 echo "<td>" . $row["id_lote"] . "</td>";
@@ -84,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "<td>" . $row["localidad"] . "</td>";
                 echo "</tr>";
 
-                // Store values for use in the form
+                
                 $id_lote = $row["id_lote"];
                 $id_trayecto = $row["id_trayecto"];
                 $id_almacen = $row["id_almacen"];
@@ -92,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             echo "</table>";
 
-            // Form for processing selected data
+           
             echo "<input type='hidden' name='id_lote' value='$id_lote'>";
             echo "<input type='hidden' name='id_trayecto' value='$id_trayecto'>";
             echo "<input type='hidden' name='id_almacen' value='$id_almacen'>";
@@ -156,15 +184,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "</table>";
         echo "</div>";
 
-        // Cerrar el statement, pero no la conexión
+        
         $stmtDireccion->close();
     }
 }
 
-// Cerrar la conexión fuera de las condiciones
+
 $conn->close();
 ?>
-        <!-- Resto del contenido -->
+        
     </main>
     <footer>
     <div class="container">

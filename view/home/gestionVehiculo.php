@@ -5,17 +5,15 @@
 <?php
 session_start();
 
-// Verificar si el usuario ha iniciado sesión y es de tipo "admin"
 if (empty($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'admin') {
-    // Redirigir a otra página (puedes cambiar la ruta según tus necesidades)
     header("Location: acceso_denegado.php");
-    exit(); // Asegúrate de detener la ejecución del script después de la redirección
+    exit(); 
 }
 ?>
 <main class="container p-4">
   <div class="row">
     <div class="col-md-4">
-      <!-- MESSAGES -->
+      
 
       <?php if (isset($_SESSION['message'])) { ?>
       <div class="alert alert-<?= $_SESSION['message_type']?> alert-dismissible fade show" role="alert">
@@ -26,7 +24,7 @@ if (empty($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'admin') {
       </div>
       <?php session_unset(); } ?>
 
-      <!-- ADD TASK FORM -->
+     
       <div class="card card-body">
         <form action="save_vehiculo.php" method="POST">
           <div class="form-group">

@@ -110,7 +110,6 @@ if (isset($_POST['update'])) {
 </div>
 
 <?php
-// Mostrar tabla de dirección
 $queryDireccion = "SELECT A.id_almacen, A.localidad, L.departamento
 FROM almacen AS A
 INNER JOIN localidad AS L ON A.localidad = L.localidad;";
@@ -118,7 +117,7 @@ $resultDireccion = mysqli_query($conn, $queryDireccion);
 ?>
 <div>
   <h2>Almacenes</h2>
-  <table>
+  <table class="table table-bordered tabla-paquetes">
     <thead>
       <tr>
         <th>ID Almacen</th>

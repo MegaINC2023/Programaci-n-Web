@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("config/usersDB.php");
 
 if (isset($_GET['matricula']) && isset($_GET['id_paquete'])) {

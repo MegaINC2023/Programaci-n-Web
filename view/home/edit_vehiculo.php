@@ -1,9 +1,9 @@
 <?php
 session_start();
 if (empty($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'admin') {
-    // Redirigir a otra página (puedes cambiar la ruta según tus necesidades)
+    
     header("Location: acceso_denegado.php");
-    exit(); // Asegúrate de detener la ejecución del script después de la redirección
+    exit();
 }
 ?>
 <?php
@@ -143,7 +143,7 @@ $resultLotesSinAsignar = mysqli_query($conn, $queryLotesSinAsignar);
 
 <div>
   <h2>Trayecto</h2>
-  <table>
+  <table class="table table-bordered tabla-paquetes">
     <thead>
       <tr>
         <th>ID Trayecto</th>

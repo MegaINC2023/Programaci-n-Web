@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include('config\usersDB.php');
 
 if (isset($_POST['save_usuario'])) {

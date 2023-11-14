@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("config/usersDB.php");
 
 if (isset($_POST['matricula']) && isset($_POST['id_lote']) && isset($_POST['id_trayecto']) && isset($_POST['id_almacen'])) {

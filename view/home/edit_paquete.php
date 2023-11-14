@@ -1,11 +1,10 @@
 <?php
 session_start();
 
-// Verificar si el usuario ha iniciado sesión y es de tipo "admin" o "almacenista"
+
 if (empty($_SESSION['usuario']) || ($_SESSION['tipo_usuario'] !== 'admin' && $_SESSION['tipo_usuario'] !== 'almacenista')) {
-    // Redirigir a otra página (puedes cambiar la ruta según tus necesidades)
     header("Location: acceso_denegado.php");
-    exit(); // Asegúrate de detener la ejecución del script después de la redirección
+    exit(); 
 }
 ?>
 <?php
@@ -14,12 +13,12 @@ include("config/usersDB.php");
 if (isset($_GET['id_paquete'])) {
   $id_paquete = $_GET['id_paquete'];
 
-  // Realizamos una consulta para obtener los datos actuales del paquete y la dirección
+ 
   $query = "SELECT paquete.*, direccion.calle, direccion.numero, direccion.localidad FROM paquete JOIN direccion ON paquete.id_paquete = direccion.id_paquete WHERE paquete.id_paquete = $id_paquete";
   $result = mysqli_query($conn, $query);
   
   if ($row = mysqli_fetch_assoc($result)) {
-      // Asignamos los valores a las variables
+      
       $estado = $row['estado'];
       $tipo = $row['tipo'];
       $fragil = $row['fragil'];
@@ -31,7 +30,7 @@ if (isset($_GET['id_paquete'])) {
 if (isset($_POST['update'])) {
     $id_paquete = $_GET['id_paquete'];
 
-    // Recopilamos los datos del formulario
+    
     $estado = $_POST['estado'];
     $tipo = $_POST['tipo'];
     $fragil = $_POST['fragil'];
@@ -39,33 +38,33 @@ if (isset($_POST['update'])) {
     $numero = $_POST['numero'];
     $localidad = $_POST['localidad'];
 
-    // Realizamos una consulta para verificar qué campos se han modificado
+    
     $query = "SELECT estado, tipo, fragil FROM paquete WHERE id_paquete = $id_paquete";
     $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);
 
-    // Verificamos y actualizamos los campos en la tabla "paquete" si es necesario
+   
     if ($row['estado'] != $estado || $row['tipo'] != $tipo || $row['fragil'] != $fragil) {
         $update_query = "UPDATE paquete SET estado = '$estado', tipo = '$tipo', fragil = '$fragil' WHERE id_paquete = $id_paquete";
         mysqli_query($conn, $update_query);
     }
 
-    // Realizamos una consulta para verificar qué campos se han modificado en la tabla "direccion"
+    
     $query = "SELECT calle, numero, localidad FROM direccion WHERE id_paquete = $id_paquete";
     $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);
 
-    // Verificamos y actualizamos los campos en la tabla "direccion" si es necesario
+    
     if ($row['calle'] != $calle || $row['numero'] != $numero || $row['localidad'] != $localidad) {
         $update_query = "UPDATE direccion SET calle = '$calle', numero = '$numero', localidad = '$localidad' WHERE id_paquete = $id_paquete";
         mysqli_query($conn, $update_query);
     }
 
-    // Redireccionamos o mostramos un mensaje de éxito
+    
     $_SESSION['message'] = 'Cambios guardados exitosamente';
     $_SESSION['message_type'] = 'success';
 
-    header('Location: gestionPaquete.php'); // Cambia "index.php" a la página a la que desees redirigir después de guardar.
+    header('Location: gestionPaquete.php');
 }
 ?>
 <?php include('includes\header.php'); ?>
