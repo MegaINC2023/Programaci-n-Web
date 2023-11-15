@@ -6,7 +6,7 @@ if (isset($_GET['id_lote'])) {
     $id_lote = $_GET['id_lote'];
 
     
-    $delete_realiza_query = "DELETE FROM realiza WHERE id_lote = '$id_lote'";
+    $delete_realiza_query = "DELETE FROM Realiza WHERE id_lote = '$id_lote'";
     $delete_realiza_result = mysqli_query($conn, $delete_realiza_query);
 
     if ($delete_realiza_result) {

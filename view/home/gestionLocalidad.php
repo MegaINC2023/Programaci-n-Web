@@ -51,7 +51,7 @@ if (empty($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'admin') {
         <tbody>
 
           <?php
-          $query = "SELECT * FROM localidad";
+          $query = "SELECT * FROM Localidad";
           $result_tasks = mysqli_query($conn, $query);    
 
           while($row = mysqli_fetch_assoc($result_tasks)) { ?>

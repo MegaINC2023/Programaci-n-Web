@@ -1,5 +1,5 @@
 <?php
-    require("../view/home/procesarformulario.php");
+    require("../home/procesarformulario.php");
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +49,11 @@
       <nav class="navbar" data-navbar>
         <ul class="navbar-list">
 
-
+          <li class="navbar-item">
+            <span class="en"> English </span>
+            <input type="checkbox" class="check" checked>
+            <span class="es"> Español </span>
+          </li>
 
           <li class="navbar-item">
             <a href="seguimiento.php" class="navbar-link">Tracking</a>
@@ -263,6 +267,20 @@
       </div>
     </div>
   </footer>
+  <script>
+    var check=document.querySelector(".check");
+check.addEventListener('click',idioma);
+
+function idioma (){
+   let id=check.cheched;
+   if(id==true) {
+    location.href="contacto.php";
+   }else{
+        location.href="../contacto.php"
+   }
+
+}
+</script>
 
   <!-- 
     - #BACK TO TOP
@@ -276,7 +294,6 @@
     - custom js link
   -->
   <script src="../asset/js/script.js"></script>
-  <script src="../asset/js/idiomes.js"></script>
 
   <!-- 
     - ionicon link

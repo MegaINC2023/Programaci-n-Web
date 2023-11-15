@@ -1,8 +1,8 @@
 <?php
 // Conéctate a tu base de datos (modifica esto con tu configuración)
-$servername = "localhost";
-$username = "root";
-$password = "";
+$servername = "192.168.5.50";
+$username = "joaquin.cordano";
+$password = "55426677";
 $dbname = "megainc";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="container">
 
             <!-- Logo -->
-            <a href="index.html" class="logo">
+            <a href="index.php" class="logo">
                 <img src="../asset/imgs/logo.png" width="160" height="50" alt="nel home">
             </a>
 
@@ -68,25 +68,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <nav class="navbar" data-navbar>
                 <ul class="navbar-list">
 
-                    <!-- Login Link -->
-                    <li class="navbar-item">
-                        <a href="iniciosesion.php" class="navbar-link">Login</a>
-                    </li>
+                <li class="navbar-item">
+            <span class="en"> English </span>
+            <input type="checkbox" class="check" checked>
+            <span class="es"> Español </span>
+          </li>
+
+
 
                     <!-- Contact Link -->
                     <li class="navbar-item">
                         <a href="contacto.php" class="navbar-link">Contact</a>
                     </li>
 
-                    <!-- FAQs Link -->
-                    <li class="navbar-item">
-                        <a href="#" class="navbar-link">FAQs</a>
-                    </li>
-
-                    <!-- About Us Link -->
-                    <li class="navbar-item">
-                        <a href="#section about" class="navbar-link">About Us</a>
-                    </li>
 
                 </ul>
             </nav>
@@ -281,7 +275,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     </div>
 </footer>
+<script>
+    var check=document.querySelector(".check");
+check.addEventListener('click',idioma);
 
+function idioma (){
+   let id=check.cheched;
+   if(id==true) {
+    location.href="seguimiento.php";
+   }else{
+        location.href="../seguimiento.php"
+   }
+
+}
+</script>
 
     <!-- 
     - #BACK TO TOP

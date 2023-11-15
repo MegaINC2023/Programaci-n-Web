@@ -16,7 +16,7 @@ $distancia= '';
 
 if  (isset($_GET['id_trayecto'])) {
   $id_trayecto = $_GET['id_trayecto'];
-  $query = "SELECT * FROM trayecto WHERE id_trayecto=$id_trayecto";
+  $query = "SELECT * FROM Trayecto WHERE id_trayecto=$id_trayecto";
   $result = mysqli_query($conn, $query);
   if (mysqli_num_rows($result) == 1) {
     $row = mysqli_fetch_array($result);
@@ -89,7 +89,7 @@ if (isset($_POST['update'])) {
         </thead>
         <tbody>
             <?php
-            $queryp = "SELECT * FROM tiene WHERE id_trayecto = $id_trayecto;";
+            $queryp = "SELECT * FROM Tiene WHERE id_trayecto = $id_trayecto;";
             $result_tasks = mysqli_query($conn, $queryp);
 
             while ($row = mysqli_fetch_assoc($result_tasks)) {
@@ -111,8 +111,8 @@ if (isset($_POST['update'])) {
 
 <?php
 $queryDireccion = "SELECT A.id_almacen, A.localidad, L.departamento
-FROM almacen AS A
-INNER JOIN localidad AS L ON A.localidad = L.localidad;";
+FROM Almacen AS A
+INNER JOIN Localidad AS L ON A.localidad = L.localidad;";
 $resultDireccion = mysqli_query($conn, $queryDireccion);
 ?>
 <div>

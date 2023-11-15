@@ -8,8 +8,10 @@ if (isset($_POST['save_almacen'])) {
   $calle = $_POST['calle'];
   $numero = $_POST['numero'];
   $localidad = $_POST['localidad'];
-  $query = "INSERT INTO Almacen(id_almacen, id_empresa, calle, numero, localidad) VALUES ('$id_almacen', '$id_empresa', '$calle', '$numero', '$localidad')";
+
+  $query = "INSERT INTO Almacen (id_empresa, calle, numero, localidad) VALUES ('$id_empresa', '$calle', '$numero', '$localidad')";
   $result = mysqli_query($conn, $query);
+
   if(!$result) {
     die("Query Failed.");
   }

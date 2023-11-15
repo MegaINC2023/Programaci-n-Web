@@ -81,9 +81,9 @@ if (empty($_SESSION['usuario']) || ($_SESSION['tipo_usuario'] !== 'admin' && $_S
         </thead>
         <tbody>
         <?php
-  $query = "SELECT paquete.*, direccion.*
-  FROM paquete
-  JOIN direccion ON paquete.id_paquete = direccion.id_paquete;";
+  $query = "SELECT Paquete.*, Direccion.*
+  FROM Paquete
+  JOIN Direccion ON Paquete.id_paquete = Direccion.id_paquete;";
   $result_tasks = mysqli_query($conn, $query);
 ?>
 

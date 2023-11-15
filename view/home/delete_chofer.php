@@ -4,7 +4,7 @@ include("config\usersDB.php");
 
 if(isset($_GET['cedula'])) {
   $cedula = $_GET['cedula'];
-  $query = "DELETE FROM chofer WHERE cedula = $cedula";
+  $query = "DELETE FROM Chofer WHERE cedula = $cedula";
   $result = mysqli_query($conn, $query);
   if(!$result) {
     die("Query Failed.");

@@ -55,7 +55,7 @@
 
        
 
-        $sql = "SELECT peso, almacen_destino FROM lote WHERE id_lote = $idLote";
+        $sql = "SELECT peso, almacen_destino FROM Lote WHERE id_lote = $idLote";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -67,7 +67,7 @@
             echo "No se encontraron resultados para el ID del lote ingresado.";
         }
 
-        $sql = "SELECT id_paquete FROM pertenece WHERE id_lote = $idLote";
+        $sql = "SELECT id_paquete FROM Pertenece WHERE id_lote = $idLote";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {

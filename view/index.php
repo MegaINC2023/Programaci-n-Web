@@ -47,7 +47,26 @@
 
       <nav class="navbar" data-navbar>
         <ul class="navbar-list">
+        <li class="navbar-item">
+            <span class="en"> English </span>
+            <input type="checkbox" class="check" checked>
+            <span class="es"> Español </span>
+          </li>
 
+          <script>
+    var check=document.querySelector(".check");
+check.addEventListener('click',idioma);
+
+function idioma (){
+   let id=check.cheched;
+   if(id==true) {
+    location.href="index.php";
+   }else{
+        location.href="eng/index.php"
+   }
+
+}
+</script>
 
 
           <li class="navbar-item">
@@ -77,7 +96,7 @@
           <span class="span">+598 92 173 072</span>
         </a>
 
-          <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+         
         </a>
 
       </div>

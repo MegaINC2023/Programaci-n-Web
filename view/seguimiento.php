@@ -1,8 +1,8 @@
 <?php
 // Conéctate a tu base de datos (modifica esto con tu configuración)
-$servername = "localhost";
-$username = "root";
-$password = "";
+$servername = "192.168.5.50";
+$username = "joaquin.cordano";
+$password = "55426677";
 $dbname = "megainc";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -17,12 +17,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_paquete = $_POST["id_paquete"];
     
     // Realiza una consulta SQL para obtener el estado del paquete
-    $sql = "SELECT estado FROM paquete WHERE id_paquete = $id_paquete";
+    $sql = "SELECT Estado FROM Paquete WHERE id_paquete = $id_paquete";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
       $row = $result->fetch_assoc();
-      $estado = $row["estado"];
+      $estado = $row["Estado"];
   }
 }
     // Cierra la conexión a la base de datos
@@ -77,14 +77,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <img src="asset/imgs/logo.png" width="160" height="50" alt="nel home">
       </a>
 
+
       <nav class="navbar" data-navbar>
         <ul class="navbar-list">
 
+            <li class="navbar-item">
+            <span class="en"> English </span>
+            <input type="checkbox" class="check" checked>
+            <span class="es"> Español </span>
+          </li>
+ 
 
 
+  <script>
+    var check=document.querySelector(".check");
+check.addEventListener('click',idioma);
+
+function idioma (){
+   let id=check.cheched;
+   if(id==true) {
+    location.href="seguimiento.php";
+   }else{
+        location.href="eng/seguimiento.php"
+   }
+
+}
+</script>
           <li class="navbar-item">
             <a href="contacto.php" class="navbar-link">Contacto</a>
           </li>
+
+
 
         </ul>
       </nav>
@@ -109,9 +132,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <ion-icon name="menu-outline" aria-hidden="true" class="open"></ion-icon>
         <ion-icon name="close-outline" aria-hidden="true" class="close"></ion-icon>
       </button>
-
     </div>
   </header>
+
 
 
 

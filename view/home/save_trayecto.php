@@ -7,7 +7,7 @@ if (isset($_POST['save_trayecto'])) {
   $origen = $_POST['origen'];
   $destino = $_POST['destino'];
   $distancia = $_POST['distancia'];
-  $query = "INSERT INTO trayecto(id_trayecto, origen, destino, distancia) VALUES ('$id_trayecto', '$origen', '$destino', '$distancia')";
+  $query = "INSERT INTO Trayecto (origen, destino, distancia) VALUES ('$origen', '$destino', '$distancia')";
   $result = mysqli_query($conn, $query);
   if(!$result) {
     die("Query Failed.");

@@ -14,7 +14,7 @@ if (isset($_GET['id_paquete'])) {
   $id_paquete = $_GET['id_paquete'];
 
  
-  $query = "SELECT paquete.*, direccion.calle, direccion.numero, direccion.localidad FROM paquete JOIN direccion ON paquete.id_paquete = direccion.id_paquete WHERE paquete.id_paquete = $id_paquete";
+  $query = "SELECT Paquete.*, Direccion.calle, Direccion.numero, Direccion.localidad FROM Paquete JOIN Direccion ON Paquete.id_paquete = Direccion.id_paquete WHERE Paquete.id_paquete = $id_paquete";
   $result = mysqli_query($conn, $query);
   
   if ($row = mysqli_fetch_assoc($result)) {
@@ -39,24 +39,24 @@ if (isset($_POST['update'])) {
     $localidad = $_POST['localidad'];
 
     
-    $query = "SELECT estado, tipo, fragil FROM paquete WHERE id_paquete = $id_paquete";
+    $query = "SELECT estado, tipo, fragil FROM Paquete WHERE id_paquete = $id_paquete";
     $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);
 
    
     if ($row['estado'] != $estado || $row['tipo'] != $tipo || $row['fragil'] != $fragil) {
-        $update_query = "UPDATE paquete SET estado = '$estado', tipo = '$tipo', fragil = '$fragil' WHERE id_paquete = $id_paquete";
+        $update_query = "UPDATE Paquete SET estado = '$estado', tipo = '$tipo', fragil = '$fragil' WHERE id_paquete = $id_paquete";
         mysqli_query($conn, $update_query);
     }
 
     
-    $query = "SELECT calle, numero, localidad FROM direccion WHERE id_paquete = $id_paquete";
+    $query = "SELECT calle, numero, localidad FROM Direccion WHERE id_paquete = $id_paquete";
     $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);
 
     
     if ($row['calle'] != $calle || $row['numero'] != $numero || $row['localidad'] != $localidad) {
-        $update_query = "UPDATE direccion SET calle = '$calle', numero = '$numero', localidad = '$localidad' WHERE id_paquete = $id_paquete";
+        $update_query = "UPDATE Direccion SET calle = '$calle', numero = '$numero', localidad = '$localidad' WHERE id_paquete = $id_paquete";
         mysqli_query($conn, $update_query);
     }
 

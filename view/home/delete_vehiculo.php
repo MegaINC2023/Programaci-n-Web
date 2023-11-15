@@ -20,7 +20,7 @@ if(isset($_GET['matricula'])) {
 
     
     
-    $query5 = "DELETE FROM realiza WHERE matricula = '$matricula'";
+    $query5 = "DELETE FROM Realiza WHERE matricula = '$matricula'";
     $query3 = "DELETE FROM Camion WHERE matricula = '$matricula'";
     $query4 = "DELETE FROM Vehiculo WHERE matricula = '$matricula'";
     

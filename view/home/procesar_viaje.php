@@ -13,7 +13,7 @@ if (isset($_POST['viajar'])) {
     $id_almacen = $_POST['input_id_almacen'];
     $id_trayecto = $_POST['input_id_trayecto'];
     
-    $sql = "INSERT INTO viaja (id_lote, id_almacen, id_trayecto, fecha_llegada, hora_llegada) VALUES (?, ?, ?, NOW(), NOW())";
+    $sql = "INSERT INTO Viaja (id_lote, id_almacen, id_trayecto, fecha_llegada, hora_llegada) VALUES (?, ?, ?, NOW(), NOW())";
    
     $stmt = $conn->prepare($sql);
     

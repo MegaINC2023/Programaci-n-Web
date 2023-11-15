@@ -83,9 +83,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (strpos($matricula, "TM") === false) {
         
         $sql = "SELECT r.id_trayecto, r.id_lote, t.id_almacen, t.posicion, a.calle, a.numero, a.localidad
-            FROM realiza r
-            JOIN tiene t ON r.id_trayecto = t.id_trayecto
-            JOIN almacen a ON t.id_almacen = a.id_almacen
+            FROM Realiza r
+            JOIN Tiene t ON r.id_trayecto = t.id_trayecto
+            JOIN Almacen a ON t.id_almacen = a.id_almacen
             WHERE r.matricula = ?";
 
         $stmt = $conn->prepare($sql);
@@ -149,11 +149,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             d.calle,
             d.numero
             FROM 
-            entrega e
+            Entrega e
             JOIN 
-            paquete p ON e.id_paquete = p.id_paquete
+            Paquete p ON e.id_paquete = p.id_paquete
             JOIN 
-            direccion d ON p.id_paquete = d.id_paquete
+            Direccion d ON p.id_paquete = d.id_paquete
             WHERE 
             e.hora_entrega IS NULL
             AND e.matricula = ?";

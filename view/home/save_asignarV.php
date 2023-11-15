@@ -9,7 +9,7 @@ if (isset($_POST['matricula']) && isset($_POST['id_lote']) && isset($_POST['id_t
     $id_almacen = $_POST['id_almacen'];
 
     // Realiza la inserción en la tabla 'realiza'
-    $insert_realiza_query = "INSERT INTO realiza (matricula, id_lote, id_trayecto, id_almacen) VALUES ('$matricula', '$id_lote', '$id_trayecto', '$id_almacen')";
+    $insert_realiza_query = "INSERT INTO Realiza (matricula, id_lote, id_trayecto, id_almacen) VALUES ('$matricula', '$id_lote', '$id_trayecto', '$id_almacen')";
     $insert_realiza_result = mysqli_query($conn, $insert_realiza_query);
 
     if ($insert_realiza_result) {

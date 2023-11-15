@@ -17,7 +17,7 @@ $apellido= '';
 
 if  (isset($_GET['cedula'])) {
   $cedula = $_GET['cedula'];
-  $query = "SELECT * FROM chofer WHERE cedula=$cedula";
+  $query = "SELECT * FROM Chofer WHERE cedula=$cedula";
   $result = mysqli_query($conn, $query);
   if (mysqli_num_rows($result) == 1) {
     $row = mysqli_fetch_array($result);
@@ -37,7 +37,7 @@ if (isset($_POST['update'])) {
   
 
 
-  $query = "UPDATE chofer set licencia = '$licencia', nombre = '$nombre', apellido = '$apellido' WHERE cedula=$cedula";
+  $query = "UPDATE Chofer set licencia = '$licencia', nombre = '$nombre', apellido = '$apellido' WHERE cedula=$cedula";
   mysqli_query($conn, $query);
   $_SESSION['message'] = 'Se modifico correctamente';
   $_SESSION['message_type'] = 'warning';
@@ -89,7 +89,7 @@ if (isset($_POST['update'])) {
         <tbody>
 
           <?php
-          $queryp = "SELECT matricula FROM maneja WHERE cedula = $cedula";
+          $queryp = "SELECT matricula FROM Maneja WHERE cedula = $cedula";
           $result_tasks = mysqli_query($conn, $queryp);    
 
           while ($row = mysqli_fetch_assoc($result_tasks)) {
@@ -110,8 +110,8 @@ if (isset($_POST['update'])) {
 
       <?php
 $queryDireccion = "SELECT matricula
-FROM camion
-WHERE matricula NOT IN (SELECT matricula FROM maneja);";
+FROM Camion
+WHERE matricula NOT IN (SELECT matricula FROM Maneja);";
 $resultDireccion = mysqli_query($conn, $queryDireccion);
 ?>
 <div>

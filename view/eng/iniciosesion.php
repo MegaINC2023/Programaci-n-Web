@@ -7,9 +7,9 @@ if (!empty($_SESSION['usuario'])) {
 }
 
 // Configuración de la base de datos
-$host = "localhost";
-$usuario = "root";
-$contrasena = "";
+$host = "192.168.5.50";
+$usuario = "joaquin.cordano";
+$contrasena = "55426677";
 $base_de_datos = "megainc";
 
 // Conexión a la base de datos
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contraseña = $_POST['contraseña'];
 
     // Consulta SQL con consulta preparada para prevenir inyección SQL
-    $consulta = $conexion->prepare("SELECT contraseña, tipo_de_usuario FROM login WHERE cedula = ?");
+    $consulta = $conexion->prepare("SELECT contraseña, tipo_de_usuario FROM Login WHERE cedula = ?");
     $consulta->bind_param("s", $cedula);
     $consulta->execute();
     $consulta->store_result();
@@ -45,17 +45,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Redirigir según el tipo de usuario
             switch ($tipo_usuario) {
                 case 'admin':
-                    header('Location: view/home/admin_page.php');
+                    header('Location: ../home/pagina_admin.php');
                     exit();
                 case 'chofer':
-                    header('Location: view/home/driver_page.php');
+                    header('Location: ../home/camionero.php');
                     exit();
                 case 'almacenista':
-                    header('Location: view/home/warehouse_page.php');
+                    header('Location: ../home/página_almacenista.php');
                     exit();
                 default:
                     // Redirigir a una página por defecto
-                    header('Location: view/home/default_page.php');
+                    header('Location: ../home/default_page.php');
                     exit();
             }
         } else {
@@ -105,7 +105,7 @@ $conexion->close();
     <!-- 
     - custom font link
     -->
-    <link rel="stylesheet" href="asset/font/font.css">
+    <link rel="stylesheet" href="../asset/font/font.css">
 </head>
 
 <body id="top">
@@ -141,7 +141,7 @@ $conexion->close();
                 // ... Otros elementos de la barra de navegación ...
 
                 echo '<li class="navbar-item">';
-                echo '<a href="view\home\logout.php" class="navbar-link">Cerrar Sesión</a>';
+                echo '<a href="..\home\logout.php" class="navbar-link">Cerrar Sesión</a>';
                 echo '</li>';
 
                 // Cierra los elementos del encabezado
@@ -158,12 +158,20 @@ $conexion->close();
 
                 // ... Otros elementos de la barra de navegación ...
 
+                   
+                echo  '<li class="navbar-item">';
+                echo  '<span class="en"> English </span>';
+                echo  '<input type="checkbox" class="check" checked>';
+                echo  '<span class="es"> Español </span>';
+                echo '</li>';
+
+
                 echo '<li class="navbar-item">';
-                echo '<a href="seguimiento.php" class="navbar-link">Tracking</a>';
+                echo '<a href="../seguimiento.php" class="navbar-link">Tracking</a>';
                 echo '</li>';
 
                 echo '<li class="navbar-item">';
-                echo '<a href="contacto.php" class="navbar-link">Contact</a>';
+                echo '<a href="../contacto.php" class="navbar-link">Contact</a>';
                 echo '</li>';
 
 
@@ -176,11 +184,6 @@ $conexion->close();
                 echo '<span class="span">+598 92 173 072</span>';
                 echo '</a>';
 
-                echo '<a href="iniciosesion.php" class="btn btn-primary">';
-                echo '<span class="span">Login</span>';
-                echo '<ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>';
-                echo '</a>';
-
                 echo '</div>';
 
                 echo '<button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>';
@@ -191,6 +194,22 @@ $conexion->close();
                 echo '</div>';
             }
             ?>
+
+
+          <script>
+    var check=document.querySelector(".check");
+check.addEventListener('click',idioma);
+
+function idioma (){
+   let id=check.cheched;
+   if(id==true) {
+    location.href="iniciosesion.php";
+   }else{
+        location.href="../iniciosesion.php"
+   }
+
+}
+</script>
     </header>
 
     <main>

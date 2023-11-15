@@ -15,7 +15,7 @@ $almacen_destino= '';
 
 if  (isset($_GET['id_lote'])) {
   $id_lote = $_GET['id_lote'];
-  $query = "SELECT * FROM lote WHERE id_lote=$id_lote";
+  $query = "SELECT * FROM Lote WHERE id_lote=$id_lote";
   $result = mysqli_query($conn, $query);
   if (mysqli_num_rows($result) == 1) {
     $row = mysqli_fetch_array($result);
@@ -32,7 +32,7 @@ if (isset($_POST['update'])) {
   $peso = $_POST['peso'];
   $almacen_destino = $_POST['almacen_destino'];
 
-  $query = "UPDATE lote set estado = '$estado', peso = '$peso', almacen_destino = '$almacen_destino'  WHERE id_lote=$id_lote";
+  $query = "UPDATE Lote set estado = '$estado', peso = '$peso', almacen_destino = '$almacen_destino'  WHERE id_lote=$id_lote";
   mysqli_query($conn, $query);
   $_SESSION['message'] = 'Se modifico correctamente';
   $_SESSION['message_type'] = 'warning';
@@ -92,7 +92,7 @@ if (isset($_POST['update'])) {
         <tbody>
 
           <?php
-          $queryp = "SELECT id_paquete FROM pertenece WHERE id_lote = $id_lote";
+          $queryp = "SELECT id_paquete FROM Pertenece WHERE id_lote = $id_lote";
           $result_tasks = mysqli_query($conn, $queryp);    
 
           while ($row = mysqli_fetch_assoc($result_tasks)) {
@@ -115,7 +115,7 @@ if (isset($_POST['update'])) {
 $queryDireccion = "SELECT D.id_paquete, D.localidad, L.departamento
 FROM Direccion AS D
 INNER JOIN Localidad AS L ON D.localidad = L.localidad
-WHERE D.id_paquete NOT IN (SELECT id_paquete FROM pertenece);";
+WHERE D.id_paquete NOT IN (SELECT id_paquete FROM Pertenece);";
 $resultDireccion = mysqli_query($conn, $queryDireccion);
 ?>
 <div class="col-md-4 mx-auto">

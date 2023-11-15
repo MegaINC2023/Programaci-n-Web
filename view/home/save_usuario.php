@@ -8,7 +8,7 @@ if (isset($_POST['save_usuario'])) {
   $contraseña = $_POST['contraseña'];
   $hashed_password = password_hash($contraseña, PASSWORD_DEFAULT);
   $tipo_de_usuario = $_POST['tipo_de_usuario'];
-  $query = "INSERT INTO login(id_usuario, cedula, contraseña, tipo_de_usuario) VALUES ('$id_usuario', '$cedula', '$hashed_password', '$tipo_de_usuario')";
+  $query = "INSERT INTO Login ( cedula, contraseña, tipo_de_usuario) VALUES ( '$cedula', '$hashed_password', '$tipo_de_usuario')";
   $result = mysqli_query($conn, $query);
   if(!$result) {
     die("Query Failed.");

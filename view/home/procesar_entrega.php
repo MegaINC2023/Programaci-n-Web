@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_paquete = $_POST["id_paquete"];
 
     
-    $sqlVerificar = "SELECT matricula, hora_entrega, fecha_entrega FROM entrega WHERE matricula = ? AND id_paquete = ?";
+    $sqlVerificar = "SELECT matricula, hora_entrega, fecha_entrega FROM Entrega WHERE matricula = ? AND id_paquete = ?";
     $stmtVerificar = $conn->prepare($sqlVerificar);
     $stmtVerificar->bind_param("ss", $matricula, $id_paquete);
     $stmtVerificar->execute();
@@ -22,13 +22,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
        
         if ($hora_entrega === null && $fecha_entrega === null) {
             
-            $sqlUpdate = "UPDATE entrega SET hora_entrega = NOW(), fecha_entrega = NOW() WHERE matricula = ? AND id_paquete = ?";
+            $sqlUpdate = "UPDATE Entrega SET hora_entrega = NOW(), fecha_entrega = NOW() WHERE matricula = ? AND id_paquete = ?";
             $stmtUpdate = $conn->prepare($sqlUpdate);
             $stmtUpdate->bind_param("ss", $matricula, $id_paquete);
 
             if ($stmtUpdate->execute()) {
                 
-                $sqlUpdatePaquete = "UPDATE paquete SET estado = 'Entregado' WHERE id_paquete = ?";
+                $sqlUpdatePaquete = "UPDATE Paquete SET estado = 'Entregado' WHERE id_paquete = ?";
                 $stmtUpdatePaquete = $conn->prepare($sqlUpdatePaquete);
                 $stmtUpdatePaquete->bind_param("s", $id_paquete);
 
@@ -49,13 +49,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } else {
         
-        $sqlInsert = "INSERT INTO entrega (matricula, id_paquete, hora_entrega, fecha_entrega) VALUES (?, ?, NOW(), NOW())";
+        $sqlInsert = "INSERT INTO Entrega (matricula, id_paquete, hora_entrega, fecha_entrega) VALUES (?, ?, NOW(), NOW())";
         $stmtInsert = $conn->prepare($sqlInsert);
         $stmtInsert->bind_param("ss", $matricula, $id_paquete);  
 
         if ($stmtInsert->execute()) {
             
-            $sqlUpdatePaquete = "UPDATE paquete SET estado = 'Entregado' WHERE id_paquete = ?";
+            $sqlUpdatePaquete = "UPDATE Paquete SET estado = 'Entregado' WHERE id_paquete = ?";
             $stmtUpdatePaquete = $conn->prepare($sqlUpdatePaquete);
             $stmtUpdatePaquete->bind_param("s", $id_paquete);
 

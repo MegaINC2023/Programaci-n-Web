@@ -9,7 +9,7 @@ if (isset($_GET['id_paquete'])) {
     mysqli_autocommit($conn, false);
 
     
-    $delete_pertenece_query = "DELETE FROM pertenece WHERE id_paquete = $id_paquete";
+    $delete_pertenece_query = "DELETE FROM Pertenece WHERE id_paquete = $id_paquete";
     $delete_pertenece_result = mysqli_query($conn, $delete_pertenece_query);
 }
 

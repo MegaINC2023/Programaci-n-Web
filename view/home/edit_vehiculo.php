@@ -114,7 +114,7 @@ if (isset($_POST['update'])) {
         <tbody>
             <?php
             
-            $queryp = "SELECT * FROM realiza WHERE matricula = '$matricula'";
+            $queryp = "SELECT * FROM Realiza WHERE matricula = '$matricula'";
             $result_tasks = mysqli_query($conn, $queryp);
 
             while ($row = mysqli_fetch_assoc($result_tasks)) {
@@ -138,8 +138,8 @@ $queryTrayecto = "SELECT id_trayecto, origen, destino FROM trayecto";
 $resultTrayecto = mysqli_query($conn, $queryTrayecto);
 
 $queryLotesSinAsignar = "SELECT l.id_lote, l.almacen_destino
-                         FROM lote AS l
-                         LEFT JOIN realiza AS r ON l.id_lote = r.id_lote
+                         FROM Lote AS l
+                         LEFT JOIN Realiza AS r ON l.id_lote = r.id_lote
                          WHERE r.id_lote IS NULL";
 $resultLotesSinAsignar = mysqli_query($conn, $queryLotesSinAsignar);
 ?>

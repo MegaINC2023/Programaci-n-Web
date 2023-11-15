@@ -13,7 +13,7 @@ $departamento = '';
 
 if (isset($_GET['localidad'])) {
   $localidad = $_GET['localidad'];
-  $query = "SELECT * FROM localidad WHERE localidad='$localidad'"; 
+  $query = "SELECT * FROM Localidad WHERE localidad='$localidad'"; 
   $result = mysqli_query($conn, $query);
   if (mysqli_num_rows($result) == 1) {
     $row = mysqli_fetch_array($result);
@@ -26,7 +26,7 @@ if (isset($_POST['update'])) {
   $newLocalidad = $_POST['new_localidad'];
   $newDepartamento = $_POST['departamento'];
 
-  $query = "UPDATE localidad SET localidad = '$newLocalidad', departamento = '$newDepartamento' WHERE localidad='$localidad'"; 
+  $query = "UPDATE Localidad SET localidad = '$newLocalidad', departamento = '$newDepartamento' WHERE localidad='$localidad'"; 
   mysqli_query($conn, $query);
   $_SESSION['message'] = 'Se modificó correctamente';
   $_SESSION['message_type'] = 'warning';

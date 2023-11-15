@@ -61,7 +61,7 @@ if (empty($_SESSION['usuario']) || ($_SESSION['tipo_usuario'] !== 'admin' && $_S
         <tbody>
 
           <?php
-          $query = "SELECT * FROM almacen";
+          $query = "SELECT * FROM Almacen";
           $result_tasks = mysqli_query($conn, $query);    
 
           while($row = mysqli_fetch_assoc($result_tasks)) { ?>

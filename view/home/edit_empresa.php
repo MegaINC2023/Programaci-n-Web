@@ -12,7 +12,7 @@ $empresa = '';
 
 if (isset($_GET['id_empresa'])) {
   $id_empresa = $_GET['id_empresa'];
-  $query = "SELECT * FROM empresa WHERE id_empresa='$id_empresa'"; 
+  $query = "SELECT * FROM Empresa WHERE id_empresa='$id_empresa'"; 
   $result = mysqli_query($conn, $query);
   if (mysqli_num_rows($result) == 1) {
     $row = mysqli_fetch_array($result);
@@ -25,7 +25,7 @@ if (isset($_POST['update'])) {
   $id_empresa = $_POST['id_empresa']; 
   $empresa = $_POST['empresa'];
 
-  $query = "UPDATE empresa SET empresa = ? WHERE id_empresa = ?";
+  $query = "UPDATE Empresa SET empresa = ? WHERE id_empresa = ?";
   
   $stmt = mysqli_prepare($conn, $query);
   mysqli_stmt_bind_param($stmt, 'si', $empresa, $id_empresa);

@@ -22,7 +22,7 @@ if (empty($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'admin') {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <?php session_unset(); } ?>
+      <?php unset($_SESSION['message']);}?>
 
      
       <div class="card card-body">

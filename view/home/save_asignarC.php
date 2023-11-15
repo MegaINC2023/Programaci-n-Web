@@ -5,7 +5,7 @@ include('config\usersDB.php');
 if (isset($_POST['save_asignarC'])) {
   $cedula = $_POST['cedula'];
   $matricula = $_POST['matricula'];
-  $query = "INSERT INTO maneja(cedula, matricula) VALUES ('$cedula', '$matricula')";
+  $query = "INSERT INTO Maneja(cedula, matricula) VALUES ('$cedula', '$matricula')";
   $result = mysqli_query($conn, $query);
   if(!$result) {
     die("Query Failed.");

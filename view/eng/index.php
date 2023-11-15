@@ -16,7 +16,7 @@
   <!-- 
     - favicon
   -->
-  <link rel="shortcut icon" href="asset/imgs/logo.png" type="image/svg+xml">
+  <link rel="shortcut icon" href="../asset/imgs/logo.png" type="image/svg+xml">
 
   <!-- 
     - custom css link
@@ -80,7 +80,7 @@
       session_start();
       if (!empty($_SESSION['usuario'])) {
         // Si el usuario ha iniciado sesión, mostrar el botón de cerrar sesión
-        echo '<a href="view\home\logout.php" class="btn btn-primary">';
+        echo '<a href="..\home\logout.php" class="btn btn-primary">';
         echo '<span class="span">Log Out</span>';
         echo '</a>';
       } else {
@@ -135,10 +135,10 @@
         <div class="container">
 
           <figure class="about-banner" data-reveal="left">
-            <img src="asset/imgs/camioncito2.jpg" width="380" height="382" loading="lazy" alt="about banner"
+            <img src="../asset/imgs/camioncito2.jpg" width="380" height="382" loading="lazy" alt="about banner"
               class="w-100 img-1">
 
-            <img src="asset/imgs/entrega.jpg" width="347" height="349" loading="lazy" alt="about banner"
+            <img src="../asset/imgs/entrega.jpg" width="347" height="349" loading="lazy" alt="about banner"
               class="w-100 img-2">
           </figure>
 

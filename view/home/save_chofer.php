@@ -7,7 +7,7 @@ if (isset($_POST['save_chofer'])) {
   $licencia = $_POST['licencia'];
   $nombre = $_POST['nombre'];
   $apellido = $_POST['apellido'];
-  $query = "INSERT INTO chofer(cedula, licencia, nombre, apellido) VALUES ('$cedula', '$licencia', '$nombre', '$apellido')";
+  $query = "INSERT INTO Chofer (cedula, licencia, nombre, apellido) VALUES ('$cedula', '$licencia', '$nombre', '$apellido')";
   $result = mysqli_query($conn, $query);
   if(!$result) {
     die("Query Failed.");

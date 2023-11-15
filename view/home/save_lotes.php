@@ -7,7 +7,7 @@ if (isset($_POST['save_lotes'])) {
   $estado = $_POST['estado'];
   $peso = $_POST['peso'];
   $almacen_destino = $_POST['almacen_destino'];
-  $query = "INSERT INTO lote(id_lote, estado, peso, almacen_destino) VALUES ('$id_lote', '$estado', '$peso', '$almacen_destino')";
+  $query = "INSERT INTO Lote (estado, peso, almacen_destino) VALUES ('$estado', '$peso', '$almacen_destino')";
   $result = mysqli_query($conn, $query);
   if(!$result) {
     die("Query Failed.");

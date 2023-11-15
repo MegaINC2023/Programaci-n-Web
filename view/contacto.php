@@ -44,6 +44,8 @@
   <header class="header" data-header>
     <div class="container">
 
+   
+          
       <a href="index.php" class="logo">
         <img src="asset/imgs/logo.png" width="160" height="50" alt="nel home">
       </a>
@@ -51,7 +53,12 @@
       <nav class="navbar" data-navbar>
         <ul class="navbar-list">
 
-
+        <li class="navbar-item">
+            <span class="en"> English </span>
+            <input type="checkbox" class="check" checked>
+            <span class="es"> Español </span>
+          </li>
+          
           <li class="navbar-item">
             <a href="seguimiento.php" class="navbar-link">Seguimiento</a>
           </li>
@@ -111,14 +118,6 @@ include("home/procesarformulario.php")
        
     </div>
 </section>
-
-
-
-
-
-
-
-     
 
 
       <!-- 
@@ -283,7 +282,20 @@ include("home/procesarformulario.php")
 
 
 
+  <script>
+    var check=document.querySelector(".check");
+check.addEventListener('click',idioma);
 
+function idioma (){
+   let id=check.cheched;
+   if(id==true) {
+    location.href="contacto.php";
+   }else{
+        location.href="eng/contacto.php"
+   }
+
+}
+</script>
 
   <!-- 
     - #BACK TO TOP

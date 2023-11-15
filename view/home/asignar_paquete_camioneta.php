@@ -104,7 +104,7 @@ if (isset($_POST['update'])) {
         <tbody>
             <?php
             
-            $queryp = "SELECT * FROM entrega WHERE matricula = '$matricula'";
+            $queryp = "SELECT * FROM Entrega WHERE matricula = '$matricula'";
             $result_tasks = mysqli_query($conn, $queryp);
 
             while ($row = mysqli_fetch_assoc($result_tasks)) {
@@ -125,10 +125,10 @@ if (isset($_POST['update'])) {
 include('config\usersDB.php');
 
 $query = "SELECT p.id_paquete
-          FROM paquete p
+          FROM Paquete p
           WHERE NOT EXISTS (
               SELECT 1
-              FROM entrega e
+              FROM Entrega e
               WHERE e.id_paquete = p.id_paquete
           )";
 

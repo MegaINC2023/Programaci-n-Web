@@ -37,7 +37,7 @@ if (isset($_POST['update'])) {
   
 
 
-  $query = "UPDATE login set cedula = '$cedula', tipo_de_usuario = '$tipo_de_usuario', contraseña = '$hashed_password' WHERE id_usuario=$id_usuario";
+  $query = "UPDATE Login set cedula = '$cedula', tipo_de_usuario = '$tipo_de_usuario', contraseña = '$hashed_password' WHERE id_usuario=$id_usuario";
   mysqli_query($conn, $query);
   $_SESSION['message'] = 'Se modifico correctamente';
   $_SESSION['message_type'] = 'warning';

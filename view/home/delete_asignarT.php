@@ -8,7 +8,7 @@ if (isset($_GET['id_trayecto']) && isset($_GET['posicion'])) {
 
     mysqli_autocommit($conn, false);
 
-    $delete_tiene_query = "DELETE FROM tiene WHERE id_trayecto = '$id_trayecto' AND posicion = '$posicion'";
+    $delete_tiene_query = "DELETE FROM Tiene WHERE id_trayecto = '$id_trayecto' AND posicion = '$posicion'";
     $delete_tiene_result = mysqli_query($conn, $delete_tiene_query);
 
     if ($delete_tiene_result) {

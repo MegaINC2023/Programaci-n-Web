@@ -7,9 +7,9 @@ if (!empty($_SESSION['usuario'])) {
 }
 
 
-$host = "localhost";
-$usuario = "root";
-$contrasena = "";
+$host = "192.168.5.50";
+$usuario = "joaquin.cordano";
+$contrasena = "55426677";
 $base_de_datos = "megainc";
 
 
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contraseña = $_POST['contraseña'];
 
     
-    $consulta = $conexion->prepare("SELECT contraseña, tipo_de_usuario FROM login WHERE cedula = ?");
+    $consulta = $conexion->prepare("SELECT contraseña, tipo_de_usuario FROM Login WHERE cedula = ?");
     $consulta->bind_param("s", $cedula);
     $consulta->execute();
     $consulta->store_result();
@@ -153,6 +153,13 @@ if (!empty($_SESSION['usuario'])) {
 
     // ... Otros elementos de la barra de navegación ...
 
+
+   echo  '<li class="navbar-item">';
+                echo  '<span class="en"> English </span>';
+                echo  '<input type="checkbox" class="check" checked>';
+                echo  '<span class="es"> Español </span>';
+                echo '</li>';
+
     echo '<li class="navbar-item">';
     echo '<a href="seguimiento.php" class="navbar-link">Seguimiento</a>';
     echo '</li>';
@@ -181,10 +188,24 @@ if (!empty($_SESSION['usuario'])) {
     echo '</div>';
 }
 ?>
+
   </header>
 
 
+  <script>
+    var check=document.querySelector(".check");
+check.addEventListener('click',idioma);
 
+function idioma (){
+   let id=check.cheched;
+   if(id==true) {
+    location.href="iniciosesion.php";
+   }else{
+        location.href="eng/iniciosesion.php"
+   }
+
+}
+</script>
 
 
   <main>
