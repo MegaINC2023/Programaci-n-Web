@@ -2,78 +2,77 @@
 session_start();
 
 if (!empty($_SESSION['usuario'])) {
-    header("Location: panel_control.php");
+    header("Location: acceso_denegado.php");
     exit();
 }
 
-// Configuración de la base de datos
+
 $host = "localhost";
 $usuario = "root";
 $contrasena = "";
 $base_de_datos = "megainc";
 
-// Conexión a la base de datos
+
 $conexion = new mysqli($host, $usuario, $contrasena, $base_de_datos);
 
-// Verificar la conexión
+
 if ($conexion->connect_error) {
     die("Error de conexión a la base de datos: " . $conexion->connect_error);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recuperar las credenciales del formulario
+    
     $cedula = $_POST['cedula'];
     $contraseña = $_POST['contraseña'];
 
-    // Consulta SQL con consulta preparada para prevenir inyección SQL
+    
     $consulta = $conexion->prepare("SELECT contraseña, tipo_de_usuario FROM login WHERE cedula = ?");
     $consulta->bind_param("s", $cedula);
     $consulta->execute();
     $consulta->store_result();
 
-    // Verificar si se encontraron resultados
+    
     if ($consulta->num_rows > 0) {
         $consulta->bind_result($contraseña_hasheada, $tipo_usuario);
         $consulta->fetch();
 
-        // Verificar si la contraseña ingresada coincide con la contraseña hasheada
+        
         if (password_verify($contraseña, $contraseña_hasheada)) {
-            // Contraseña válida, puedes continuar con el manejo de sesiones
+            
             $_SESSION['usuario'] = $cedula;
             $_SESSION['tipo_usuario'] = $tipo_usuario;
 
-            // Redirigir según el tipo de usuario
+            
             switch ($tipo_usuario) {
                 case 'admin':
-                    header('Location: view/home/pagina_admin.php');
+                    header('Location: home/pagina_admin.php');
                     exit();
                 case 'chofer':
-                    header('Location: view/home/camionero.php');
+                    header('Location: home/camionero.php');
                     exit();
                 case 'almacenista':
-                    header('Location: view/home/pagina_almacenista.php');
+                    header('Location: home/pagina_almacenista.php');
                     exit();
                 default:
-                    // Redirigir a una página por defecto
-                    header('Location: view/home/pagina_administracion.php');
+                    header('Location: home/pagina_administracion.php');
                     exit();
             }
         } else {
-            // Las credenciales son incorrectas
+            
             header('Location: iniciosesion.php?error=Credenciales incorrectas. Por favor, intente de nuevo.');
             exit();
         }
     } else {
-        // Usuario no encontrado en la base de datos
+        
         header('Location: iniciosesion.php?error=Usuario no encontrado. Por favor, intente de nuevo.');
         exit();
     }
 
-    // Cierra la consulta
+   
     $consulta->close();
 }
 
-// Cierra la conexión a la base de datos al final del script
+
 $conexion->close();
 ?>
 
@@ -87,26 +86,18 @@ $conexion->close();
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- 
-    - primary meta tags
-  -->
+  
   <title>NEL</title>
   <meta name="title" content="NEL">
   <meta name="description" content="Programa de Gestión Logisitca para Quick Carry">
 
-  <!-- 
-    - favicon
-  -->
+  
   <link rel="shortcut icon" href="asset/imgs/logo.png" type="image/svg+xml">
 
-  <!-- 
-    - custom css link
-  -->
+  
   <link rel="stylesheet" href="asset/css/iniciosesion.css">
 
-  <!-- 
-    - custom font link
-  -->
+  
   <link rel="stylesheet" href="asset/font/font.css">
 
 
@@ -145,7 +136,7 @@ if (!empty($_SESSION['usuario'])) {
     // ... Otros elementos de la barra de navegación ...
 
     echo '<li class="navbar-item">';
-    echo '<a href="view\home\logout.php" class="navbar-link">Cerrar Sesión</a>';
+    echo '<a href="home\logout.php" class="navbar-link">Cerrar Sesión</a>';
     echo '</li>';
 
     // Cierra los elementos del encabezado
@@ -170,13 +161,6 @@ if (!empty($_SESSION['usuario'])) {
     echo '<a href="contacto.php" class="navbar-link">Contacto</a>';
     echo '</li>';
 
-    echo '<li class="navbar-item">';
-    echo '<a href="#" class="navbar-link">Preguntas Frecuentes</a>';
-    echo '</li>';
-
-    echo '<li class="navbar-item">';
-    echo '<a href="#section about" class="navbar-link">Sobre Nosotros</a>';
-    echo '</li>';
 
     echo '</ul>';
     echo '</nav>';
@@ -187,12 +171,7 @@ if (!empty($_SESSION['usuario'])) {
     echo '<span class="span">+598 92 173 072</span>';
     echo '</a>';
 
-    echo '<a href="iniciosesion.php" class="btn btn-primary">';
-    echo '<span class="span">Iniciar Sesion</span>';
-    echo '<ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>';
-    echo '</a>';
-
-    echo '</div>';
+  
 
     echo '<button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>';
     echo '<ion-icon name="menu-outline" aria-hidden="true" class="open"></ion-icon>';

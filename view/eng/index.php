@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -12,7 +11,7 @@
   -->
   <title>NEL</title>
   <meta name="title" content="NEL">
-  <meta name="description" content="Programa de Gestión Logisitca para Quick Carry">
+  <meta name="description" content="Logistics Management Program for Quick Carry">
 
   <!-- 
     - favicon
@@ -22,48 +21,47 @@
   <!-- 
     - custom css link
   -->
-  <link type="text/css" rel="stylesheet" href="asset/css/index.css">
+  <link type="text/css" rel="stylesheet" href="../asset/css/index.css">
 
   <!-- 
     - custom font link
   -->
-  <link rel="stylesheet" href="asset/font/font.css">
+  <link rel="stylesheet" href="../asset/font/font.css">
 </head>
 
-
 <body id="top">
-
 
   <!-- 
     - #HEADER
   -->
-
   <header class="header" data-header>
     <div class="container">
 
       <a href="index.php" class="logo">
-        <img src="asset/imgs/logo.png" width="160" height="50" alt="nel home">
+        <img src="../asset/imgs/logo.png" width="160" height="50" alt="nel home">
       </a>
 
       <nav class="navbar" data-navbar>
         <ul class="navbar-list">
-
-
-
           <li class="navbar-item">
-            <a href="seguimiento.php" class="navbar-link">Seguimiento</a>
+            <span class="en"> English </span>
+            <input type="checkbox" class="check" checked>
+            <span class="es"> Español </span>
+          </li>
+          <li class="navbar-item">
+            <a href="seguimiento.php" class="navbar-link">Tracking</a>
           </li>
 
           <li class="navbar-item">
-            <a href="contacto.php" class="navbar-link">Contacto</a>
+            <a href="contacto.php" class="navbar-link">Contact</a>
           </li>
 
           <li class="navbar-item">
-            <a href="#section service" class="navbar-link">Preguntas Frecuentes</a>
+            <a href="#section service" class="navbar-link">Frequently Asked Questions</a>
           </li>
 
           <li class="navbar-item">
-            <a href="#section about" class="navbar-link">Sobre Nosotros</a>
+            <a href="#section about" class="navbar-link">About Us</a>
           </li>
 
         </ul>
@@ -73,48 +71,39 @@
 
         <a href="tel:+12312345678901" class="contact-number">
           <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
-
           <span class="span">+598 92 173 072</span>
         </a>
 
-          <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
-        </a>
-
       </div>
+
       <?php
-session_start();
+      session_start();
       if (!empty($_SESSION['usuario'])) {
-    // Si el usuario ha iniciado sesión, mostrar el botón de cerrar sesión
-    echo '<a href="view\home\logout.php" class="btn btn-primary">';
-    echo '<span class="span">Cerrar Sesión</span>';
-    echo '</a>';
-} else {
-    // Si el usuario no ha iniciado sesión, mostrar el botón de iniciar sesión
-    echo '<a href="iniciosesion.php" class="btn btn-primary">';
-    echo '<span class="span">Iniciar Sesion</span>';
-    echo '<ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>';
-    echo '</a>';
-}
+        // Si el usuario ha iniciado sesión, mostrar el botón de cerrar sesión
+        echo '<a href="view\home\logout.php" class="btn btn-primary">';
+        echo '<span class="span">Log Out</span>';
+        echo '</a>';
+      } else {
+        // Si el usuario no ha iniciado sesión, mostrar el botón de iniciar sesión
+        echo '<a href="iniciosesion.php" class="btn btn-primary">';
+        echo '<span class="span">Log In</span>';
+        echo '<ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>';
+        echo '</a>';
+      }
 
-echo '</div>';
+      echo '</div>';
 
-echo '<button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>';
-echo '<ion-icon name="menu-outline" aria-hidden="true" class="open"></ion-icon>';
-echo '<ion-icon name="close-outline" aria-hidden="true" class="close"></ion-icon>';
-echo '</button>';
+      echo '<button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>';
+      echo '<ion-icon name="menu-outline" aria-hidden="true" class="open"></ion-icon>';
+      echo '<ion-icon name="close-outline" aria-hidden="true" class="close"></ion-icon>';
+      echo '</button>';
 
-echo '</div>';
-echo '</header>';
-?>
-
-
-
-
+      echo '</div>';
+      echo '</header>';
+      ?>
 
   <main>
     <article>
-
-   
 
       <section class="section hero" aria-label="home">
         <div class="container">
@@ -122,35 +111,26 @@ echo '</header>';
           <div class="hero-content" data-reveal="left">
 
             <h1 class="h1 hero-title">
-              N.E.L. <span class="span">Nimble E-Commerce Logistic</span> 
+              N.E.L. <span class="span">Nimble E-Commerce Logistic</span>
             </h1>
 
-
-       
-
-            <a href="seguimiento.php" class="btn btn-primary" >
-              <span class="span">Sigue tu paquete</span>
-
+            <a href="seguimiento.php" class="btn btn-primary">
+              <span class="span">Track your package</span>
               <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
             </a>
 
           </div>
 
           <figure class="hero-banner" data-reveal="right">
-            <img src="asset/imgs/camioncito.png" width="111" height="76" alt="Camion" class="w-100">
+            <img src="../asset/imgs/camioncito.png" width="111" height="76" alt="Truck" class="w-100">
           </figure>
 
         </div>
       </section>
 
-
-
-
-
       <!-- 
         - #ABOUT
       -->
-
       <section class="section about" id="section about" aria-labelledby="about-label">
         <div class="container">
 
@@ -164,14 +144,14 @@ echo '</header>';
 
           <div class="about-content" data-reveal="right">
 
-            <p class="section-subtitle has-before" id="about-label">Sobre Nosotros</p>
+            <p class="section-subtitle has-before" id="about-label">About Us</p>
 
             <h2 class="h2 section-title">
-              El servicio más rápido de Uruguay
+              The fastest service in Uruguay
             </h2>
 
             <p class="section-text">
-        Entrega al instante
+              Instant delivery
             </p>
 
             <div class="about-wrapper">
@@ -180,12 +160,11 @@ echo '</header>';
 
                 <div class="title-wrapper">
                   <ion-icon name="bonfire-outline" aria-hidden="true"></ion-icon>
-
-                  <h3 class="card-title">Rapida entrega</h3>
+                  <h3 class="card-title">Fast delivery</h3>
                 </div>
 
                 <p class="card-text">
-                  Amamos entregar los paquetes en tiempo yi forma.
+                  We love delivering packages on time and in good condition.
                 </p>
 
               </div>
@@ -194,12 +173,11 @@ echo '</header>';
 
                 <div class="title-wrapper">
                   <ion-icon name="document-text-outline" aria-hidden="true"></ion-icon>
-
-                  <h3 class="card-title">Tus paquetes en las mejores manos</h3>
+                  <h3 class="card-title">Your packages in the best hands</h3>
                 </div>
 
                 <p class="card-text">
-                  Nos preocupa el cuidado de los envios.
+                  We care about the careful handling of shipments.
                 </p>
 
               </div>
@@ -210,21 +188,18 @@ echo '</header>';
 
               <li class="about-item">
                 <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
-
-                <span class="span">Entrega en menos de 1 semana</span>
+                <span class="span">Delivery in less than 1 week</span>
               </li>
 
               <li class="about-item">
                 <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
-
-                <span class="span">Disfrita de una excelente atención personalizada</span>
+                <span class="span">Enjoy excellent personalized attention</span>
               </li>
 
             </ul>
 
             <a href="#" class="btn btn-primary">
-              <span class="span">Lee Más</span>
-
+              <span class="span">Read More</span>
               <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
             </a>
 
@@ -233,28 +208,14 @@ echo '</header>';
         </div>
       </section>
 
-
-
-
-
- 
-
- 
-
-
-
-
-
       <!-- 
-        - #PREGUNTAS FRECUENTES
+        - #FREQUENTLY ASKED QUESTIONS
       -->
-
       <section class="section service" aria-labelledby="service-label">
         <div class="container">
 
-
           <h2 class="h2 section-title" data-reveal>
-            PREGUNTAS FRECUENTES
+            FREQUENTLY ASKED QUESTIONS
           </h2>
 
           <div class="wrapper">
@@ -263,10 +224,9 @@ echo '</header>';
 
               <li class="service-item">
                 <div>
-                  <h3 class="h5 card-title">Vehículos de Última Generación</h3>
-
+                  <h3 class="h5 card-title">Latest Generation Vehicles</h3>
                   <p class="card-text">
-                    Contamos con los mejores camiones.
+                    We have the best trucks.
                   </p>
                 </div>
 
@@ -277,10 +237,9 @@ echo '</header>';
 
               <li class="service-item">
                 <div>
-                  <h3 class="h5 card-title">¿Entregas a cualquier paete del País?</h3>
-
+                  <h3 class="h5 card-title">Do you deliver to any part of the country?</h3>
                   <p class="card-text">
-                    Sí, llegamos hasta a las zonas más remotas del país para llevar su paquete.
+                    Yes, we reach even the most remote areas of the country to deliver your package.
                   </p>
                 </div>
 
@@ -291,10 +250,9 @@ echo '</header>';
 
               <li class="service-item">
                 <div>
-                  <h3 class="h5 card-title">¿Cuánto tarda en llegar mi paquete?</h3>
-
+                  <h3 class="h5 card-title">How long does it take for my package to arrive?</h3>
                   <p class="card-text">
-                    Máximo 72 horas
+                    Maximum 72 hours
                   </p>
                 </div>
 
@@ -309,21 +267,9 @@ echo '</header>';
         </div>
       </section>
 
-
-
-
-
-
-
-
-
-     
-
-
       <!-- 
         - #CONTACT
       -->
-
       <section class="contact" aria-label="contact" data-reveal="right">
         <div class="container">
 
@@ -336,8 +282,7 @@ echo '</header>';
                 </div>
 
                 <div>
-                  <h3 class="h6">Número de Télefono</h3>
-
+                  <h3 class="h6">Phone Number</h3>
                   <a href="tel:+01123457890" class="card-subtitle">+598 92 173 072</a>
                 </div>
               </div>
@@ -350,8 +295,7 @@ echo '</header>';
                 </div>
 
                 <div>
-                  <h3 class="h6">E-Mail </h3>
-
+                  <h3 class="h6">E-Mail</h3>
                   <a href="mailto:voltiinfo@gmail.com" class="card-subtitle">megaincsrl2023@gmail.com</a>
                 </div>
               </div>
@@ -364,9 +308,8 @@ echo '</header>';
                 </div>
 
                 <div>
-                  <h3 class="h6">Nuestra dirección</h3>
-
-                  <address class="card-subtitle"> Rambla 25 de Agosto de 1825 N° 160.</address>
+                  <h3 class="h6">Our Address</h3>
+                  <address class="card-subtitle">Rambla 25 de Agosto de 1825 N° 160.</address>
                 </div>
               </div>
             </li>
@@ -379,140 +322,119 @@ echo '</header>';
     </article>
   </main>
 
-   
-
-
-
-
-
   <!-- 
     - #FOOTER
   -->
-
   <footer class="footer">
     <div class="container">
 
       <div class="footer-top section" data-reveal>
 
-        
-
         <div class="footer-list">
 
-          <p class="h6 has-after">Quick Carry descripcion</p>
+          <p class="h6 has-after">Quick Carry description</p>
 
           <p class="footer-text">
-            
+
           </p>
 
-
-
-            <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+          <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
           </a>
 
         </div>
 
         <ul class="footer-list">
 
+          <ul class="footer-list">
 
-        <ul class="footer-list">
+            <li>
+              <p class="h6 has-after">Quick Contact</p>
+            </li>
 
-          <li>
-            <p class="h6 has-after">Contacto Rápido</p>
-          </li>
+            <li>
+              <address class="footer-text">
+                Rambla 25 de Agosto de 1825 N° 160.
+              </address>
+            </li>
 
-          <li>
-            <address class="footer-text">
-            Rambla 25 de Agosto de 1825 N° 160.
-            </address>
-          </li>
+            <li>
+              <p class="footer-text">
+                If you have any questions, feel free to call us at the phone number below.
+              </p>
+            </li>
 
-          <li>
-            <p class="footer-text">
-              Sí tienes alguna duda no dudes en llamarnos al telefono que aoarece debajo
-            </p>
-          </li>
+            <li>
+              <a href="tel:00201061245741" class="contact-link">+598 92 173 072</a>
+            </li>
 
-          <li>
-            <a href="tel:00201061245741" class="contact-link">+598 92 173 072</a>
-          </li>
+          </ul>
 
-        </ul>
-
-      </div>
-
-      <div class="footer-bottom">
-
-        <div>
-
-          <p class="copyright">Hecho por Mega, INC.</a></p>
         </div>
 
-        <img src="asset/imgs/nuestrologo.png.png" width="100"  loading="lazy">
+        <div class="footer-bottom">
 
-        <ul class="social-list">
+          <div>
 
-          <li>
-            <a href="#" class="social-link">
-              <ion-icon name="logo-facebook" aria-hidden="true"></ion-icon>
-            </a>
-          </li>
+            <p class="copyright">Made by Mega, INC.</a></p>
+          </div>
 
-          <li>
-            <a href="#" class="social-link">
-              <ion-icon name="logo-twitter" aria-hidden="true"></ion-icon>
-            </a>
-          </li>
+          <img src="../asset/imgs/nuestrologo.png.png" width="100" loading="lazy">
 
-          <li>
-            <a href="#" class="social-link">
-              <ion-icon name="logo-youtube" aria-hidden="true"></ion-icon>
-            </a>
-          </li>
+          <ul class="social-list">
 
-          <li>
-            <a href="#" class="social-link">
-              <ion-icon name="logo-linkedin" aria-hidden="true"></ion-icon>
-            </a>
-          </li>
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-facebook" aria-hidden="true"></ion-icon>
+              </a>
+            </li>
 
-        </ul>
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter" aria-hidden="true"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-youtube" aria-hidden="true"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-linkedin" aria-hidden="true"></ion-icon>
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
 
       </div>
-
     </div>
   </footer>
 
-
-
- <!-- 
+  <!-- 
     - custom js link
   -->
-  <script src="asset/js/script.js"></script>
+  <script src="../asset/js/script.js"></script>
+  <script src="../asset/js/idiomes.js"></script>
 
   <!-- 
     - #BACK TO TOP
   -->
-
   <a href="#top" class="back-top-btn" aria-label="go to top" data-go-top-btn>
     <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
   </a>
 
-
-
-
-
-
   <!-- 
     - ionicon link
   -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script type="module"
+    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule
+    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 </body>
 
 </html>
-
-
-
-
-

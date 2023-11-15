@@ -5,7 +5,7 @@
     <title>NEL</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <!-- BOOTSTRAP 4 -->
-    <link rel="stylesheet" href="../../asset/css/seguimiento.css">
+    <link rel="stylesheet" href="../asset/css/seguimiento.css">
     <!-- FONT AWESOEM -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
   </head>
@@ -14,8 +14,8 @@
   <header class="header" data-header>
     <div class="container">
 
-      <a href="../../index.php" class="logo">
-        <img src="../../asset/imgs/logo.png" width="160" height="50" alt="nel home">
+      <a href="../index.php" class="logo">
+        <img src="../asset/imgs/logo.png" width="160" height="50" alt="nel home">
       </a>
 
       <nav class="navbar" data-navbar>

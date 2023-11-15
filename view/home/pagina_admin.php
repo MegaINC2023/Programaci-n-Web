@@ -13,7 +13,7 @@ if (empty($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'admin') {
 <head>
  
     
-    <link rel="stylesheet" href="../../asset/css/seguimiento.css">
+    <link rel="stylesheet" href="../asset/css/seguimiento.css">
 
 </head>
 <body>
@@ -21,8 +21,8 @@ if (empty($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'admin') {
     <header class="header" data-header>
     <div class="container">
 
-      <a href="../../index.php" class="logo">
-        <img src="../../asset/imgs/logo.png" width="160" height="50" alt="nel home">
+      <a href="../index.php" class="logo">
+        <img src="../asset/imgs/logo.png" width="160" height="50" alt="nel home">
       </a>
 
       <nav class="navbar" data-navbar>
@@ -203,7 +203,7 @@ if (empty($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'admin') {
           <p class="copyright">Hecho por Mega, INC.</a></p>
         </div>
 
-        <img src="asset/imgs/nuestrologo.png.png" width="100"  loading="lazy">
+        <img src="../asset/imgs/nuestrologo.png.png" width="100"  loading="lazy">
 
         <ul class="social-list">
 

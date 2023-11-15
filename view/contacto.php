@@ -1,5 +1,5 @@
 <?php
-    require("view/home/procesarformulario.php");
+    require("home/procesarformulario.php");
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +30,7 @@
   <!-- 
     - custom font link
   -->
-  <link rel="stylesheet" href="/asset/font/font.css">
+  <link rel="stylesheet" href="asset/font/font.css">
 
 
 
@@ -51,25 +51,12 @@
       <nav class="navbar" data-navbar>
         <ul class="navbar-list">
 
-          <li class="navbar-item">
-            <a href="iniciosesion.php" class="navbar-link">Inicio de Sesion</a>
-          </li>
 
           <li class="navbar-item">
             <a href="seguimiento.php" class="navbar-link">Seguimiento</a>
           </li>
 
-          <li class="navbar-item">
-            <a href="contacto.php" class="navbar-link">Contacto</a>
-          </li>
 
-          <li class="navbar-item">
-            <a href="#" class="navbar-link">Preguntas Frecuentes</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="#section about" class="navbar-link">Sobre Nosotros</a>
-          </li>
 
         </ul>
       </nav>
@@ -119,7 +106,7 @@
     <input type="submit" name="enviar" value="Enviar Mensaje" class="btn-enviar">
 </form>
 <?php
-include("view/home/procesarformulario.php")
+include("home/procesarformulario.php")
 ?>
        
     </div>

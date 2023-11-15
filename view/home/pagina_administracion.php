@@ -3,7 +3,7 @@
 <head>
  
     
-    <link rel="stylesheet" href="../../asset/css/seguimiento.css">
+    <link rel="stylesheet" href="../asset/css/seguimiento.css">
 
 </head>
 <body>
@@ -11,8 +11,8 @@
     <header class="header" data-header>
     <div class="container">
 
-      <a href="index.php" class="logo">
-        <img src="../../asset/imgs/logo.png" width="160" height="50" alt="nel home">
+      <a href="../index.php" class="logo">
+        <img src="../asset/imgs/logo.png" width="160" height="50" alt="nel home">
       </a>
 
       <nav class="navbar" data-navbar>

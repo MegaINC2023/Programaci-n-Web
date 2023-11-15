@@ -80,22 +80,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <nav class="navbar" data-navbar>
         <ul class="navbar-list">
 
-          <li class="navbar-item">
-            <a href="iniciosesion.php" class="navbar-link">Inicio de Sesion</a>
-          </li>
-
 
 
           <li class="navbar-item">
             <a href="contacto.php" class="navbar-link">Contacto</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="#" class="navbar-link">Preguntas Frecuentes</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="#section about" class="navbar-link">Sobre Nosotros</a>
           </li>
 
         </ul>
@@ -109,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <span class="span">+598 92 173 072</span>
         </a>
 
-        <a href="iniciosesion.html" class="btn btn-primary">
+        <a href="iniciosesion.php" class="btn btn-primary">
           <span class="span">Iniciar Sesion</span>
 
           <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>

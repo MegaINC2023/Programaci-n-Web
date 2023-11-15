@@ -10,7 +10,7 @@ if (empty($_SESSION['usuario']) || $_SESSION['tipo_usuario'] !== 'chofer') {
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="stylesheet" href="../../asset/css/seguimiento.css">
+    <link rel="stylesheet" href="../asset/css/seguimiento.css">
 
 </head>
 <body>
@@ -28,13 +28,13 @@ if (!empty($_SESSION['usuario'])) {
     echo '<header>';
     echo ' <header class="header" data-header>';
     echo  '<div class="container">';
-    echo  '<a href="index.php" class="logo">';
-    echo  '<img src="../../asset/imgs/logo.png" width="160" height="50" alt="nel home">';
+    echo  '<a href="../index.php" class="logo">';
+    echo  '<img src="../asset/imgs/logo.png" width="160" height="50" alt="nel home">';
     echo  ' </a>';
     echo  '<nav class="navbar" data-navbar>';
     echo  '<ul class="navbar-list">';
     echo  '<li class="navbar-item">';
-    echo  '<a >Página del Administrativo</a>';
+    echo  '<a >Página de Chofer</a>';
     echo  '</li>';
     echo  '</ul>';
     echo  '</nav>';
